@@ -6,11 +6,11 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:41:22 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/08 11:41:42 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/09 16:07:17 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "../includes/shell.h"
 
 static char	**ft_free_split(char **ptr, int i)
 {

@@ -1,0 +1,100 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_utils_2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/10 13:22:42 by rachou            #+#    #+#             */
+/*   Updated: 2024/10/10 13:22:53 by rachou           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/shell.h"
+
+/*frees the lists*/
+
+void	total_free(t_token *t)
+{
+	token_l_free(t);
+	return ;
+}
+
+/*deletes one token of the list*/
+
+t_token	*token_delete(t_token *t)
+{
+	t_token	*tmp;
+
+	if (t->next == NULL && t->previous == NULL)
+		return (token_free(t), NULL);
+	else if (t->previous == NULL)
+	{
+		tmp = t->next;
+		tmp->previous = NULL;
+		return (token_free(t), tmp);
+	}
+	else if (t->next == NULL)
+	{
+		tmp = t->previous;
+		token_free(t);
+		tmp->next = NULL;
+		return (NULL);
+	}
+	else
+	{
+		tmp = t->next;
+		t->previous->next = tmp;
+		tmp->previous = t->previous;
+		return (token_free(t), tmp);
+	}
+}
+
+/*frees token*/
+
+void	token_free(t_token *t)
+{
+	free(t->content);
+	free(t);
+	return ;
+}
+
+/*detects if a character is a point to split*/
+
+int	not_a_split(char *s, char sep, int index)
+{
+	if (quoted(s, index) || s[index] != sep)
+		return (1);
+	else
+		return (0);
+}
+
+/*detects if a character is between simple quotes*/
+
+int	simple_quoted(char *s, int index)
+{
+	int	i;
+	int	squotes_open;
+	int	squotes_closed;
+	int	quote;
+
+	i = 0;
+	squotes_open = 0;
+	squotes_closed = 0;
+	while (s[i])
+	{
+		if ((s[i] == 39 && ft_strchr(s + (i + 1), 39)))
+		{
+			quote = s[i];
+			squotes_open = i++;
+			while (s[i] != quote)
+				i++;
+			squotes_closed = i;
+		}
+		if (index < squotes_closed && index > squotes_open)
+			return (1);
+		squotes_closed = 0;
+		i++;
+	}
+	return (0);
+}
