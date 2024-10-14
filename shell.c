@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 16:03:52 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/10 15:55:36 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/14 14:17:33 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@ int	main(int arc, char **arv, char **env)
 	t_all		*all;
 	int			i;
 
-	all->env = NULL;
-	all->token = NULL;
-	all->cmd = NULL;
 	if (arc == 0)
 		return (1);
 	input = readline("write something : ");

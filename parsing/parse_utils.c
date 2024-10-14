@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 16:15:57 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/09 16:16:15 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/14 12:09:00 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 char	*var_value(char *var)
 {
-	while (var != '=')
+	if (!var)
+		return (NULL);
+	while (*var != '=' && *var != '\0')
 		var++;
-	var++;
 	return (var);
 }

@@ -36,7 +36,7 @@ CC		= gcc -g #-fsanitize=address
 
 FLAGS	= -Wall -Wextra -Werror
 
-READ_FLAGS = -L/Users/$(shell whoami)/.brew/opt/readline/lib -I/Users/$(shell whoami)/.brew/opt/readline/include -lreadline
+READ_FLAGS = -L/Users/raneuman/.brew/opt/readline/lib -I/Users/raneuman/.brew/opt/readline/include -lreadline
 
 LIB		= ar -rc
 
