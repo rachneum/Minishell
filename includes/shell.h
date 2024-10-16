@@ -92,8 +92,6 @@ t_token	*new_t_node(t_token *l);
 /* ------------------- PIPEX_BONUS ------------------- */
 
 char	**ft_split(char const *s, char c);
-char	*ft_free_tab(char **argv);
-
 void	pipex(int arc, t_cmd *cmd, char **env);
 
 #endif

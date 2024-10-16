@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:20:43 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/10 15:16:34 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/16 11:41:16 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ int	is_command(t_token *t)
 	return (0);
 }
 
-/*returns the environment variable*/
+/*returns the environment variable
 
-/*
+
 {
 	int		i;
 	char	*name;
@@ -90,8 +90,7 @@ int	is_command(t_token *t)
 	return (value);
 }
 
-/*gets the size of the environment variable*/
-/*
+gets the size of the environment variable
 size_t	env_size(char *input, t_env_list *env)
 {
 	int		i;

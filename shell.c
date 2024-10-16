@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 16:03:52 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/14 14:17:33 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:10:13 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,7 @@ int	main(int arc, char **arv, char **env)
         add_history(input);
 	token = tokenizer(input, all);
 	c = parser(token);
-	while (c->next != NULL)
-	{
-		i = 0;
-		while (c->cmd[i])
-		{
-			printf("%s\n", c->cmd[i]);
-			i++;
-		}
-		c = c->next;
-	}
+	c = c->previous;
    	pipex(arc, c, env);
 	clear_history();
 	cmd_l_free(c);

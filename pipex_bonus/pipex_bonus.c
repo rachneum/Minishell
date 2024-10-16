@@ -6,11 +6,25 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:25:55 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/11 19:32:42 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/16 12:11:09 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
+
+static char	*ft_free_tab(char **cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		free(cmd[i]);
+		i++;
+	}
+	free(cmd[i]);
+	return (NULL);
+}
 
 static int	check_path(char **env)//Check si le PATH existe dans l'environnement.
 {
@@ -112,7 +126,7 @@ void	pipex(int arc, t_cmd *cmd, char **env)
 				close(prev_tube);
 			}
 			close(tube[0]);
-			ft_exec(&current_cmd->cmd[0], env);
+			ft_exec(current_cmd->cmd, env);
 		}
 		if (prev_tube != -1)//Vérifie si le processus précédent est ouvert.
 			close(prev_tube);

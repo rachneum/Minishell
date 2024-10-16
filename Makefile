@@ -7,7 +7,6 @@ NAME	= minishell
 HEADER	= /includes/shell.h 
 
 SHELL_SRCS 	=	pipex_bonus/ft_split.c \
-				pipex_bonus/ft_utils.c \
 				pipex_bonus/pipex_bonus.c \
 				parsing/parse_utils.c \
 				parsing/parse.c \
@@ -36,7 +35,7 @@ CC		= gcc -g #-fsanitize=address
 
 FLAGS	= -Wall -Wextra -Werror
 
-READ_FLAGS = -L/Users/raneuman/.brew/opt/readline/lib -I/Users/raneuman/.brew/opt/readline/include -lreadline
+READ_FLAGS = -L/Users/rachou/.brew/opt/readline/lib -I/Users/rachou/.brew/opt/readline/include -lreadline
 
 LIB		= ar -rc
 
