@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/09 16:14:04 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/09 16:14:23 by rachou           ###   ########.fr       */
+/*   Created: 2024/09/24 14:02:12 by marvin            #+#    #+#             */
+/*   Updated: 2024/09/24 14:02:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,5 @@ void	cmd_l_free(t_cmd *c)
 	c->cmd = 0;
 	c->next = 0;
 	c->previous = 0;
-	system("leaks minishell");
+	//system("leaks minishell");
 }

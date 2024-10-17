@@ -1,23 +1,22 @@
 # -----------------------------------Makefile------------------------------------
-
 NAME	= minishell
 
 # -----------------------------------Sources-------------------------------------
 
 HEADER	= /includes/shell.h 
 
-SHELL_SRCS 	=	pipex_bonus/ft_split.c \
-				pipex_bonus/pipex_bonus.c \
-				parsing/parse_utils.c \
-				parsing/parse.c \
-				env.c \
-				token/special_split.c \
-				token/token_utils_1.c \
-				token/token_utils_2.c \
-				token/token_utils_3.c \
-				token/token_utils.c \
-				token/token.c \
-				shell.c
+SHELL_SRCS 	=	token/token_utils.c\
+				token/token_utils_1.c\
+				token/token_utils_2.c\
+				token/token_utils_3.c\
+				token/token.c\
+				token/special_split.c\
+				parsing/parse.c\
+				env.c\
+				shell.c\
+				exec/exec_utils.c\
+				exec/ft_split.c\
+				exec/pipex_bonus.c
 
 SHELL_SRC	= ${SHELL_SRCS}
 
@@ -35,7 +34,7 @@ CC		= gcc -g #-fsanitize=address
 
 FLAGS	= -Wall -Wextra -Werror
 
-READ_FLAGS = -L/Users/rachou/.brew/opt/readline/lib -I/Users/rachou/.brew/opt/readline/include -lreadline
+READ_FLAGS = -L/Users/raneuman/.brew/opt/readline/lib -I/Users/raneuman/.brew/opt/readline/include -lreadline
 
 LIB		= ar -rc
 

@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 15:25:55 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/16 12:11:09 by rachou           ###   ########.fr       */
+/*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
+/*   Updated: 2024/10/17 14:24:56 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
-
-static char	*ft_free_tab(char **cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd[i])
-	{
-		free(cmd[i]);
-		i++;
-	}
-	free(cmd[i]);
-	return (NULL);
-}
 
 static int	check_path(char **env)//Check si le PATH existe dans l'environnement.
 {
@@ -93,7 +79,24 @@ static void	ft_exec(char **cmd, char **env)//Cherche le chemin de la commande da
 	}
 }
 
-void	pipex(int arc, t_cmd *cmd, char **env)
+static void    child_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, char **env)
+{
+    if (current_cmd->next)
+	{
+		close(tube[0]);
+		dup2(tube[1], 1);//Redirige écriture dans le pipe.
+		close(tube[1]);
+	}
+	if (current_cmd->previous != NULL)//Tant que != première cmd.
+	{
+		close(tube[1]);
+		dup2(prev_tube, 0);//Redirige lecture du pipe (lire dans le pipe précédent).
+		close(prev_tube);
+	}
+	close(tube[0]);
+}
+
+void	ft_pipe(int arc, t_cmd *cmd, char **env)
 {
 	int		tube[2];//Mon pipe.
 	int		prev_tube;//Va me permettre de lire le pipe précédent.
@@ -113,23 +116,11 @@ void	pipex(int arc, t_cmd *cmd, char **env)
 			perror("FORK");
 		if (pid == 0)//Si on se trouve bien dans l'enfant.
 		{
-			if (current_cmd->next)
-			{
-				close(tube[0]);
-				dup2(tube[1], 1);//Redirige écriture dans le pipe.
-				close(tube[1]);
-			}
-			if (current_cmd->previous != NULL)//Tant que != première cmd.
-			{
-				close(tube[1]);
-				dup2(prev_tube, 0);//Redirige lecture du pipe (lire dans le pipe précédent).
-				close(prev_tube);
-			}
-			close(tube[0]);
+			child_pipe_redirect(current_cmd, tube, prev_tube, env);
 			ft_exec(current_cmd->cmd, env);
 		}
-		if (prev_tube != -1)//Vérifie si le processus précédent est ouvert.
-			close(prev_tube);
+		//if (prev_tube != -1)//Vérifie si le processus précédent est ouvert.
+		//	close(prev_tube);
 		if (current_cmd->next)
 		{
 			close(tube[1]);//Ferme l'extrémité d'écriture du pipe dans le parent.

@@ -1,18 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 13:26:22 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/10 15:43:30 by rachou           ###   ########.fr       */
+/*   Created: 2024/09/14 13:10:50 by marvin            #+#    #+#             */
+/*   Updated: 2024/09/14 13:10:50 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-//Still need to implement $ handling
+/*int	main(int arc, char **arv, char **env)
+{
+	t_token *t;
+	t_cmd	*c;
+	int		i;
+	t_all	*all;
+	
+
+	all = (t_all *)malloc(sizeof(t_all));
+	all->env = envellope(env);
+	t = tokenizer("He$SHELL |l\"omy  |'love'\"|baby|bubble>>look", all);
+	printf("\"He>>$SHELL \"|l\"omy  |'love'\"|baby|bubble>>look\n");
+	c = parser(t);
+	while (c->previous != NULL)
+		c = c->previous;
+	while (c->next != NULL)
+	{
+		i = 0;
+		while (c->cmd[i])
+		{
+			printf("%s\n", c->cmd[i]);
+			i++;
+		}
+		c = c->next;
+	}
+	i = 0;
+	while (c->cmd[i])
+	{
+		printf("%s\n", c->cmd[i]);
+		i++;
+	}
+	cmd_l_free(c);
+	token_l_free(t);
+}*/
 
 t_token	*tokenizer(char	*input, t_all *all)
 {
@@ -94,10 +127,10 @@ char	*spacer(char *s, t_all *all)
 	spaced = malloc(sizeof(char) * (size_count(s, all) + 1));
 	while (s[i] && spaced)
 	{
-		if (s[i] == '$' && var_pfetch(all->env, s + i) && !simple_quoted(s, i))
+		if (s[i] == '$' && var_pfetch(all->env, s + i) && !simple_quoted(s, i)
+			&& s[i + 1] != '?')
 		{
 			tmp = var_pfetch(all->env, s + i);
-			spaced[j++] = ' ';
 			while (*tmp)
 				spaced[j++] = *(tmp++);
 			while (s[i] != ' ')
@@ -108,7 +141,7 @@ char	*spacer(char *s, t_all *all)
 		else
 			spaced[j++] = s[i++];
 	}
-	//free(s);
+	free(s);
 	if (spaced)
 		spaced[j] = '\0';
 	return (spaced);

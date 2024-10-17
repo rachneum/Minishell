@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/08 16:03:52 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/16 12:10:13 by rachou           ###   ########.fr       */
+/*   Created: 2024/09/16 16:06:54 by marvin            #+#    #+#             */
+/*   Updated: 2024/10/04 16:22:46 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int arc, char **arv, char **env)
 	char		*prompt;
 	t_token		*token;
 	t_cmd		*c;
-	t_all		*all;
+    t_all       *all;
 	int			i;
 
 	if (arc == 0)
@@ -35,8 +35,9 @@ int	main(int arc, char **arv, char **env)
         add_history(input);
 	token = tokenizer(input, all);
 	c = parser(token);
-	c = c->previous;
-   	pipex(arc, c, env);
+    while (c->previous != NULL)
+        c = c->previous;
+    ft_pipe(arc, c, env);
 	clear_history();
 	cmd_l_free(c);
 	total_free(token);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 13:20:43 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/16 11:41:16 by rachou           ###   ########.fr       */
+/*   Created: 2024/09/17 15:15:34 by thomvan-          #+#    #+#             */
+/*   Updated: 2024/09/18 20:01:21 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ int	is_command(t_token *t)
 	return (0);
 }
 
-/*returns the environment variable
+/*returns the environment variable*/
 
-
+/*
 {
 	int		i;
 	char	*name;
@@ -91,6 +91,7 @@ int	is_command(t_token *t)
 }
 
 gets the size of the environment variable
+
 size_t	env_size(char *input, t_env_list *env)
 {
 	int		i;
