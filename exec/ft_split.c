@@ -3,42 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:50:12 by raneuman          #+#    #+#             */
-/*   Updated: 2024/10/14 11:50:51 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/10/20 09:45:29 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-static char	**ft_free_split(char **ptr, int i)
+char	**ft_split(char const *s, char c)
 {
-	while (i > 0)
-	{
-		i--;
-		free(ptr[i]);
-	}
-	free(ptr);
-	return (0);
+	char			**dst;
+	unsigned int	num_wds;
+
+	if (!s)
+		return (NULL);
+	num_wds = ft_cnt_wds(s, c);
+	dst = (char **)malloc(sizeof(char *) * (num_wds + 1));
+	if (!dst)
+		return (NULL);
+	dst = ft_split_wds(s, c, dst, num_wds);
+	return (dst);
 }
 
-static char	*ft_put(char *wds, char const *s, int i, int len_wds)
-{
-	int	j;
-
-	j = 0;
-	while (len_wds > 0)
-	{
-		wds[j] = s[i - len_wds];
-		j++;
-		len_wds--;
-	}
-	wds[j] = '\0';
-	return (wds);
-}
-
-static int	ft_cnt_wds(char const *str, char c)
+int	ft_cnt_wds(char const *str, char c)
 {
 	int	i;
 	int	cnt;
@@ -59,7 +48,7 @@ static int	ft_cnt_wds(char const *str, char c)
 	return (cnt);
 }
 
-static char	**ft_split_wds(char const *s, char c, char **dst, int num_wds)
+char	**ft_split_wds(char const *s, char c, char **dst, int num_wds)
 {
 	int	i;
 	int	wds;
@@ -88,17 +77,28 @@ static char	**ft_split_wds(char const *s, char c, char **dst, int num_wds)
 	return (dst);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_free_split(char **ptr, int i)
 {
-	char			**dst;
-	unsigned int	num_wds;
+	while (i > 0)
+	{
+		i--;
+		free(ptr[i]);
+	}
+	free(ptr);
+	return (0);
+}
 
-	if (!s)
-		return (NULL);
-	num_wds = ft_cnt_wds(s, c);
-	dst = (char **)malloc(sizeof(char *) * (num_wds + 1));
-	if (!dst)
-		return (NULL);
-	dst = ft_split_wds(s, c, dst, num_wds);
-	return (dst);
+char	*ft_put(char *wds, char const *s, int i, int len_wds)
+{
+	int	j;
+
+	j = 0;
+	while (len_wds > 0)
+	{
+		wds[j] = s[i - len_wds];
+		j++;
+		len_wds--;
+	}
+	wds[j] = '\0';
+	return (wds);
 }

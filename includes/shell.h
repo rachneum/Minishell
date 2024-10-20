@@ -113,9 +113,18 @@ void		my_env(t_all *all, t_cmd *cmd);
 /*exec functions*/
 
 char	**ft_split(char const *s, char c);
+char	**ft_split_wds(char const *s, char c, char **dst, int num_wds);
+char	**ft_free_split(char **ptr, int i);
+char	*ft_put(char *wds, char const *s, int i, int len_wds);
+int		ft_cnt_wds(char const *str, char c);
+
 char	*ft_free_tab(char **cmd);
+char	*get_path(char **cmd, char **env, int i);
+int		check_path(char **env);
 
 void	ft_pipe(int arc, t_cmd *cmd, char **env);
+void    child_pipe_redi(t_cmd *current_cmd, int *tube, int prev_tube, char **env);
+void	ft_exec(char **cmd, char **env);
 
 
 #endif
