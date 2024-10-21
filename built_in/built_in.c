@@ -20,7 +20,7 @@ void my_pwd(t_cmd *c)
 
 	if (c->cmd[1])
 	{
-		perror("pwd: too many arguments\n");
+		perror("pwd: too many arguments");
 		return ;
 	}
     if (getcwd(cwd, sizeof(cwd)) != NULL)
@@ -61,7 +61,7 @@ void	my_cd(char **cmd, t_all *all)
 
 	err = chdir(cmd[1]);
 	if (err == -1)
-		perror("cd: no such file in directory");
+		perror("chdir");
 	getcwd(cwd, sizeof(cwd));
 	tmp = malloc(sizeof(char) * (ft_strlen(cwd) + 5));
 	while (ft_strncmp(all->env->var, PWD, 3) != 0
@@ -80,25 +80,25 @@ void	my_cd(char **cmd, t_all *all)
 
 /*export*/
 
-void	my_export(t_all *all, t_cmd *cmd)
+void	my_export(t_all *all,t_cmd *c)
 {
 	int	i;
 
-	if (!cmd->cmd[1])
+	if (!c->cmd[1])
 	{
-		my_env(all, cmd);
+		my_env(all, c);
 		return ;
 	}
 	i = 1;
 	while (all->env->next != NULL)
 		all->env = all->env->next;
-	while (all->cmd[i] != NULL && var_value(all->cmd[i]))
+	while (all->c[i] != NULL && var_value(all->c[i]))
 	{
 		all->env = new_node(all->env);
-		all->env->var = all->cmd[i];
+		all->env->var = all->c[i];
 		i++;
 	}
-	if (!var_value(all->cmd[i]))
+	if (!var_value(all->c[i]))
 		printf("syntax error");
 }
 

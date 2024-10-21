@@ -5,18 +5,22 @@ NAME	= minishell
 
 HEADER	= /includes/shell.h 
 
-SHELL_SRCS 	=	token/token_utils.c\
+SHELL_SRCS 	= token/token_utils.c\
 				token/token_utils_1.c\
 				token/token_utils_2.c\
 				token/token_utils_3.c\
 				token/token.c\
 				token/special_split.c\
 				parsing/parse.c\
+				parsing/parse_utils.c\
+				parsing/parse_utils_1.c\
 				env.c\
 				shell.c\
 				exec/exec_utils.c\
 				exec/ft_split.c\
-				exec/pipex.c
+				exec/pipex.c\
+				exec/handle_redirect.c
+
 
 SHELL_SRC	= ${SHELL_SRCS}
 
@@ -30,7 +34,7 @@ FT_FOLDER = ./libft
 
 FT = ${FT_FOLDER}/libft.a
 
-CC		= gcc -g #-fsanitize=address
+CC		= gcc -g -fsanitize=address
 
 FLAGS	= -Wall -Wextra -Werror
 

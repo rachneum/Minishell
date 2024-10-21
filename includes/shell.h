@@ -37,6 +37,9 @@ typedef struct s_token
 typedef struct s_cmd
 {
 	char			**cmd;
+	int				n_redirection;
+	struct s_token	*in_red;
+	struct s_token	*out_red;
 	struct s_cmd	*next;
 	struct s_cmd	*previous;
 }	t_cmd;
@@ -48,17 +51,17 @@ typedef struct s_all
 	t_cmd		*cmd;
 }	t_all;
 
-# define CHAR_SMALLER_THAN 1
-# define CHAR_GREATER_THAN 2
-# define PIPE 3
-# define DOUBLE_SMALL 4
-# define DOUBLE_GREAT 5
+# define SMALLER 1
+# define GREATER 2
+# define DOUBLE_SMALL 3
+# define DOUBLE_GREAT 4
+# define PIPE 5
 # define GENERAL 6
 # define COMMAND 7
 
 /*general functions*/
 
-void		total_free(t_token *t);
+void		total_free(t_all *all);
 
 /*environment_list functions*/
 
@@ -91,7 +94,7 @@ void		quote_erase(t_token *l);
 void		spacer_shortcut(char *spac, char *s, int *i, int *j);
 int			simple_quoted(char *s, int index);
 void		spacer_shortcut(char *spac, char *s, int *i, int *j);
-
+void		replace_here(t_all *all);
 
 /*parsing functions*/
 
@@ -100,31 +103,32 @@ t_cmd		*cmd_node(t_token *t, t_cmd *cmd_l);
 t_cmd		*new_c_node(t_cmd *c, t_token *t);
 t_cmd		*parser(t_token *t);
 void		cmd_l_free(t_cmd *c);
+void		redirect_finder(t_token *t, t_cmd *c);
+void		in_red(t_token *t, t_cmd *c);
+void		out_red(t_token *t, t_cmd *c);
 
 /*built-in functions*/
 
 void		my_unset(t_all *all);
-void 		my_pwd();
+void		my_pwd(void);
 void		my_echo(char **arg);
 void		my_cd(char **cmd);
-void		my_export(t_all *all);
+void		my_export(t_all *all, t_cmd *c);
 void		my_env(t_all *all, t_cmd *cmd);
 
 /*exec functions*/
 
+char	*get_path(char **cmd, char **env, int i);
+int	check_path(char **env);
+char	*ft_free_tab(char **cmd);
 char	**ft_split(char const *s, char c);
+int	ft_cnt_wds(char const *str, char c);
 char	**ft_split_wds(char const *s, char c, char **dst, int num_wds);
 char	**ft_free_split(char **ptr, int i);
 char	*ft_put(char *wds, char const *s, int i, int len_wds);
-int		ft_cnt_wds(char const *str, char c);
-
-char	*ft_free_tab(char **cmd);
-char	*get_path(char **cmd, char **env, int i);
-int		check_path(char **env);
-
+char *handle_heredoc(char *delimiter);
 void	ft_pipe(int arc, t_cmd *cmd, char **env);
-void    child_pipe_redi(t_cmd *current_cmd, int *tube, int prev_tube, char **env);
+void    child_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, char **env);
 void	ft_exec(char **cmd, char **env);
-
 
 #endif

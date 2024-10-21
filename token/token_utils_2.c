@@ -14,9 +14,12 @@
 
 /*frees the lists*/
 
-void	total_free(t_token *t)
+void	total_free(t_all *all)
 {
-	token_l_free(t);
+	token_l_free(all->token);
+	//cmd_l_free(all->cmd);
+	env_l_free(all->env);
+	free(all);
 	return ;
 }
 
@@ -26,6 +29,8 @@ t_token	*token_delete(t_token *t)
 {
 	t_token	*tmp;
 
+	if (!t)
+		return (NULL);
 	if (t->next == NULL && t->previous == NULL)
 		return (token_free(t), NULL);
 	else if (t->previous == NULL)
@@ -37,9 +42,8 @@ t_token	*token_delete(t_token *t)
 	else if (t->next == NULL)
 	{
 		tmp = t->previous;
-		token_free(t);
 		tmp->next = NULL;
-		return (NULL);
+		return (token_free(t), NULL);
 	}
 	else
 	{

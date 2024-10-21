@@ -6,36 +6,73 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:59 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/20 09:44:15 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/21 15:45:01 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/shell.c"
+#include "../includes/shell.h"
 
 /*void	handle_redirections(t_cmd *cmd)
 {
 
-}
-
-void	handle_heredoc(char *delimiter)//Lit l'entrée utilisateur jusqu'à ce que le délimiteur spécifié soit rencontré, puis redirige cette entrée vers l'entrée standard (stdin) via un tube (pipe).
+}*/
+char *handle_heredoc(char *delimiter)
 {
     int tube[2];
-    char *line;
+    char	*line;
+    char	*heredoc_content;
+    size_t	content_size;
+	size_t	line_len;
 
+	heredoc_content = NULL;
+	content_size = 0;
     if (pipe(tube) == -1)
-        perror("pipe");
-    while (1)
+	{
+        perror("PIPE_HEREDOC");
+		return (NULL);
+	}
+    while (1) 
 	{
         line = readline("> ");
-        if (ft_strcmp(line, delimiter) == 0) {
+        if (!line)//Gère EOF.
+            break;
+        if (strcmp(line, delimiter) == 0)
+		{
             free(line);
             break;
         }
-        write(tube[1], line, ft_strlen(line));
-        write(tube[1], "\n", 1);
+        line_len = strlen(line);
+        heredoc_content = realloc(heredoc_content, content_size + line_len + 2);//+2 pour /n et /0.
+        if (!heredoc_content)
+		{
+            perror("REALLOC_HEREDOC");
+            free(line);
+            close(tube[0]);//Fermer le pipe vu que le heredoc est vide.
+            close(tube[1]);
+            return NULL;
+        }
+        ft_memcpy(heredoc_content + content_size, line, line_len);
+        content_size += line_len;
+        heredoc_content[content_size++] = '\n';
+        heredoc_content[content_size] = '\0';
         free(line);
     }
+    if (write(tube[1], heredoc_content, content_size) == -1)
+	{
+        perror("WRITE_HEREDOC");
+        free(heredoc_content);
+        close(tube[0]);
+        close(tube[1]);
+        return NULL;
+    }
     close(tube[1]);
-    dup2(tube[0], STDIN_FILENO); //Remplace l'entrée standard par le contenu du heredoc.
+    if (dup2(tube[0], STDIN_FILENO) == -1)//Redirige stdin dans le pipe.
+	{
+        perror("DUP2_HEREDOC");
+        free(heredoc_content);
+        close(tube[0]);
+        return NULL;
+    }
     close(tube[0]);
-}*/
+    return (heredoc_content);
+}

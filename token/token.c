@@ -18,33 +18,38 @@
 	t_cmd	*c;
 	int		i;
 	t_all	*all;
+	char	*str;
 	
 
 	all = (t_all *)malloc(sizeof(t_all));
 	all->env = envellope(env);
-	t = tokenizer("He$SHELL |l\"omy  |'love'\"|baby|bubble>>look", all);
-	printf("\"He>>$SHELL \"|l\"omy  |'love'\"|baby|bubble>>look\n");
+	str = NULL;
+	t = tokenizer("He<<$SHELL |l\"omy  |'love'\"|baby|bubble look", all);
+	all->token = t;
+	while (t)
+	{
+		printf("token go %s and type is %d\n", t->content, t->type);
+		t = t->next;
+	}
+	t = all->token;
+	printf("He<<$SHELL |l\"omy  |'love'\"|baby|bubble look\n");
 	c = parser(t);
+	all->cmd = c;
 	while (c->previous != NULL)
 		c = c->previous;
-	while (c->next != NULL)
+	while (c != NULL)
 	{
 		i = 0;
 		while (c->cmd[i])
 		{
-			printf("%s\n", c->cmd[i]);
+			printf("%s", c->cmd[i]);
 			i++;
 		}
+		printf("\n");
 		c = c->next;
 	}
 	i = 0;
-	while (c->cmd[i])
-	{
-		printf("%s\n", c->cmd[i]);
-		i++;
-	}
-	cmd_l_free(c);
-	token_l_free(t);
+	total_free(all);
 }*/
 
 t_token	*tokenizer(char	*input, t_all *all)
@@ -58,6 +63,8 @@ t_token	*tokenizer(char	*input, t_all *all)
 	if (token_list == NULL)
 		return (NULL);
 	type_assign(token_list);
+	all->token = token_list;
+	replace_here(all);
 	free(input);
 	free(chop);
 	return (token_list);
@@ -141,7 +148,7 @@ char	*spacer(char *s, t_all *all)
 		else
 			spaced[j++] = s[i++];
 	}
-	free(s);
+	//free(s);
 	if (spaced)
 		spaced[j] = '\0';
 	return (spaced);

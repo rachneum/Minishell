@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/10/20 09:49:21 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/21 15:07:37 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_pipe(int arc, t_cmd *cmd, char **env)
 			perror("FORK");
 		if (pid == 0)//Si on se trouve bien dans l'enfant.
 		{
-			child_pipe_redi(current_cmd, tube, prev_tube, env);
+			child_pipe_redirect(current_cmd, tube, prev_tube, env);
 			ft_exec(current_cmd->cmd, env);
 		}
 		if (current_cmd->next)
@@ -45,7 +45,7 @@ void	ft_pipe(int arc, t_cmd *cmd, char **env)
 	}
 }
 
-void    child_pipe_redi(t_cmd *current_cmd, int *tube, int prev_tube, char **env)
+void    child_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, char **env)
 {
     if (current_cmd->next)
 	{

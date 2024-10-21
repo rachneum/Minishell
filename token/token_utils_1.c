@@ -16,6 +16,7 @@
 
 void	type_assign(t_token *t)
 {
+	
 	while (t->next != NULL)
 	{
 		t->type = sym_check(t->content);
@@ -25,7 +26,7 @@ void	type_assign(t_token *t)
 	}
 	t->type = sym_check(t->content);
 	if (is_command(t))
-			t->type = 7;
+		t->type = 7;
 	quote_erase(t);
 }
 
@@ -40,7 +41,8 @@ int	size_count(char *str, t_all *all)
 	size = 0;
 	while (str[i])
 	{
-		if (str[i] == '$' && var_pfetch(all->env, str + i) && !simple_quoted(str, i))
+		if (str[i] == '$' && var_pfetch(all->env, str + i)
+			&& !simple_quoted(str, i))
 			size += ft_strlen(var_pfetch(all->env, str + i));
 		if (sym_check(str + i) < GENERAL && !quoted(str, i))
 		{
@@ -90,8 +92,8 @@ int	is_command(t_token *t)
 	return (value);
 }
 
-gets the size of the environment variable
-
+/*gets the size of the environment variable*/
+/*
 size_t	env_size(char *input, t_env_list *env)
 {
 	int		i;

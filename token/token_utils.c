@@ -20,15 +20,15 @@ int	sym_check(char *input)
 
 	i = 0;
 	if (input[i] == '<' && input[i + 1] == '<')
-		return (4);
+		return (DOUBLE_SMALL);
 	if (input[i] == '>' && input[i + 1] == '>')
-		return (5);
+		return (DOUBLE_GREAT);
 	if (input[i] == '<')
-		return (1);
+		return (SMALLER);
 	if (input[i] == '>')
-		return (2);
+		return (GREATER);
 	if (input[i] == '|')
-		return (3);
+		return (PIPE);
 	return (6);
 }
 

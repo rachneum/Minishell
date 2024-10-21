@@ -73,7 +73,7 @@ char	*var_fetch(t_env_list *e, char *str)
 		if (ft_strnstr(e->var, str, ft_strlen(str)))
 		{
 			flag = 1;
-			break;
+			break ;
 		}
 		e = e->next;
 	}
@@ -96,7 +96,7 @@ char	*var_pfetch(t_env_list *e, char *str)
 		if (!ft_strncmp(e->var, str + 1, i))
 		{
 			flag = 1;
-			break;
+			break ;
 		}
 		e = e->next;
 	}
