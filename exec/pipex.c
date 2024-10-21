@@ -6,18 +6,19 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/10/21 15:07:37 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/21 18:09:39 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-void	ft_pipe(int arc, t_cmd *cmd, char **env)
+void	ft_pipe(int arc, t_cmd *cmd, t_env_list *env_list)
 {
 	int		tube[2];//Mon pipe.
 	int		prev_tube;//Va me permettre de lire le pipe précédent.
 	pid_t	pid;
 	t_cmd	*current_cmd;
+	t_all	*all;
 
 	prev_tube = -1;
 	current_cmd = cmd;
@@ -32,8 +33,8 @@ void	ft_pipe(int arc, t_cmd *cmd, char **env)
 			perror("FORK");
 		if (pid == 0)//Si on se trouve bien dans l'enfant.
 		{
-			child_pipe_redirect(current_cmd, tube, prev_tube, env);
-			ft_exec(current_cmd->cmd, env);
+			child_pipe_redirect(current_cmd, tube, prev_tube, env_list);
+			ft_exec(current_cmd->cmd, env_list);
 		}
 		if (current_cmd->next)
 		{
@@ -45,7 +46,7 @@ void	ft_pipe(int arc, t_cmd *cmd, char **env)
 	}
 }
 
-void    child_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, char **env)
+void    child_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list)
 {
     if (current_cmd->next)
 	{
@@ -62,22 +63,34 @@ void    child_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, char *
 	close(tube[0]);
 }
 
-void	ft_exec(char **cmd, char **env)//Cherche le chemin de la commande dans l'environnement, et exécute la commande, affichant un message d'erreur et sortant avec un code d'erreur approprié si la commande ne peut pas être trouvée ou exécutée.
+void ft_exec(char **cmd, t_env_list *env_list)
 {
-	char	*path;
+    char *path;
+    char **env_array;
 
-	path = NULL;
-	path = get_path(&cmd[0], env, -1);
-	if (!path)
-	{
-		perror("CMD");
-		ft_free_tab(cmd);
-		exit(127);//Cmd exécuté est introuvable.
-	}
-	if (execve(path, cmd, env) == -1)
-	{
-		perror("EXEC");
-		ft_free_tab(cmd);
-		exit(126);//Erreur d'exécution.
-	}
+    path = NULL;
+    path = get_path(&cmd[0], env_list, -1);
+    if (!path)
+    {
+        perror("CMD");
+        ft_free_tab(cmd);
+        exit(127);//Commande executée n'est pas trouvée.
+    }
+    env_array = env_list_to_array(env_list, 0);
+    if (env_array)
+    {
+        if (execve(path, cmd, env_array) == -1)
+        {
+            perror("EXEC");
+            ft_free_tab(cmd);
+            ft_free_tab(env_array);
+            exit(126);//Erreur d'exec.
+        }
+        ft_free_tab(env_array);
+    }
+    /*else
+    {
+        ft_free_tab(cmd);//Handle the error
+        exit(126);//Execution error
+    }*/
 }

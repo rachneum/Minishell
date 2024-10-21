@@ -6,25 +6,28 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:52:57 by raneuman          #+#    #+#             */
-/*   Updated: 2024/10/21 15:07:36 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/21 18:09:38 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-char	*get_path(char **cmd, char **env, int i)//Vérifie si la cmd est exécutable et, si ce n'est pas le cas, extrait et divise la variable d'environnement PATH pour rechercher le chemin de la commande.
+char	*get_path(char **cmd, t_env_list *env_list, int i)//Vérifie si la cmd est exécutable et, si ce n'est pas le cas, extrait et divise la variable d'environnement PATH pour rechercher le chemin de la commande.
 {
 	char	**split_path;
 	char	*path;
 	char	*full_path;
+	char	*env_path;
 
 	if (!access(cmd[0], X_OK))
 		return (cmd[0]);
-	if (check_path(env) == -1)
+	env_path = var_pfetch(env_list, "PATH");
+	if (!env_path || check_path(env_list) == -1)
+	{
 		perror("PATH");
-	if (!env[check_path(env)])
 		return (cmd[0]);
-	split_path = ft_split(env[check_path(env)] + 5, ':');
+	}
+	split_path = ft_split(env_path, ':');
 	if (!split_path)
 		return (NULL);
 	while (split_path[++i])//Recherche le chemin dans chaque répertoire de PATH.
@@ -43,20 +46,44 @@ char	*get_path(char **cmd, char **env, int i)//Vérifie si la cmd est exécutabl
 	return (ft_free_tab(split_path));//Libère le tableau des chemins.
 }
 
-int	check_path(char **env)//Check si le PATH existe dans l'environnement.
+int	check_path(t_env_list *env_list)//Check si le PATH existe dans l'environnement.
 {
-	int	i;
-
-	i = 0;
-	if (!env)
-		return (-1);
-	while (env[i])
+	while (env_list)
 	{
-		if (ft_strncmp("PATH", env[i], 4) == 0)
-			return (i);
-		i++;
+	    if (ft_strncmp("PATH", env_list->var, 4) == 0)
+	        return (1);
+	    env_list = env_list->next;
 	}
 	return (-1);
+}
+
+char **env_list_to_array(t_env_list *env_list, int i)
+{
+    char		**env_array;
+    t_env_list *current;
+    int 		count;
+
+    current = env_list;//Compte le nbr d'éléments dans env_list.
+    count = 0;
+    if (current)
+    {
+        count++;
+        current = current->next;
+	}
+    env_array = (char **)malloc(sizeof(char *) * (count + 1));//Allocation de mémoire pour env_array.
+    if (!env_array)
+        return NULL;
+    current = env_list;
+    if (current)
+    {
+        env_array[i] = ft_strjoin("&", current->var);
+        if (!env_array[i])
+            return (free(env_array), NULL);
+        current = current->next;
+		i++;
+    }
+    env_array[i] = NULL;//Terminate env_array.
+    return env_array;
 }
 
 char	*ft_free_tab(char **cmd)

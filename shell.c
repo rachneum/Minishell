@@ -52,7 +52,7 @@ int	main(int arc, char **arv, char **envp)
 		printf("\n");
 		all->cmd = all->cmd->next;
 	}*/
-	ft_pipe(arc, all->cmd, envp);
+	ft_pipe(arc, all->cmd, all->env);
 	clear_history();
 	//cmd_l_free(c);
 	total_free(all);
