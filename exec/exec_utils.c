@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:52:57 by raneuman          #+#    #+#             */
-/*   Updated: 2024/10/21 18:09:38 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/22 14:09:35 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	check_path(t_env_list *env_list)//Check si le PATH existe dans l'environneme
 	return (-1);
 }
 
-char **env_list_to_array(t_env_list *env_list, int i)
+char **env_list_to_array(t_env_list *env_list, int i)//Convertit liste chaînée en tableau de chaînes de caractères.
 {
     char		**env_array;
     t_env_list *current;

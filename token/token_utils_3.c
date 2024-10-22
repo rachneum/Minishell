@@ -45,7 +45,8 @@ void	replace_here(t_all *all)
 		all->token = token_delete(all->token);
 		str = all->token->content;
 		all->token->content = handle_heredoc(delimiter);
-		//printf("%s\n", all->token->content);
+		//printf("Delimiter: %s\n", delimiter);
+		//printf("Heredoc content: %s\n",  all->token->content);
 		free(str);
 	}
 	all->token = first;
