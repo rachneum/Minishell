@@ -139,7 +139,7 @@ char	**ft_free_split(char **ptr, int i);
 char	*ft_put(char *wds, char const *s, int i, int len_wds);
 int		ft_cnt_wds(char const *str, char c);
 
-char 	*handle_heredoc(char *delimiter);
+//char 	*handle_heredoc(char *delimiter);
 void    handle_redirections(t_cmd   *cmd);
 
 
