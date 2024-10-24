@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:59 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/24 11:25:12 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/24 14:20:55 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void handle_append_red(t_token *out_red)
     close(fd);
 }
 
-/*static void handle_input_red(t_token *in_red)
+static void handle_input_red(t_token *in_red)
 {
     int fd;
     
@@ -67,23 +67,24 @@ static void handle_append_red(t_token *out_red)
         return;
     }
     close(fd);
-}*/
+}
 
 void handle_redirections(t_cmd *cmd)
 {
     while (cmd->n_redirection > 0)
     {
-        if (cmd->out_red->content)
+        if (cmd->out_red && cmd->out_red->content)
         {
-            if (cmd->out_red->previous && strcmp(cmd->out_red->previous->content, ">") == 0)
+            if (cmd->out_red->previous->content && strcmp(cmd->out_red->previous->content, ">") == 0)
                 handle_output_red(cmd->out_red);
-            if (cmd->out_red->previous && strcmp(cmd->out_red->previous->content, ">>") == 0)
+            if (cmd->out_red->previous->content && strcmp(cmd->out_red->previous->content, ">>") == 0)
                 handle_append_red(cmd->out_red);
         }
-        //if (cmd->in_red->content)
-        //{
-        //    if (cmd->in_red->previous && strcmp(cmd->in_red->previous->content, "<") == 0)
-        //        handle_input_red(cmd->in_red);
+        else if (cmd->in_red && cmd->in_red->content)
+        {
+            if (cmd->in_red->previous->content && strcmp(cmd->in_red->previous->content, "<") == 0)
+                handle_input_red(cmd->in_red);
+        }
         cmd->n_redirection--;
     }
 }
