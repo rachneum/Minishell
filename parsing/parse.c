@@ -18,6 +18,7 @@ static void	cmd_init(t_cmd *c)
 	c->next = NULL;
 	c->in_red = NULL;
 	c->out_red = NULL;
+	c->n_redirection = 0;
 }
 
 t_cmd	*parser(t_token *t)
@@ -60,24 +61,24 @@ t_cmd	*cmd_node(t_token *t, t_cmd *cmd_l)
 	if (!cmd_l->cmd)
 		return (NULL);
 	first = cmd_l;
-	cmd_l->in_red = NULL;
-	cmd_l->out_red = NULL;
-	while (t->next != NULL)
+	while (t && t->next != NULL)
 	{
 		if (t->type != PIPE)
 		{
-			if (t->next->type != PIPE)
-				redirect_finder(t, cmd_l);
+			t = redirect_finder(t, cmd_l);
+			if (!t)
+				break;
 			cmd_l->cmd[i++] = t->content;
 		}
 		t = t->next;
-		if (t->type == PIPE)
+		if (t && t->type == PIPE)
 			cmd_l = cmd_node_pipe_short(t,cmd_l, &i);
 	}
-	if (t->type != PIPE)
+	cmd_l->cmd[i] = NULL;
+	if (t && t->type != PIPE)
 	{
 		cmd_l->cmd[i++] = t->content;
-		cmd_l->cmd[i++] = NULL;
+		cmd_l->cmd[i] = NULL;
 	}
 	return (first);
 }
@@ -99,6 +100,7 @@ t_cmd	*new_c_node(t_cmd *c, t_token *t)
 	new->next = NULL;
 	new->in_red = NULL;
 	new->out_red = NULL;
+	new->n_redirection = 0;
 	new->previous = c;
 	return (new);
 }

@@ -16,24 +16,21 @@ void	cmd_l_free(t_cmd *c)
 {
 	t_cmd	*tmp;
 
+	if (!c)
+	 return ;
 	while (c->previous != NULL)
 		c = c->previous;
 	while (c->next != NULL)
 	{
-		if (c->in_red)
-			token_l_free(c->in_red);
-		if (c->out_red)
-			token_l_free(c->out_red);
-		//if (c->cmd);
-			free(c->cmd);
+		token_l_free(c->in_red);
+		token_l_free(c->out_red);
+		free(c->cmd);
 		tmp = c;
 		c = c->next;
 		free(tmp);
 	}
-	if (c->in_red)
-		free(c->in_red);
-	if (c->out_red)
-		free(c->out_red);
+	token_l_free(c->in_red);
+	token_l_free(c->out_red);
 	free(c->cmd);
 	free(c);
 	// c->cmd = 0;

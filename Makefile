@@ -16,11 +16,11 @@ SHELL_SRCS 	= token/token_utils.c\
 				parsing/parse_utils_1.c\
 				env.c\
 				shell.c\
+				utils/extra.c\
 				exec/exec_utils.c\
 				exec/ft_split.c\
 				exec/pipex.c\
 				exec/handle_redirect.c
-
 
 SHELL_SRC	= ${SHELL_SRCS}
 

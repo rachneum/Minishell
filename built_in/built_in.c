@@ -20,7 +20,7 @@ void my_pwd(t_cmd *c)
 
 	if (c->cmd[1])
 	{
-		perror("pwd: too many arguments");
+		perror("pwd: too many arguments\n");
 		return ;
 	}
     if (getcwd(cwd, sizeof(cwd)) != NULL)
@@ -61,7 +61,7 @@ void	my_cd(char **cmd, t_all *all)
 
 	err = chdir(cmd[1]);
 	if (err == -1)
-		perror("chdir");
+		perror("chdir :");
 	getcwd(cwd, sizeof(cwd));
 	tmp = malloc(sizeof(char) * (ft_strlen(cwd) + 5));
 	while (ft_strncmp(all->env->var, PWD, 3) != 0

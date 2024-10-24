@@ -17,7 +17,7 @@
 void	total_free(t_all *all)
 {
 	token_l_free(all->token);
-	//cmd_l_free(all->cmd);
+	cmd_l_free(all->cmd);
 	env_l_free(all->env);
 	free(all);
 	return ;

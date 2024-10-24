@@ -23,38 +23,27 @@ int	main(int arc, char **arv, char **envp)
 
 	if (arc == 0)
 		return (1);
-	input = readline("write something : ");
-    if (input == NULL)
-		return(1);
-    if (ft_strncmp(input, "exit", ft_strlen(input)) == 0) 
+	while (1)
 	{
-    	free(input);
-    	return (1);
-    }
-	all = (t_all *)malloc(sizeof(t_all));
-    if (*input) 
-        add_history(input);
-	all->env = envellope(envp);
-	all->token = tokenizer(input, all);
-	tok = all->token;
-	/*while (all->token)
-	{
-		printf("%s\n", all->token->content);
-		all->token = all->token->next;
-	}*/
-	all->cmd = parser(tok);
-	c = all->cmd;
-	/*while (all->cmd != NULL)
-	{
-		printf("command is %s", *all->cmd->cmd);
-		if (all->cmd->out_red->content)
-			printf("out_red is %s", all->cmd->out_red->content);
-		printf("\n");
-		all->cmd = all->cmd->next;
-	}*/
-	ft_pipe(arc, all->cmd, all->env);
+		input = readline("write something : ");
+		if (input == NULL)
+			return(1);
+		if (ft_strncmp(input, "exit", ft_strlen(input)) == 0) 
+		{
+			free(input);
+			return (1);
+		}
+		all = (t_all *)malloc(sizeof(t_all));
+		if (*input) 
+			add_history(input);
+		all->env = envellope(envp);
+		all->token = tokenizer(input, all);
+		all->cmd = parser(all->token);
+		ft_pipe(arc, all->cmd, all->env);
+		//token_list_visualizer(all);
+		//cmd_list_visualizer(all);
+	}
 	clear_history();
-	//cmd_l_free(c);
 	total_free(all);
     return 0;
 }

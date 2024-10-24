@@ -18,6 +18,7 @@
 # include <readline/history.h>
 # include <stdio.h>
 # include "libft.h"
+# include <fcntl.h>
 
 typedef struct s_env_list
 {
@@ -38,6 +39,7 @@ typedef struct s_cmd
 {
 	char			**cmd;
 	int				n_redirection;
+	char			*heredoc_name;
 	struct s_token	*in_red;
 	struct s_token	*out_red;
 	struct s_cmd	*next;
@@ -94,7 +96,6 @@ void		quote_erase(t_token *l);
 void		spacer_shortcut(char *spac, char *s, int *i, int *j);
 int			simple_quoted(char *s, int index);
 void		spacer_shortcut(char *spac, char *s, int *i, int *j);
-void		replace_here(t_all *all);
 
 /*parsing functions*/
 
@@ -103,9 +104,9 @@ t_cmd		*cmd_node(t_token *t, t_cmd *cmd_l);
 t_cmd		*new_c_node(t_cmd *c, t_token *t);
 t_cmd		*parser(t_token *t);
 void		cmd_l_free(t_cmd *c);
-void		redirect_finder(t_token *t, t_cmd *c);
-void		in_red(t_token *t, t_cmd *c);
-void		out_red(t_token *t, t_cmd *c);
+t_token		*redirect_finder(t_token *t, t_cmd *c);
+t_token		*in_red(t_token *t, t_cmd *c);
+t_token		*out_red(t_token *t, t_cmd *c);
 
 /*built-in functions*/
 
@@ -115,6 +116,11 @@ void		my_echo(char **arg);
 void		my_cd(char **cmd);
 void		my_export(t_all *all, t_cmd *c);
 void		my_env(t_all *all, t_cmd *cmd);
+
+/*extra functions*/
+
+void		token_list_visualizer(t_all *all);
+void		cmd_list_visualizer(t_all *all);
 
 /*exec functions*/
 
@@ -134,5 +140,7 @@ char	*ft_put(char *wds, char const *s, int i, int len_wds);
 int		ft_cnt_wds(char const *str, char c);
 
 char 	*handle_heredoc(char *delimiter);
+void    handle_redirections(t_cmd   *cmd);
+
 
 #endif

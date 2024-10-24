@@ -24,31 +24,14 @@
 	all = (t_all *)malloc(sizeof(t_all));
 	all->env = envellope(env);
 	str = NULL;
-	t = tokenizer("He<<$SHELL |l\"omy  |'love'\"|baby|bubble look", all);
+	printf("He<<$SHELL |l\"omy  |'love'\"|baby||bubble <look >out >wow <gril \n");
+	t = tokenizer("He<<$SHELL |l\"omy  |'love'\"|baby||bubble <look >out >wow <gril", all);
 	all->token = t;
-	while (t)
-	{
-		printf("token go %s and type is %d\n", t->content, t->type);
-		t = t->next;
-	}
+	token_list_visualizer(all);
 	t = all->token;
-	printf("He<<$SHELL |l\"omy  |'love'\"|baby|bubble look\n");
 	c = parser(t);
 	all->cmd = c;
-	while (c->previous != NULL)
-		c = c->previous;
-	while (c != NULL)
-	{
-		i = 0;
-		while (c->cmd[i])
-		{
-			printf("%s", c->cmd[i]);
-			i++;
-		}
-		printf("\n");
-		c = c->next;
-	}
-	i = 0;
+	cmd_list_visualizer(all);
 	total_free(all);
 }*/
 
@@ -64,7 +47,6 @@ t_token	*tokenizer(char	*input, t_all *all)
 		return (NULL);
 	type_assign(token_list);
 	all->token = token_list;
-	replace_here(all);
 	free(input);
 	free(chop);
 	return (token_list);
@@ -160,6 +142,8 @@ void	token_l_free(t_token *t)
 {
 	t_token	*tmp;
 
+	if (!t)
+		return ;
 	while (t->previous != NULL)
 		t = t->previous;
 	while (t->next != NULL)

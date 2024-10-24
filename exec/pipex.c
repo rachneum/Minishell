@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/10/21 18:09:39 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/24 11:24:36 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_pipe(int arc, t_cmd *cmd, t_env_list *env_list)
 		if (pid == 0)//Si on se trouve bien dans l'enfant.
 		{
 			child_pipe_redirect(current_cmd, tube, prev_tube, env_list);
+			handle_redirections(current_cmd);
 			ft_exec(current_cmd->cmd, env_list);
 		}
 		if (current_cmd->next)
