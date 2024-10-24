@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/10/24 11:24:36 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/24 16:16:13 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void	ft_pipe(int arc, t_cmd *cmd, t_env_list *env_list)
 	}
 }
 
-void    child_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list)
+void	child_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list)
 {
-    if (current_cmd->next)
+	if (current_cmd->next)
 	{
 		close(tube[0]);
 		dup2(tube[1], 1);//Redirige écriture dans le pipe.
@@ -64,34 +64,29 @@ void    child_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_
 	close(tube[0]);
 }
 
-void ft_exec(char **cmd, t_env_list *env_list)
+void	ft_exec(char **cmd, t_env_list *env_list)
 {
-    char *path;
-    char **env_array;
+	char	*path;
+	char	**env_array;
 
-    path = NULL;
-    path = get_path(&cmd[0], env_list, -1);
-    if (!path)
-    {
-        perror("CMD");
-        ft_free_tab(cmd);
-        exit(127);//Commande executée n'est pas trouvée.
-    }
-    env_array = env_list_to_array(env_list, 0);
-    if (env_array)
-    {
-        if (execve(path, cmd, env_array) == -1)
-        {
-            perror("EXEC");
-            ft_free_tab(cmd);
-            ft_free_tab(env_array);
-            exit(126);//Erreur d'exec.
-        }
-        ft_free_tab(env_array);
-    }
-    /*else
-    {
-        ft_free_tab(cmd);//Handle the error
-        exit(126);//Execution error
-    }*/
+	path = NULL;
+	path = get_path(&cmd[0], env_list, -1);
+	if (!path)
+	{
+		perror("CMD");
+		ft_free_tab(cmd);
+		exit(127);//Commande executée n'est pas trouvée.
+	}
+	env_array = env_list_to_array(env_list, 0);
+	if (env_array)
+	{
+		if (execve(path, cmd, env_array) == -1)
+		{
+			perror("EXEC");
+			ft_free_tab(cmd);
+			ft_free_tab(env_array);
+			exit(126);//Erreur d'exec.
+		}
+		ft_free_tab(env_array);
+	}
 }

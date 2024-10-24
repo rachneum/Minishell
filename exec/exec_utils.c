@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:52:57 by raneuman          #+#    #+#             */
-/*   Updated: 2024/10/23 16:21:53 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/24 16:06:53 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,33 +57,33 @@ int	check_path(t_env_list *env_list)//Check si le PATH existe dans l'environneme
 	return (-1);
 }
 
-char **env_list_to_array(t_env_list *env_list, int i)//Convertit liste chaînée en tableau de chaînes de caractères.
+char	**env_list_to_array(t_env_list *env_list, int i)//Convertit liste chaînée en tableau de chaînes de caractères.
 {
-    char		**env_array;
-    t_env_list *current;
-    int 		count;
+	char		**env_array;
+	t_env_list	*current;
+	int			count;
 
-    current = env_list;//Compte le nbr d'éléments dans env_list.
-    count = 0;
-    if (current)
-    {
-        count++;
-        current = current->next;
+	current = env_list;//Compte le nbr d'éléments dans env_list.
+	count = 0;
+	if (current)
+	{
+		count++;
+		current = current->next;
 	}
-    env_array = (char **)malloc(sizeof(char *) * (count + 1));//Allocation de mémoire pour env_array.
-    if (!env_array)
-        return NULL;
-    current = env_list;
-    if (current)
-    {
-        env_array[i] = ft_strjoin("&", current->var);
-        if (!env_array[i])
-            return (free(env_array), NULL);
-        current = current->next;
+	env_array = (char **)malloc(sizeof(char *) * (count + 1));//Allocation de mémoire pour env_array.
+	if (!env_array)
+		return NULL;
+	current = env_list;
+	if (current)
+	{
+		env_array[i] = ft_strjoin("&", current->var);
+		if (!env_array[i])
+			return (free(env_array), NULL);
+		current = current->next;
 		i++;
-    }
-    env_array[i] = NULL;//Terminate env_array.
-    return env_array;
+   	}
+	env_array[i] = NULL;//Terminate env_array.
+	return env_array;
 }
 
 char	*ft_free_tab(char **cmd)

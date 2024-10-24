@@ -125,7 +125,7 @@ void		cmd_list_visualizer(t_all *all);
 /*exec functions*/
 
 void	ft_pipe(int arc, t_cmd *cmd, t_env_list *env_list);
-void    child_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list);
+void	child_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list);
 void	ft_exec(char **cmd, t_env_list *env_list);
 
 char	*get_path(char **cmd, t_env_list *env_list, int i);
@@ -139,8 +139,6 @@ char	**ft_free_split(char **ptr, int i);
 char	*ft_put(char *wds, char const *s, int i, int len_wds);
 int		ft_cnt_wds(char const *str, char c);
 
-//char 	*handle_heredoc(char *delimiter);
-void    handle_redirections(t_cmd   *cmd);
-
+void	handle_redirections(t_cmd   *cmd);
 
 #endif
