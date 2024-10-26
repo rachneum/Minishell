@@ -31,6 +31,7 @@ int	main(int arc, char **arv, char **envp)
 		if (ft_strncmp(input, "exit", ft_strlen(input)) == 0) 
 		{
 			free(input);
+			printf("exit\n");
 			return (1);
 		}
 		all = (t_all *)malloc(sizeof(t_all));
