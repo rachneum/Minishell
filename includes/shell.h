@@ -113,7 +113,7 @@ t_token		*out_red(t_token *t, t_cmd *c);
 void		my_unset(t_all *all);
 void		my_pwd(void);
 void		my_echo(char **arg);
-void		my_cd(char **cmd);
+void		my_cd(char **cmd, t_all *all);
 void		my_export(t_all *all, t_cmd *c);
 void		my_env(t_all *all, t_cmd *cmd);
 
