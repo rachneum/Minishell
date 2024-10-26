@@ -6,45 +6,80 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/10/24 16:16:13 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/26 17:36:13 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-void	ft_pipe(int arc, t_cmd *cmd, t_env_list *env_list)
+void ft_pipe(int arc, t_cmd *cmd, t_env_list *env_list)
 {
-	int		tube[2];//Mon pipe.
-	int		prev_tube;//Va me permettre de lire le pipe précédent.
-	pid_t	pid;
-	t_cmd	*current_cmd;
-	t_all	*all;
-
-	prev_tube = -1;
-	current_cmd = cmd;
-	while (current_cmd)
-	{
-		if (current_cmd->next)//Tant que != dernière cmd.
-		{
-			if (pipe(tube) == -1)//Crée un pipe. Important de le créer avant de forker.
+    int tube[2];
+    int prev_tube;
+	int cmd_count;
+    int i;
+    t_cmd *current_cmd;
+	t_cmd *tmp;
+    pid_t pid;
+    pid_t *pids;
+    
+    prev_tube = -1;
+    current_cmd = cmd;
+    i = 0;
+    tmp = cmd;
+    cmd_count = 0;
+    while (tmp)
+    {
+        cmd_count++;
+        tmp = tmp->next;
+    }
+    pids = malloc(sizeof(pid_t) * cmd_count);
+    if (!pids)
+        return;
+    while (current_cmd)
+    {
+        if (current_cmd->next)
+        {
+            if (pipe(tube) == -1)
+			{
                 perror("PIPE");
-		}
-		if ((pid = fork()) == -1)//Fork à chaque cmd pour créer des processus enfants.
-			perror("FORK");
-		if (pid == 0)//Si on se trouve bien dans l'enfant.
+                free(pids);
+                return;
+            }
+        }
+        pid = fork();
+        if (pid == -1)
 		{
-			child_pipe_redirect(current_cmd, tube, prev_tube, env_list);
-			handle_redirections(current_cmd);
-			ft_exec(current_cmd->cmd, env_list);
-		}
-		if (current_cmd->next)
-		{
-			close(tube[1]);//Ferme l'extrémité d'écriture du pipe dans le parent.
-			prev_tube = tube[0];//Conserve l'extrémité de lecture pour la prochaine commande.
-		}
-		waitpid(pid, NULL, 0);
-		current_cmd = current_cmd->next;
-	}
+            perror("FORK");
+            free(pids);
+            return;
+        } 
+        if (pid == 0)
+        {
+            if (current_cmd->next)
+                close(tube[0]);
+            child_pipe_redirect(current_cmd, tube, prev_tube, env_list);
+            handle_redirections(current_cmd);
+            ft_exec(current_cmd->cmd, env_list);
+            exit(1);
+        }
+        pids[i++] = pid;
+        if (prev_tube != -1)
+            close(prev_tube);
+        if (current_cmd->next)
+        {
+            close(tube[1]);
+            prev_tube = tube[0];
+        }
+        current_cmd = current_cmd->next;
+    }
+    i = 0;
+    while (i < cmd_count)
+    {
+        waitpid(pids[i], NULL, 0);
+        i++;
+    }
+    free(pids);
 }
 
 void	child_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list)

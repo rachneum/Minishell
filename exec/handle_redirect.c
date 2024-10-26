@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:59 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/26 15:18:40 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/26 17:36:34 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static void	handle_heredoc(t_token *in_red)
 		}
 		ft_putendl_fd(input, fd);
 	}
-	fd = open(".suprise.txt", O_RDONLY);
+	fd = open(".surprise.txt", O_RDONLY);
 	if (dup2(fd, 0) == -1)
 	{
 		perror("dup2");
