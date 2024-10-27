@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:59 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/26 17:36:34 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/27 14:58:06 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	handle_heredoc(t_token *in_red)
 	int		fd;
 	char	*input;
     
-	fd = open(".suprise.txt", O_WRONLY | O_TRUNC | O_CREAT, 0777);
+	fd = open(".surprise.txt", O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	if (fd == -1)
 	{
 		perror("open");

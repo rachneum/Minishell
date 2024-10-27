@@ -90,11 +90,11 @@ int	is_command(t_token *t)
 	ft_strlcpy(name, input, i);
 	value = variable_fetch(env, name);
 	return (value);
-}
+}*/
 
 /*gets the size of the environment variable*/
-/*
-size_t	env_size(char *input, t_env_list *env)
+
+/*size_t	env_size(char *input, t_env_list *env)
 {
 	int		i;
 	char	*name;
