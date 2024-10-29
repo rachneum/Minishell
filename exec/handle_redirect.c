@@ -6,11 +6,29 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:59 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/27 14:58:06 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/29 08:43:01 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
+
+#include <stddef.h>
+
+static int ft_strcmp(char *str1, char *str2)
+{
+    int i;
+
+	i = 0;
+    while (str1[i] != '\0' && str2[i] != '\0')
+    {
+        if (str1[i] != str2[i])
+        {
+            return (str1[i] - str2[i]);
+        }
+        i++;
+    }
+    return (str1[i] - str2[i]);
+}
 
 
 static void	handle_output_red(t_token *out_red)
@@ -35,7 +53,7 @@ static void	handle_append_red(t_token *out_red)
 {
 	int	fd;
 
-	fd = open(out_red->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	fd = open(out_red->content, O_WRONLY | O_CREAT | O_APPEND, 0777);
 	if (fd == -1)
 	{
 		perror("open");
@@ -71,7 +89,12 @@ static void	handle_heredoc(t_token *in_red)
 {
 	int		fd;
 	char	*input;
-    
+	char	*delimiter;
+
+	
+    delimiter = in_red->content;
+	if (!delimiter)
+		return ;
 	fd = open(".surprise.txt", O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	if (fd == -1)
 	{
@@ -81,20 +104,33 @@ static void	handle_heredoc(t_token *in_red)
 	while(1)
 	{
 		input = readline("> ");
-		if (ft_strncmp(input, in_red->content, ft_strlen(input)) == 0)
+		if (!input)
+		{
+			printf("EMPTY INPUT HEREDOC\n");
+			break;
+		}
+		if (ft_strcmp(input, delimiter) == 0)
 		{
 	    	free(input);
 	    	break ;
 		}
 		ft_putendl_fd(input, fd);
 	}
+	close(fd);
 	fd = open(".surprise.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		perror("open");
+		return;
+	}
 	if (dup2(fd, 0) == -1)
 	{
+		close(fd);
 		perror("dup2");
 		return;
 	}
 	close(fd);
+	unlink(".surprise.txt");//Suprime mon fichier une fois fini.
 }
 
 void	handle_redirections(t_cmd *cmd)
