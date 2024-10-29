@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:59 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/29 08:43:01 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/29 11:37:35 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int ft_strcmp(char *str1, char *str2)
 static void	handle_output_red(t_token *out_red)
 {
 	int	fd;
-
+	
 	fd = open(out_red->content, O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	if (fd == -1)
 	{
@@ -135,6 +135,8 @@ static void	handle_heredoc(t_token *in_red)
 
 void	handle_redirections(t_cmd *cmd)
 {
+	int	fd;
+	
 	while (cmd->n_redirection > 0)
 	{
 		if (cmd->out_red && cmd->out_red->content)
