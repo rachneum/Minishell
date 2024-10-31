@@ -6,13 +6,11 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:59 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/29 13:13:56 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/31 13:24:15 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
-
-#include <stddef.h>
 
 static int ft_strcmp(char *str1, char *str2)
 {
