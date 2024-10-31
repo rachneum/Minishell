@@ -26,3 +26,18 @@ La commande ajoute "Salut" à la fin du fichier fichier.txt sans supprimer son c
 ex: cat < fichier.txt
 la commande cat lit le contenu de fichier.txt grâce à < et l'affiche dans le terminal.
 */
+
+[[ERRORS]]
+
+->cat << lol | ls
+
+->ls | cat << lol | cat Makefile (fonctionne 1 fois sur 2??)
+
+->cat << lol | cat << yeah | cat << yo (a besoin des 3 délimitateurs pour s’arrêter, dois renvoyer ce que j’ai rentré av le dernier délimitateur)
+
+->cat Makefile > lol > lol1 > lol2(doit créer le fichier lol, lol1 aussi)
+
+->j’ai ajouté un printf pour exit mais mtn exit s’affiche qd je fais un retour à la ligne??
+
+->segfault ./minishell espace
+

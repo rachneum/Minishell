@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/10/29 09:32:11 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/29 11:52:09 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ void ft_pipe(int arc, t_cmd *cmd, t_env_list *env_list)
         } 
         if (pid == 0)
         {
-            //if (current_cmd->next)
-            //    close(tube[0]);
             if (current_cmd->out_red || current_cmd->in_red)
                 handle_redirections(current_cmd);
             else
@@ -88,17 +86,14 @@ void	child_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_lis
 {
 	if (current_cmd->next)
 	{
-		close(tube[0]);
 		dup2(tube[1], 1);//Redirige écriture dans le pipe.
 		close(tube[1]);
 	}
 	if (current_cmd->previous != NULL)//Tant que != première cmd.
 	{
-		close(tube[1]);
 		dup2(prev_tube, 0);//Redirige lecture du pipe (lire dans le pipe précédent).
 		close(prev_tube);
 	}
-	close(tube[0]);
 }
 
 void	ft_exec(char **cmd, t_env_list *env_list)
