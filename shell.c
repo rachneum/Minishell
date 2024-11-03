@@ -25,7 +25,7 @@ int	main(int arc, char **arv, char **envp)
 		return (1);
 	while (1)
 	{
-		input = readline("write something : ");
+		input = readline("bash-3.2$ ");
 		if (input == NULL)
 			return(1);
 		if (ft_strncmp(input, "exit", ft_strlen(input)) == 0) 

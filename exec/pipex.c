@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/10/29 11:52:09 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/03 08:43:43 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 void ft_pipe(int arc, t_cmd *cmd, t_env_list *env_list)
 {
     int tube[2];
-    int prev_tube;
+    int prev_tube;//Garde la sortie du pipe précédent pour connecter les cmd en série.
 	int cmd_count;
     int i;
     t_cmd *current_cmd;
 	t_cmd *tmp;
     pid_t pid;
-    pid_t *pids;
+    pid_t *pids;//Tableau pour stocker les PID des processus enfants, utilisé pour attendre leur terminaison plus tard.
     
-    prev_tube = -1;
+    prev_tube = -1;//Initialisé à -1 pour indiqué qu'il n'y a pas de tube précédent au début.
     current_cmd = cmd;
     i = 0;
     tmp = cmd;
@@ -33,7 +33,7 @@ void ft_pipe(int arc, t_cmd *cmd, t_env_list *env_list)
         cmd_count++;
         tmp = tmp->next;
     }
-    pids = malloc(sizeof(pid_t) * cmd_count);
+    pids = malloc(sizeof(pid_t) * cmd_count);//Alloue de la mémoir pour stocker les pid de chaque processus enfant.
     if (!pids)
         return;
     while (current_cmd)
@@ -69,12 +69,12 @@ void ft_pipe(int arc, t_cmd *cmd, t_env_list *env_list)
         if (current_cmd->next)
         {
             close(tube[1]);
-            prev_tube = tube[0];
+            prev_tube = tube[0];//La sortie du pipe actuel devient le prev_tube pour la commande suivante.
         }
-        current_cmd = current_cmd->next;
+        current_cmd = current_cmd->next;//Passe à la commande suivante.
     }
     i = 0;
-    while (i < cmd_count)
+    while (i < cmd_count)//Attendre la fin de chaque processus enfant afin d'éviter la création de processus "zombies".
     {
         waitpid(pids[i], NULL, 0);
         i++;

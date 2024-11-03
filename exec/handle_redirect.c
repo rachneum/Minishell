@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:59 by rachou            #+#    #+#             */
-/*   Updated: 2024/10/31 13:24:15 by rachou           ###   ########.fr       */
+/*   Updated: 2024/10/31 14:19:10 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,23 @@ static void	handle_output_red(t_token *out_red)
 {
 	int	fd;
 	
+	t_token	*current;
+
+	current = out_red;
 	fd = open(out_red->content, O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	if (fd == -1)
 	{
 		perror("open");
 		return;
 	}
+	printf ("WESH");
 	if (dup2(fd, STDOUT_FILENO) == -1)
 	{
 		perror("dup2");
 		return;
 	}
 	close(fd);
+	printf ("HHEHO");
 }
 
 static void	handle_append_red(t_token *out_red)

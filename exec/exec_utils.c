@@ -6,13 +6,13 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:52:57 by raneuman          #+#    #+#             */
-/*   Updated: 2024/10/24 16:06:53 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/02 19:25:09 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-char	*get_path(char **cmd, t_env_list *env_list, int i)//Vérifie si la cmd est exécutable et, si ce n'est pas le cas, extrait et divise la variable d'environnement PATH pour rechercher le chemin de la commande.
+char	*get_path(char **cmd, t_env_list *env_list, int i)//Vérifie si la cmd est exécutable et, si ce n'est pas le cas, extrait et divise la variable d'environnement PATH pour rechercher le chemin complet de la commande.
 {
 	char	**split_path;
 	char	*path;
@@ -36,12 +36,12 @@ char	*get_path(char **cmd, t_env_list *env_list, int i)//Vérifie si la cmd est 
 		full_path = ft_strjoin(path, cmd[0]);
 		if (!path)
 			free(path);
-		if (!full_path)
+		if (!full_path)//Si path ou full_path ne sont pas construits correctement je free.
 			free(full_path);
 		if (!access(full_path, X_OK))//Vérifie si le chemin construit est exécutable.
 			return (full_path);//Retourne le chemin complet si exécutable.
 		if (full_path)
-			free(full_path);
+			free(full_path);//Je libère full_path car elle n'est pas executable.
 	}
 	return (ft_free_tab(split_path));//Libère le tableau des chemins.
 }
