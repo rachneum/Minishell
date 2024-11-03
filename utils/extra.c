@@ -16,7 +16,11 @@ void	token_list_visualizer(t_all *all)
 {
 	t_token *first;
 
-	while (all->token->previous != NULL)
+	if (!all->token)
+		return;
+	if (all->token->previous)
+		printf("%p, %s\n", all->token->previous, all->token->previous->content);
+	while (all->token->previous != NULL)//
 		all->token = all->token->previous;
 	first = all->token;
 	printf("\nTOKEN LIST\n\n");
@@ -34,6 +38,8 @@ void	cmd_list_visualizer(t_all *all)
 	t_cmd	*first;
 	int		i;
 
+	if (!all->cmd)
+		return;
 	while (all->cmd->previous != NULL)
 		all->cmd = all->cmd->previous;
 	first = all->cmd;

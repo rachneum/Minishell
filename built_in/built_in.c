@@ -14,7 +14,7 @@
 
 /*pwd*/
 
-/*void my_pwd(t_cmd *c)
+void my_pwd(t_cmd *c)
 {
     static char cwd[1024];
 
@@ -27,11 +27,11 @@
         printf(stdout, "%s", cwd);
 	else 
         perror("getcwd error");
-}*/
+}
 
 /*echo*/
 
-/*void	my_echo(char **arg)
+void	my_echo(char **arg)
 {
 	int	i;
 	int	flag;
@@ -49,7 +49,7 @@
 	}
 	if (!flag)
 		printf("\n");
-}*/
+}
 
 /* cd */
 
@@ -64,7 +64,7 @@ void	my_cd(char **cmd, t_all *all)
 		perror("chdir :");
 	getcwd(cwd, sizeof(cwd));
 	tmp = malloc(sizeof(char) * (ft_strlen(cwd) + 5));
-	while (ft_strncmp(all->env->var, "PWD", 3) != 0
+	while (ft_strncmp(all->env->var, PWD, 3) != 0
 		&& all->env != NULL)
 		all->env = all->env->next;
 	if (all->env)
@@ -80,7 +80,7 @@ void	my_cd(char **cmd, t_all *all)
 
 /*export*/
 
-/*void	my_export(t_all *all,t_cmd *c)
+void	my_export(t_all *all,t_cmd *c)
 {
 	int	i;
 
@@ -100,11 +100,11 @@ void	my_cd(char **cmd, t_all *all)
 	}
 	if (!var_value(all->c[i]))
 		printf("syntax error");
-}*/
+}
 
 /*env*/
 
-/*void	my_env(t_all *all, t_cmd *cmd)
+void	my_env(t_all *all, t_cmd *cmd)
 {
 	if (cmd[1])
 		return (printf("too many arguments\n"), );
@@ -113,4 +113,4 @@ void	my_cd(char **cmd, t_all *all)
 		printf("%s\n", all->env->var);
 		all->env = all->env->next;
 	}
-}*/
+}

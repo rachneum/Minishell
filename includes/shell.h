@@ -17,8 +17,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdio.h>
-# include "libft.h"
 # include <fcntl.h>
+# include "libft.h"
 
 typedef struct s_env_list
 {
@@ -100,9 +100,9 @@ void		spacer_shortcut(char *spac, char *s, int *i, int *j);
 /*parsing functions*/
 
 int			word_count(t_token *t);
-t_cmd		*cmd_node(t_token *t, t_cmd *cmd_l);
+t_cmd		*cmd_node(t_all *all, t_cmd *cmd_l);
 t_cmd		*new_c_node(t_cmd *c, t_token *t);
-t_cmd		*parser(t_token *t);
+t_cmd		*parser(t_all *all);
 void		cmd_l_free(t_cmd *c);
 t_token		*redirect_finder(t_token *t, t_cmd *c);
 t_token		*in_red(t_token *t, t_cmd *c);
@@ -113,14 +113,9 @@ t_token		*out_red(t_token *t, t_cmd *c);
 void		my_unset(t_all *all);
 void		my_pwd(void);
 void		my_echo(char **arg);
-void		my_cd(char **cmd, t_all *all);
+void		my_cd(char **cmd);
 void		my_export(t_all *all, t_cmd *c);
 void		my_env(t_all *all, t_cmd *cmd);
-
-/*extra functions*/
-
-void		token_list_visualizer(t_all *all);
-void		cmd_list_visualizer(t_all *all);
 
 /*exec functions*/
 
@@ -140,5 +135,11 @@ char	*ft_put(char *wds, char const *s, int i, int len_wds);
 int		ft_cnt_wds(char const *str, char c);
 
 void	handle_redirections(t_cmd   *cmd);
+
+/*extra functions*/
+
+void		token_list_visualizer(t_all *all);
+void		cmd_list_visualizer(t_all *all);
+
 
 #endif

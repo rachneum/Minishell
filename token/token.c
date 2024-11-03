@@ -40,6 +40,8 @@ t_token	*tokenizer(char	*input, t_all *all)
 	char	**chop;
 	t_token	*token_list;
 
+	if (!input)
+		return (NULL);
 	input = spacer(input, all);
 	chop = s_split(input, ' ');
 	token_list = token_node(chop);
@@ -60,6 +62,8 @@ t_token	*token_node(char **chopped)
 	t_token	*first;
 	int		i;
 
+	if (!(*chopped))
+		return (NULL);
 	tok = (t_token *)malloc(sizeof(t_token));
 	if (!tok)
 		return (NULL);

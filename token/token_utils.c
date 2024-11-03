@@ -19,6 +19,8 @@ int	sym_check(char *input)
 	int	i;
 
 	i = 0;
+	if (!(*input))
+		return (6);
 	if (input[i] == '<' && input[i + 1] == '<')
 		return (DOUBLE_SMALL);
 	if (input[i] == '>' && input[i + 1] == '>')

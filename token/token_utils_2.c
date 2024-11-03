@@ -20,6 +20,7 @@ void	total_free(t_all *all)
 	cmd_l_free(all->cmd);
 	env_l_free(all->env);
 	free(all);
+	//system("leaks");
 	return ;
 }
 

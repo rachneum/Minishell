@@ -16,7 +16,8 @@
 
 void	type_assign(t_token *t)
 {
-	
+	if (!t)
+		return;
 	while (t->next != NULL)
 	{
 		t->type = sym_check(t->content);
@@ -24,7 +25,8 @@ void	type_assign(t_token *t)
 			t->type = 7;
 		t = t->next;
 	}
-	t->type = sym_check(t->content);
+	if (t->type)
+		t->type = sym_check(t->content);
 	if (is_command(t))
 		t->type = 7;
 	quote_erase(t);
@@ -90,11 +92,11 @@ int	is_command(t_token *t)
 	ft_strlcpy(name, input, i);
 	value = variable_fetch(env, name);
 	return (value);
-}*/
+}
 
 /*gets the size of the environment variable*/
-
-/*size_t	env_size(char *input, t_env_list *env)
+/*
+size_t	env_size(char *input, t_env_list *env)
 {
 	int		i;
 	char	*name;

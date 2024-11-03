@@ -29,6 +29,8 @@ la commande cat lit le contenu de fichier.txt grâce à < et l'affiche dans le t
 
 [[ERRORS]]
 
+->ls | cat << lol | wc ne va pas exec le ls mais simplement faire le heredoc et afficher wc
+
 ->cat << lol | ls
 
 ->ls | cat << lol | cat Makefile (fonctionne 1 fois sur 2??)
@@ -38,6 +40,3 @@ la commande cat lit le contenu de fichier.txt grâce à < et l'affiche dans le t
 ->cat Makefile > lol > lol1 > lol2(doit créer le fichier lol, lol1 aussi)
 
 ->j’ai ajouté un printf pour exit mais mtn exit s’affiche qd je fais un retour à la ligne??
-
-->segfault ./minishell espace
-
