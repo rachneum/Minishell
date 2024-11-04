@@ -75,9 +75,8 @@ int	is_command(t_token *t)
 	return (0);
 }
 
-/*returns the environment variable*/
+/*returns the environment variable
 
-/*
 {
 	int		i;
 	char	*name;
@@ -94,8 +93,8 @@ int	is_command(t_token *t)
 	return (value);
 }
 
-/*gets the size of the environment variable*/
-/*
+gets the size of the environment variable
+
 size_t	env_size(char *input, t_env_list *env)
 {
 	int		i;

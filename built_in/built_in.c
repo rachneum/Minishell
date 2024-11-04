@@ -17,7 +17,6 @@
 void my_pwd(t_cmd *c)
 {
     static char cwd[1024];
-
 	if (c->cmd[1])
 	{
 		perror("pwd: too many arguments\n");
