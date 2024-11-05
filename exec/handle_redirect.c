@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirect.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:59 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/04 14:52:25 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/05 09:57:48 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,24 +113,17 @@ static void	handle_heredoc(t_token *in_red)
 	int		fd;
 	char	*input;
 	char	*delimiter;
-	//t_token	*delimiter;
 
 	
     delimiter = in_red->content;
 	if (!delimiter)
 		return ;
-	//while (delimiter->previous != NULL)
-	//	delimiter = delimiter->previous;
 	fd = open(".surprise.txt", O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	if (fd == -1)
 	{
 		perror("open");
 		return;
 	}
-	//while (delimiter != NULL)
-	//{
-	//	delimiter = delimiteur->next;
-	//}
 	while(1)
 	{
 		input = readline("> ");
@@ -162,85 +155,6 @@ static void	handle_heredoc(t_token *in_red)
 	close(fd);
 	unlink(".surprise.txt");//Suprime mon fichier une fois fini.
 }
-
-/*static void	handle_heredoc(t_token *in_red)
-{
-	char	*input;
-	t_token	*current_delimiter = in_red;
-	int		fd;
-	t_token	*last_delimiter = in_red;
-
-	// Trouver le dernier délimiteur
-	while (last_delimiter->next != NULL)
-		last_delimiter = last_delimiter->next;
-
-	// Parcourir tous les délimiteurs
-	while (current_delimiter != NULL)
-	{
-		// Si c'est le dernier délimiteur, ouvrir le fichier
-		if (current_delimiter == last_delimiter)
-		{
-			fd = open(".surprise.txt", O_WRONLY | O_TRUNC | O_CREAT, 0777);
-			if (fd == -1)
-			{
-				perror("open");
-				return;
-			}
-		}
-
-		// Lire les entrées jusqu'à atteindre le délimiteur actuel
-		while (1)
-		{
-			input = readline("> ");
-			if (!input)
-			{
-				printf("EMPTY INPUT HEREDOC\n");
-				break;
-			}
-
-			// Si l'entrée correspond au délimiteur actuel, passer au suivant
-			if (ft_strcmp(input, current_delimiter->content) == 0)
-			{
-				free(input);
-				break;
-			}
-
-			// Si c'est le dernier délimiteur, écrire dans le fichier
-			if (current_delimiter == last_delimiter)
-				ft_putendl_fd(input, fd);
-
-			free(input);
-		}
-
-		// Fermer le fichier si c'était le dernier délimiteur
-		if (current_delimiter == last_delimiter)
-			close(fd);
-
-		// Passer au prochain délimiteur
-		current_delimiter = current_delimiter->next;
-	}
-
-	// Pour le dernier délimiteur, rediriger le contenu de ".surprise.txt" vers stdin
-	fd = open(".surprise.txt", O_RDONLY);
-	if (fd == -1)
-	{
-		perror("open");
-		return;
-	}
-	if (dup2(fd, 0) == -1)
-	{
-		close(fd);
-		perror("dup2");
-		return;
-	}
-	close(fd);
-
-	// Supprimer le fichier temporaire
-	unlink(".surprise.txt");
-}*/
-
-
-
 
 void	handle_redirections(t_cmd *cmd)
 {
