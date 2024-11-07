@@ -120,8 +120,13 @@ void		my_env(t_all *all, t_cmd *cmd);
 /*exec functions*/
 
 void	ft_pipe(int arc, t_cmd *cmd, t_env_list *env_list);
-void	child_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list);
+int 	init_pids_and_count(t_cmd *cmd, pid_t **pids);
+pid_t 	create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list);
+void	pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list);
+void 	handle_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list);
 void	ft_exec(char **cmd, t_env_list *env_list);
+void 	close_unused_pipes(int *prev_tube, int *tube, t_cmd *current_cmd);
+void 	wait_for_children(pid_t *pids, int cmd_count);
 
 char	*get_path(char **cmd, t_env_list *env_list, int i);
 int		check_path(t_env_list *env_list);
@@ -135,6 +140,7 @@ char	*ft_put(char *wds, char const *s, int i, int len_wds);
 int		ft_cnt_wds(char const *str, char c);
 
 void	handle_redirections(t_cmd   *cmd);
+
 
 /*extra functions*/
 
