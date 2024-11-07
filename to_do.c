@@ -54,3 +54,18 @@ ________________________________________
     sinon exec
     si built_in = cd, export, unset, exit
     si built_in = echo, pwd, env ->rediriger les pipes
+
+
+
+___________________________
+heredoc
+
+cat << lol | cat << mdr
+
+va exec que la dernière cmd suivi d'un heredoc
+si il y a plusieurs heredocs, parcourir jusqu'au dernier et exec le dernier
+(donc on ne doit pas transmettre d'info avec le pipe)??
+juste parcourir, repérer les différents délimiteurs
+
+
+si il y a plusieurs heredocs, juste exec le dernier??
