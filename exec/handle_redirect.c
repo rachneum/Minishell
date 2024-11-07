@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:59 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/07 08:38:19 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/07 10:59:48 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ static void	handle_append_red(t_token *out_red)
 		current = current->previous;
 	while (current != NULL)
 	{
-		if ((ft_strcmp(current->content, ">>") != 0) && (ft_strcmp(current->content, ">") != 0))
-		{
+		//if ((ft_strcmp(current->content, ">>") != 0) && (ft_strcmp(current->content, ">") != 0))
+		//{
 			fd = open(current->content, O_WRONLY | O_CREAT | O_APPEND, 0777);
 			if (fd == -1)
 			{
@@ -79,7 +79,7 @@ static void	handle_append_red(t_token *out_red)
 			}
 			if (current->next != NULL)
         	    close(fd);
-		}
+		//}
 		current = current->next;
 	}
 	if (dup2(fd, STDOUT_FILENO) == -1)

@@ -30,7 +30,7 @@ int	main(int arc, char **arv, char **envp)
 		all->env = envellope(envp);
 		all->token = tokenizer(input, all);
 		all->cmd = parser(all);
-		ft_pipe(arc, all->cmd, all->env);
+		ft_pipex(arc, all->cmd, all->env);
 		//token_list_visualizer(all);
 		//cmd_list_visualizer(all);
 

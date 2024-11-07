@@ -119,8 +119,9 @@ void		my_env(t_all *all, t_cmd *cmd);
 
 /*exec functions*/
 
-void	ft_pipe(int arc, t_cmd *cmd, t_env_list *env_list);
+void	ft_pipex(int arc, t_cmd *cmd, t_env_list *env_list);
 int 	init_pids_and_count(t_cmd *cmd, pid_t **pids);
+int		create_pipe(int tube[2], pid_t *pids, t_cmd *current_cmd);
 pid_t 	create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list);
 void	pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list);
 void 	handle_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list);

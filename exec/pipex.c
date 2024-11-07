@@ -6,13 +6,13 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/07 10:43:39 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:42:05 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-void ft_pipe(int arc, t_cmd *cmd, t_env_list *env_list)
+void ft_pipex(int arc, t_cmd *cmd, t_env_list *env_list)
 {
     t_cmd *current_cmd;
     int tube[2];
@@ -29,16 +29,9 @@ void ft_pipe(int arc, t_cmd *cmd, t_env_list *env_list)
         return ;
     while (current_cmd)
     {
-        if (current_cmd->next)
-        {
-            if (pipe(tube) == -1)
-			{
-                perror("PIPE");
-                free(pids);
-                return;
-            }
-        }
-        pids[++i] = create_process(current_cmd, tube, prev_tube, env_list);
+        if (create_pipe(tube, pids, current_cmd) == -1)
+            return;
+        pids[i++] = create_process(current_cmd, tube, prev_tube, env_list);
         if (pids[i] == -1)
 		{
             free(pids);
@@ -69,6 +62,20 @@ int init_pids_and_count(t_cmd *cmd, pid_t **pids)
         return (-1);
     }
     return (cmd_count);
+}
+
+int create_pipe(int tube[2], pid_t *pids, t_cmd *current_cmd)
+{
+    if (current_cmd->next)//Vérifie s'il y a une commande suivante.
+    {
+        if (pipe(tube) == -1)
+        {
+            perror("PIPE");
+            free(pids);
+            return -1;
+        }
+    }
+    return 0;
 }
 
 pid_t create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list)
