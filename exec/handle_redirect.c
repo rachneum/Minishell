@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:59 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/07 10:59:48 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:47:25 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ static void	handle_append_red(t_token *out_red)
 		current = current->previous;
 	while (current != NULL)
 	{
-		//if ((ft_strcmp(current->content, ">>") != 0) && (ft_strcmp(current->content, ">") != 0))
-		//{
+		if ((ft_strcmp(current->content, ">>") != 0) && (ft_strcmp(current->content, ">") != 0))
+		{
 			fd = open(current->content, O_WRONLY | O_CREAT | O_APPEND, 0777);
 			if (fd == -1)
 			{
@@ -79,7 +79,7 @@ static void	handle_append_red(t_token *out_red)
 			}
 			if (current->next != NULL)
         	    close(fd);
-		//}
+		}
 		current = current->next;
 	}
 	if (dup2(fd, STDOUT_FILENO) == -1)
@@ -241,8 +241,8 @@ void	handle_redirections(t_cmd *cmd)
 		{
 			if ((cmd->in_red->previous->content) && (ft_strcmp(cmd->in_red->previous->content, "<") == 0) && (ft_strlen(cmd->in_red->previous->content) == 1))
 				handle_input_red(cmd->in_red);
-			if ((cmd->in_red->previous->content) && (ft_strcmp(cmd->in_red->previous->content, "<<") == 0) && (ft_strlen(cmd->in_red->previous->content) == 2))
-				handle_heredoc(cmd->in_red, cmd);
+			//if ((cmd->in_red->previous->content) && (ft_strcmp(cmd->in_red->previous->content, "<<") == 0) && (ft_strlen(cmd->in_red->previous->content) == 2))
+			//	handle_heredoc(cmd->in_red, cmd);
 		}
 		cmd->n_redirection--;
 	}
