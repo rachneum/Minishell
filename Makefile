@@ -20,7 +20,11 @@ SHELL_SRCS 	= token/token_utils.c\
 				exec/exec_utils.c\
 				exec/ft_split.c\
 				exec/pipex.c\
-				exec/handle_redirect.c
+				exec/handle_redirect.c\
+				exec/handle_heredoc.c\
+				exec/exec_built_in.c\
+				built_in/built_in.c\
+				built_in/built_in_1.c
 
 SHELL_SRC	= ${SHELL_SRCS}
 

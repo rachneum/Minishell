@@ -12,6 +12,53 @@
 
 #include "../includes/shell.h"
 
+void	my_cd(char **cmd, t_all *all)
+{
+	int			err;
+	char*		tmp;
+	static char	cwd[1024];	
+
+	err = chdir(cmd[1]);
+	if (err == -1)
+		perror("chdir :");
+	getcwd(cwd, sizeof(cwd));
+	tmp = malloc(sizeof(char) * (ft_strlen(cwd) + 5));
+	while (ft_strncmp(all->env->var, "PWD", 3) != 0
+		&& all->env != NULL)
+		all->env = all->env->next;
+	if (all->env)
+	{
+		tmp = strncpy(tmp, "PWD=", 4);
+		ft_strlcat(tmp, cwd, ft_strlen(cwd + 4));
+		free(all->env->var);
+		all->env->var = tmp;
+		return ;
+	}
+	free(tmp);
+}
+
+/*void	my_export(t_cmd *cmd, t_all *all)
+{
+	int	i;
+
+	if (!cmd->cmd[1])
+	{
+		my_env(cmd, all);
+		return ;
+	}
+	i = 1;
+	while (all->env->next != NULL)
+		all->env = all->env->next;
+	while (cmd->cmd[i] && var_value(cmd->cmd[i]))
+	{
+		all->env = new_node(all->env);
+		all->env->var = cmd->cmd[i];
+		i++;
+	}
+	if (!var_value(cmd->cmd[i]))
+		printf("syntax error");
+}
+
 void	my_unset(t_all *all)
 {
 	if (all->cmd[2])
@@ -56,4 +103,4 @@ t_env_list	*env_node_delete(t_env_list *env)
 		tmp->previous = env->previous;
 		return (env_n_free(t), tmp);
 	}
-}
+}*/

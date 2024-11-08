@@ -111,11 +111,11 @@ t_token		*out_red(t_token *t, t_cmd *c);
 /*built-in functions*/
 
 void		my_unset(t_all *all);
-void		my_pwd(void);
+void		my_pwd(t_cmd *cmd);
 void		my_echo(char **arg);
-void		my_cd(char **cmd);
-void		my_export(t_all *all, t_cmd *c);
-void		my_env(t_all *all, t_cmd *cmd);
+void		my_cd(char **cmd, t_all *all);
+void		my_export(t_cmd *cmd, t_all *all);
+void		my_env(t_cmd *cmd, t_all *all);
 
 /*exec functions*/
 
@@ -133,6 +133,7 @@ char	*get_path(char **cmd, t_env_list *env_list, int i);
 int		check_path(t_env_list *env_list);
 char	**env_list_to_array(t_env_list *env_list, int i);
 char	*ft_free_tab(char **cmd);
+int 	ft_strcmp(char *str1, char *str2);
 
 char	**ft_split(char const *s, char c);
 char	**ft_split_wds(char const *s, char c, char **dst, int num_wds);
@@ -141,6 +142,15 @@ char	*ft_put(char *wds, char const *s, int i, int len_wds);
 int		ft_cnt_wds(char const *str, char c);
 
 void	handle_redirections(t_cmd   *cmd);
+void 	handle_output_red(t_token *out_red);
+void	handle_append_red(t_token *out_red);
+void	handle_input_red(t_token *in_red);
+void	handle_heredoc(t_token *in_red, t_cmd *cmd);
+
+void	built_in_shell(t_token *token, t_cmd *cmd, t_all *all);
+void    built_in_subshell(t_token	*token, t_cmd *cmd, t_all *all);
+void	handle_built_in(t_token *token, t_cmd *cmd, t_all *all);
+pid_t	fork_built_in(void);
 
 
 /*extra functions*/

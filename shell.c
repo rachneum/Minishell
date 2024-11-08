@@ -15,11 +15,7 @@
 int	main(int arc, char **arv, char **envp)
 {
 	char		*input;
-	char		*prompt;
-	t_token		*tok;
-	t_cmd		*c;
 	t_all		*all;
-	int			i;
 
 	while (1)
 	{
@@ -30,10 +26,11 @@ int	main(int arc, char **arv, char **envp)
 		all->env = envellope(envp);
 		all->token = tokenizer(input, all);
 		all->cmd = parser(all);
+		//handle_heredoc(all->cmd->in_red, all->cmd);
 		ft_pipex(arc, all->cmd, all->env);
+		//handle_built_in(all->token, all->cmd, all);
 		//token_list_visualizer(all);
 		//cmd_list_visualizer(all);
-
 	}
 	clear_history();
 	total_free(all);

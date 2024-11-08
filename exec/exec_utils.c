@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:52:57 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/02 19:25:09 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/07 12:01:28 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,20 @@ char	*ft_free_tab(char **cmd)
 	}
 	free(cmd);
 	return (NULL);
+}
+
+int ft_strcmp(char *str1, char *str2)
+{
+    int i;
+
+	i = 0;
+    while (str1[i] != '\0' && str2[i] != '\0')
+    {
+        if (str1[i] != str2[i])
+        {
+            return (str1[i] - str2[i]);
+        }
+        i++;
+    }
+    return (str1[i] - str2[i]);
 }

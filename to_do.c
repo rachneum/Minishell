@@ -50,7 +50,7 @@ ________________________________________
     
 ->  if plusieurs cmd, regarder si il y a built_in,
     si oui, fork, quel type de buil_in?
-    si c'est un built_in lancer le built_in,
+    si c'est un built_in apl la fct du built_in,
     sinon exec
     si built_in = cd, export, unset, exit
     si built_in = echo, pwd, env ->rediriger les pipes
@@ -58,6 +58,7 @@ ________________________________________
 
 
 ___________________________
+
 heredoc
 
 cat << lol | cat << mdr
