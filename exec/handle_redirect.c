@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:59 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/08 09:45:26 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/09 11:05:02 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	handle_redirections(t_cmd *cmd)
 			if ((cmd->in_red->previous->content) && (ft_strcmp(cmd->in_red->previous->content, "<") == 0) && (ft_strlen(cmd->in_red->previous->content) == 1))
 				handle_input_red(cmd->in_red);
 			if ((cmd->in_red->previous->content) && (ft_strcmp(cmd->in_red->previous->content, "<<") == 0) && (ft_strlen(cmd->in_red->previous->content) == 2))
-				handle_heredoc(cmd->in_red, cmd);
+				handle_heredoc(cmd->in_red);
 		}
 		cmd->n_redirection--;
 	}
@@ -42,9 +42,9 @@ void handle_output_red(t_token *out_red)
     t_token *current;
 	
 	current = out_red;
-    while (current->previous != NULL)
+    while (current->previous)
         current = current->previous;
-    while (current != NULL)
+    while (current)
 	{
         if ((ft_strcmp(current->content, ">") != 0) && (ft_strcmp(current->content, ">>") != 0))
 		{
@@ -73,9 +73,9 @@ void	handle_append_red(t_token *out_red)
 	t_token	*current;
 
 	current = out_red;
-	while (current->previous != NULL)
+	while (current->previous)
 		current = current->previous;
-	while (current != NULL)
+	while (current)
 	{
 		if ((ft_strcmp(current->content, ">>") != 0) && (ft_strcmp(current->content, ">") != 0))
 		{

@@ -39,7 +39,7 @@ typedef struct s_cmd
 {
 	char			**cmd;
 	int				n_redirection;
-	char			*heredoc_name;
+	//char			*heredoc_name;
 	struct s_token	*in_red;
 	struct s_token	*out_red;
 	struct s_cmd	*next;
@@ -145,7 +145,7 @@ void	handle_redirections(t_cmd   *cmd);
 void 	handle_output_red(t_token *out_red);
 void	handle_append_red(t_token *out_red);
 void	handle_input_red(t_token *in_red);
-void	handle_heredoc(t_token *in_red, t_cmd *cmd);
+void	handle_heredoc(t_token *in_red);
 
 void	built_in_shell(t_token *token, t_cmd *cmd, t_all *all);
 void    built_in_subshell(t_token	*token, t_cmd *cmd, t_all *all);
