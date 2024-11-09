@@ -6,13 +6,13 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/07 11:42:05 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/09 08:56:35 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-void ft_pipex(int arc, t_cmd *cmd, t_env_list *env_list)
+void ft_pipex(int arc, t_cmd *cmd, t_env_list *env_list)//Ajouter condition built_in.
 {
     t_cmd *current_cmd;
     int tube[2];

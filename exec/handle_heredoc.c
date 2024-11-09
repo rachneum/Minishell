@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 11:57:54 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/08 09:43:34 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/09 08:50:41 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void handle_heredoc(t_token *in_red, t_cmd *cmd)
          			   	printf("EMPTY INPUT HEREDOC\n");
             			break;
         			}
-					printf("%s\n", delimiter->content);
+					//printf("%s\n", delimiter->content);
         			if (strcmp(input, delimiter->content) == 0)
 					{
             			free(input);

@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:53:47 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/08 14:47:38 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/09 08:54:57 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	handle_built_in(t_token *token, t_cmd *cmd, t_all *all)
 	built_in_shell(token, cmd, all);
 }
 
-void	built_in_subshell(t_token *token, t_cmd *cmd, t_all *all)
+void	built_in_subshell(t_token *token, t_cmd *cmd, t_all *all)//Fork et apl fonction.
 {
 	t_token	*tok;
 	pid_t	pid;
@@ -57,7 +57,7 @@ void	built_in_subshell(t_token *token, t_cmd *cmd, t_all *all)
     }
 }
 
-void	built_in_shell(t_token *token, t_cmd *cmd, t_all *all)
+void	built_in_shell(t_token *token, t_cmd *cmd, t_all *all)//Fork, pipe si cmd->next != NULL, exec.
 {
 	t_token	*tok;
 	pid_t	pid;
