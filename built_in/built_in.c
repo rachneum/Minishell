@@ -55,5 +55,4 @@ void	my_env(t_cmd *cmd, t_all *all)
 		printf("%s\n", all->env->var);
 		all->env = all->env->next;
 	}
-}
-*/
+}*/

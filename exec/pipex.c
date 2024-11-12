@@ -6,13 +6,13 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/12 11:59:17 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/12 18:51:23 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-void ft_pipex(int arc, t_cmd *cmd, t_env_list *env_list)//Ajouter condition built_in.
+void ft_pipex(int arc, t_cmd *cmd, t_env_list *env_list, t_all *all)//Ajouter condition built_in.
 {
     t_cmd *current_cmd;
     int tube[2];
@@ -31,7 +31,7 @@ void ft_pipex(int arc, t_cmd *cmd, t_env_list *env_list)//Ajouter condition buil
     {
         if (create_pipe(tube, pids, current_cmd) == -1)
             return;
-        pids[i++] = create_process(current_cmd, tube, prev_tube, env_list);
+        pids[i++] = create_process(current_cmd, tube, prev_tube, env_list, all);
         if (pids[i] == -1)
 		{
             free(pids);
@@ -78,7 +78,7 @@ int create_pipe(int tube[2], pid_t *pids, t_cmd *current_cmd)
     return 0;
 }
 
-pid_t create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list)
+pid_t create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list, t_all *all)
 {
     pid_t pid;
 
@@ -91,9 +91,9 @@ pid_t create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *e
     if (pid == 0)
     {
         handle_pipe_redirect(current_cmd, tube, prev_tube, env_list);
-        //if (ft_check(current_cmd)
-        //    built_in
-        //else   
+        if (handle_built_in(current_cmd, all))
+            exit(0);
+        else   
             ft_exec(current_cmd->cmd, env_list);
         exit(1);
     }

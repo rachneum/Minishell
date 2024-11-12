@@ -12,7 +12,7 @@
 
 #include "../includes/shell.h"
 
-void	my_cd(char **cmd, t_all *all)
+/*void	my_cd(char **cmd, t_all *all)
 {
 	int			err;
 	char*		tmp;
@@ -37,7 +37,7 @@ void	my_cd(char **cmd, t_all *all)
 	free(tmp);
 }
 
-/*void	my_export(t_cmd *cmd, t_all *all)
+void	my_export(t_cmd *cmd, t_all *all)
 {
 	int	i;
 
@@ -56,7 +56,7 @@ void	my_cd(char **cmd, t_all *all)
 		i++;
 	}
 	if (!var_value(cmd->cmd[i]))
-		printf("syntax error");
+		printf("syntax error\n");
 }
 
 void	my_unset(t_all *all)

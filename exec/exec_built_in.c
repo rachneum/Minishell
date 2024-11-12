@@ -6,80 +6,61 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:53:47 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/12 11:57:44 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/12 22:35:06 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-/*void	handle_built_in(t_token *token, t_cmd *cmd, t_all *all)
+int	handle_built_in(t_cmd *cmd, t_all *all)
 {
-	built_in_subshell(token, cmd, all);
-	built_in_shell(token, cmd, all);
-}
-	changer tok avec current cmd
-void	built_in_subshell(t_cmd *cmd, t_all *all)//Fork et apl fonction.
-{
-
-		if ((ft_strcmp(cmd->cmd, "cd") == 0) && (ft_strlen(tok->content) == 2))
-		{
-			printf("1");
-				my_cd(cmd->cmd, all);
-		}
-		if ((ft_strcmp(tok->content, "export") == 0) && (ft_strlen(tok->content) == 6))
-		{
-			fork_built_in();
-			if (pid == 0)
-				my_export(cmd, all);
-		}
-		else if ((ft_strcmp(tok->content, "unset") == 0) && (ft_strlen(tok->content) == 5))
-		{
-			fork_built_in();
-			if (pid == 0)
-				my_unset(all);
-		}
-		else if ((ft_strcmp(tok->content, "exit") == 0) && (ft_strlen(tok->content) == 4))
-		{
-			fork_built_in();
-			if (pid == 0)
-				my_exit();
-		}
-        printf("%s\n", tok->content);
-        tok = tok->next;
-    }
+	if (built_in_subshell(cmd, all) || built_in_shell(cmd, all))
+        return (1);
+    return (0); 
 }
 
-void	built_in_shell(t_token *token, t_cmd *cmd, t_all *all)//Fork, pipe si cmd->next != NULL, exec.
+int	built_in_subshell(t_cmd *cmd, t_all *all)
 {
-	t_token	*tok;
-	pid_t	pid;
-
-	tok = token;
-	while (tok->previous)
-		tok = tok->previous;
-    while (tok)
+	/*if ((ft_strcmp(cmd->cmd[0], "cd") == 0) && (ft_strlen(cmd->cmd[0]) == 2))
 	{
-		//if ((ft_strcmp(tok->content, "echo") == 0) && (ft_strlen(tok->content) == 4))
-		//	my_echo();
-		//else if ((ft_strcmp(tok->content, "pwd") == 0) && (ft_strlen(tok->content) == 3))
-		//	my_pwd(cmd);
-		//else if ((ft_strcmp(tok->content, "env") == 0) && (ft_strlen(tok->content) == 3))
-		//	my_env(cmd, all);
+		//printf("1\n");
+		my_cd(cmd->cmd, all);
+		return (1);
 	}
+	if ((ft_strcmp(cmd->cmd[0], "export") == 0) && (ft_strlen(cmd->cmd[0]) == 6))
+	{
+		my_export(cmd, all);
+		return (1);
+	}
+	else if ((ft_strcmp(cmd->cmd[0], "unset") == 0) && (ft_strlen(cmd->cmd[0]) == 5))
+	{
+		my_unset(all);
+		return (1);
+	}
+	else if ((ft_strcmp(cmd->cmd[0], "exit") == 0) && (ft_strlen(cmd->cmd[0]) == 4))
+	{
+		my_exit();
+		return (1);
+	}*/
+	return (0);
 }
 
-pid_t	fork_built_in(void)
+int	built_in_shell(t_cmd *cmd, t_all *all)
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-		perror("FORK");
-	return (pid);
+	/*if ((ft_strcmp(cmd->cmd[0], "echo") == 0) && (ft_strlen(cmd->cmd[0]) == 4))
+	{
+		my_echo();
+		return (1);
+	}
+	if ((ft_strcmp(cmd->cmd[0], "pwd") == 0) && (ft_strlen(cmd->cmd[0]) == 3))
+	{
+		my_pwd(cmd);
+		return (1);
+	}
+	else if ((ft_strcmp(cmd->cmd[0], "env") == 0) && (ft_strlen(cmd->cmd[0]) == 3))
+	{
+		my_env(cmd, all);
+		return (1);
+	}*/
+	return(0);
 }
-
-static void    exec_built_in()
-{
-    
-}*/
-
