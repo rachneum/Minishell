@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 11:57:54 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/09 11:56:31 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/12 11:59:51 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	handle_heredoc(t_token *in_red)
 	char	*delimiter;
 
     delimiter = in_red->content;
-	printf("Délimiteur: %s\n", delimiter);
-	printf("Heredoc: %s\n", in_red->previous->content);
+	//printf("Délimiteur: %s\n", delimiter);
+	//printf("Heredoc: %s\n", in_red->previous->content);
 	if (!delimiter)
 		return ;
 	fd = open(".surprise.txt", O_WRONLY | O_TRUNC | O_CREAT, 0777);
@@ -58,7 +58,7 @@ void	handle_heredoc(t_token *in_red)
 		return;
 	}
 	close(fd);
-	unlink(".surprise.txt");//Suprime mon fichier une fois fini.
+	//unlink(".surprise.txt");//Suprime mon fichier une fois fini.
 }
 
 /*void handle_heredoc(t_token *in_red, t_cmd *cmd) 

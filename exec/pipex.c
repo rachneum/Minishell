@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/09 08:56:35 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/12 11:59:17 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,17 @@ pid_t create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *e
     if (pid == 0)
     {
         handle_pipe_redirect(current_cmd, tube, prev_tube, env_list);
-        ft_exec(current_cmd->cmd, env_list);
+        //if (ft_check(current_cmd)
+        //    built_in
+        //else   
+            ft_exec(current_cmd->cmd, env_list);
         exit(1);
     }
+    else
+        wait(NULL);
+    //{
+    //   if (current_cmd->out_red || current_cmd->in_red)
+    //}
     return pid;
 }
 
