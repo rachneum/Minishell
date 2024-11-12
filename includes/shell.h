@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
+#ifndef	SHELL_H
 # define SHELL_H
 
 # include <unistd.h>
@@ -39,7 +39,6 @@ typedef struct s_cmd
 {
 	char			**cmd;
 	int				n_redirection;
-	//char			*heredoc_name;
 	struct s_token	*in_red;
 	struct s_token	*out_red;
 	struct s_cmd	*next;

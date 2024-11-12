@@ -33,13 +33,38 @@ ________________________________________
 
 [[ERRORS]]
 
-->  cat << lol | cat << yeah | cat << yo (a besoin des 3 délimitateurs pour s’arrêter, dois renvoyer ce que j’ai rentré av le dernier délimitateur).
+//->  cat << lol | cat << yeah | cat << yo (a besoin des 3 délimitateurs pour s’arrêter, dois renvoyer ce que j’ai rentré av le dernier délimitateur).
 
-->  ls | cat << lol | wc (ne va doit exec le ls mais simplement faire le heredoc et afficher wc).
+//->  ls | cat << lol | wc (ne va doit exec le ls mais simplement faire le heredoc et afficher wc).
 
-->  cat << lol | ls
+//->  cat << lol | ls
 
-->  ajouter printf exit.
+//->  ajouter printf exit.
+
+->  cat << lol | cat << yeah | cat << yo 
+    write something : cat << lol | cat << yeah | cat << yo
+    > yo
+    > yeah
+    > lol
+    yo
+    yeah
+    > 
+
+->  ls | cat << lol | wc pareril qu’en bas, wc ne renvoie que des 0??
+
+->  write something : ls | cat << lol | wc
+    > haha
+    > hihi
+    > lol
+    haha
+    hihi
+           0       0       0
+    au lieu de
+    bash-3.2$ ls | cat << lol | wc
+    > haha
+    > hihi
+    > lol
+           2       2      10
 ________________________________________
 
    [[BUILT_IN]]
@@ -54,19 +79,4 @@ ________________________________________
     sinon exec
     si built_in = cd, export, unset, exit
     si built_in = echo, pwd, env ->rediriger les pipes
-
-
-
 ___________________________
-
-heredoc
-
-cat << lol | cat << mdr
-
-va exec que la dernière cmd suivi d'un heredoc
-si il y a plusieurs heredocs, parcourir jusqu'au dernier et exec le dernier
-(donc on ne doit pas transmettre d'info avec le pipe)??
-juste parcourir, repérer les différents délimiteurs
-
-
-si il y a plusieurs heredocs, juste exec le dernier??
