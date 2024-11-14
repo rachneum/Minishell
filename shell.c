@@ -17,20 +17,25 @@ int	main(int arc, char **arv, char **envp)
 	char		*input;
 	t_all		*all;
 
-	while (1)
+	if (arc == 1)
 	{
-		input = readline("write something : ");
-		all = (t_all *)malloc(sizeof(t_all));
-		if (*input) 
-			add_history(input);
-		all->env = envellope(envp);
-		all->token = tokenizer(input, all);
-		all->cmd = parser(all);
-		ft_pipex(all->cmd, all->env, all);
-		//token_list_visualizer(all);
-		//cmd_list_visualizer(all);
-	}
+		while (1)
+		{
+			input = readline("write something : ");
+			all = (t_all *)malloc(sizeof(t_all));
+			if (*input) 
+				add_history(input);
+			all->env = envellope(envp);
+			all->token = tokenizer(input, all);
+			all->cmd = parser(all);
+			ft_pipex(all->cmd, all->env, all);
+			//token_list_visualizer(all);
+			//cmd_list_visualizer(all);
+		}
 	clear_history();
 	total_free(all);
+	}
+	else
+		printf("Wrong amount of arguments!\n");
     return 0;
 }

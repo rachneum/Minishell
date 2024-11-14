@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:53:47 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/14 15:14:49 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/14 17:03:03 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	built_in_shell(t_cmd *cmd, t_all *all)
 	}*/
 	if ((ft_strcmp(cmd->cmd[0], "pwd") == 0) && (ft_strlen(cmd->cmd[0]) == 3))
 	{
-		printf("ahah\n");
 		my_pwd(cmd);
 		return (1);
 	}

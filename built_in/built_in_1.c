@@ -23,9 +23,10 @@ void	my_export(t_all *all)
 		result = ft_split(current_var->var, '=');
 		current_var->name = result[0];
 		current_var->value = result[1];
-		printf("VAR: %s\n", current_var->var);
-		printf("NAME OF VAR: %s\n", current_var->name);
-		printf("VALUE OF VAR: %s\n", current_var->value);
+		//printf("VAR: %s\n", current_var->var);
+		//printf("NAME OF VAR: %s\n", current_var->name);
+		//printf("VALUE OF VAR: %s\n", current_var->value);
+		
 		current_var = current_var->next;
 	}
 }
