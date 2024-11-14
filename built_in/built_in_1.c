@@ -12,6 +12,46 @@
 
 #include "../includes/shell.h"
 
+void	my_export(t_all *all)
+{
+	t_env_list	*current_var;
+	char		**result;
+
+	current_var = all->env;
+	while (current_var)
+	{
+		result = ft_split(current_var->var, '=');
+		current_var->name = result[0];
+		current_var->value = result[1];
+		printf("VAR: %s\n", current_var->var);
+		printf("NAME OF VAR: %s\n", current_var->name);
+		printf("VALUE OF VAR: %s\n", current_var->value);
+		current_var = current_var->next;
+	}
+}
+
+/*void	my_export(t_cmd *cmd, t_all *all)
+{
+	int	i;
+
+	if (!cmd->cmd[1])
+	{
+		my_env(cmd, all);
+		return ;
+	}
+	i = 1;
+	while (all->env->next != NULL)
+		all->env = all->env->next;
+	while (cmd->cmd[i] && var_value(cmd->cmd[i]))
+	{
+		all->env = new_node(all->env);
+		all->env->var = cmd->cmd[i];
+		i++;
+	}
+	if (!var_value(cmd->cmd[i]))
+		printf("syntax error\n");
+}*/
+
 /*void	my_cd(char **cmd, t_all *all)
 {
 	int			err;
@@ -35,28 +75,6 @@
 		return ;
 	}
 	free(tmp);
-}
-
-void	my_export(t_cmd *cmd, t_all *all)
-{
-	int	i;
-
-	if (!cmd->cmd[1])
-	{
-		my_env(cmd, all);
-		return ;
-	}
-	i = 1;
-	while (all->env->next != NULL)
-		all->env = all->env->next;
-	while (cmd->cmd[i] && var_value(cmd->cmd[i]))
-	{
-		all->env = new_node(all->env);
-		all->env->var = cmd->cmd[i];
-		i++;
-	}
-	if (!var_value(cmd->cmd[i]))
-		printf("syntax error\n");
 }
 
 void	my_unset(t_all *all)

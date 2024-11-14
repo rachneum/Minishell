@@ -69,14 +69,23 @@ ________________________________________
 
    [[BUILT_IN]]
 
-->  Les commandes intégrées comme cd, export, unset, et exit n'ont pas d'effet durable dans un pipeline car
-    elles sont exécutées dans un sous-shell et ne modifient pas l'environnement du shell principal.
-    Les autres commandes (echo, pwd, env) fonctionnent comme prévu dans les pipelines car elles ne tentent pas de modifier l'environnement.
-    
-->  if plusieurs cmd, regarder si il y a built_in,
-    si oui, fork, quel type de buil_in?
-    si c'est un built_in apl la fct du built_in,
-    sinon exec
-    si built_in = cd, export, unset, exit
-    si built_in = echo, pwd, env ->rediriger les pipes
+//->  Les commandes intégrées comme cd, export, unset, et exit n'ont pas d'effet durable dans un pipeline car
+//    elles sont exécutées dans un sous-shell et ne modifient pas l'environnement du shell principal.
+//    Les autres commandes (echo, pwd, env) fonctionnent comme prévu dans les pipelines car elles ne tentent pas de modifier l'environnement.
+//    
+//->  if plusieurs cmd, regarder si il y a built_in,
+//    si oui, fork, quel type de buil_in?
+//    si c'est un built_in apl la fct du built_in,
+//    sinon exec
+//    si built_in = cd, export, unset, exit
+//    si built_in = echo, pwd, env ->rediriger les pipes
+
+
+->pwd       me montre mon dossier actuel + le path absolu.
+
+->export   "export RACHEL=test" ajoutera RACHEL=test dans env si il le name existe déjà mais que la value diffère
+alors il va juste remplacer avec la nouvelle value.
+Split au "=", tout ce qui se trouve avant == le name de ma var et tout ce qui se trouve après == la value de ma var.
+
+
 ___________________________

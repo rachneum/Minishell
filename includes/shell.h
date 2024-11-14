@@ -23,6 +23,8 @@
 typedef struct s_env_list
 {
 	char				*var;
+	char				*name;
+	char				*value;
 	struct s_env_list	*next;
 }	t_env_list;
 
@@ -109,16 +111,16 @@ t_token		*out_red(t_token *t, t_cmd *c);
 
 /*built-in functions*/
 
-void		my_unset(t_all *all);
-void		my_pwd(t_cmd *cmd);
-void		my_echo(char **arg);
-void		my_cd(char **cmd, t_all *all);
-void		my_export(t_cmd *cmd, t_all *all);
+int			my_pwd(t_cmd *cmd);
+//void		my_unset(t_all *all);
+//void		my_echo(char **arg);
+//void		my_cd(char **cmd, t_all *all);
+void		my_export(t_all *all);
 void		my_env(t_cmd *cmd, t_all *all);
 
 /*exec functions*/
 
-void	ft_pipex(int arc, t_cmd *cmd, t_env_list *env_list, t_all *all);
+void	ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all);
 int 	init_pids_and_count(t_cmd *cmd, pid_t **pids);
 int		create_pipe(int tube[2], pid_t *pids, t_cmd *current_cmd);
 pid_t 	create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list, t_all *all);

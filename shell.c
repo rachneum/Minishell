@@ -26,9 +26,7 @@ int	main(int arc, char **arv, char **envp)
 		all->env = envellope(envp);
 		all->token = tokenizer(input, all);
 		all->cmd = parser(all);
-		//handle_heredoc(all->cmd->in_red);
-		ft_pipex(arc, all->cmd, all->env, all);
-		//handle_built_in(all->token, all->cmd, all);
+		ft_pipex(all->cmd, all->env, all);
 		//token_list_visualizer(all);
 		//cmd_list_visualizer(all);
 	}

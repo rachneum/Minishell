@@ -12,21 +12,18 @@
 
 #include "../includes/shell.h"
 
-/*void my_pwd(t_cmd *cmd)
+int	my_pwd(t_cmd *cmd)
 {
-    static char cwd[1024];
-	if (cmd->cmd[1])
-	{
-		perror("pwd: too many arguments\n");
-		return ;
-	}
-    if (getcwd(cwd, sizeof(cwd)) != NULL)
-        printf(stdout, "%s", cwd);
-	else 
-        perror("getcwd error");
+	char	*crt_wd;
+
+	(void)cmd;
+	crt_wd = NULL;
+	crt_wd = getcwd(crt_wd, sizeof(size_t));
+	printf("%s\n", crt_wd);
+	return (0);
 }
 
-void	my_echo(char **arg)
+/*void	my_echo(char **arg)
 {
 	int	i;
 	int	flag;
@@ -44,15 +41,15 @@ void	my_echo(char **arg)
 	}
 	if (!flag)
 		printf("\n");
-}
+}*/
 
 void	my_env(t_cmd *cmd, t_all *all)
 {
-	if (cmd->cmd[1])
-		printf("too many arguments\n");
+	//if (cmd->cmd[1])
+	//	printf("too many arguments\n");
 	while (all->env != NULL)
 	{
 		printf("%s\n", all->env->var);
 		all->env = all->env->next;
 	}
-}*/
+}

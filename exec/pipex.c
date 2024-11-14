@@ -6,13 +6,13 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/12 18:51:23 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/14 16:24:20 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-void ft_pipex(int arc, t_cmd *cmd, t_env_list *env_list, t_all *all)//Ajouter condition built_in.
+void ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)//Ajouter condition built_in.
 {
     t_cmd *current_cmd;
     int tube[2];
@@ -32,11 +32,6 @@ void ft_pipex(int arc, t_cmd *cmd, t_env_list *env_list, t_all *all)//Ajouter co
         if (create_pipe(tube, pids, current_cmd) == -1)
             return;
         pids[i++] = create_process(current_cmd, tube, prev_tube, env_list, all);
-        if (pids[i] == -1)
-		{
-            free(pids);
-            return;
-        }
         close_unused_pipes(&prev_tube, tube, current_cmd);
         current_cmd = current_cmd->next;
     }
