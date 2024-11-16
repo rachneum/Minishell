@@ -25,7 +25,6 @@ void	my_export(t_all *all)
 
 	current_var = all->env;
 	next_content = all->token->next;
-	//while (all->token)
 	tok_result = ft_split(next_content->content, '=');
 	next_content->tok_name = tok_result[0];
 	next_content->tok_value = tok_result[1];
