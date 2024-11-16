@@ -12,52 +12,6 @@
 
 #include "../includes/shell.h"
 
-/*void my_export(t_all *all, const char *arg) {
-    char *equal_sign = strchr(arg, '='); // Cherche '=' dans l'argument
-    char *name = NULL;
-    char *value = NULL;
-
-    // Vérifie si l'argument est bien au format `name=value`
-    if (!equal_sign) {
-        // Si pas de `=`, on ne fait rien
-        return;
-    }
-
-    // Extraire `name` et `value`
-    name = strndup(arg, equal_sign - arg); // `name` = tout avant '='
-    value = strdup(equal_sign + 1);        // `value` = tout après '='
-
-    // Validation du nom de la variable
-    if (!is_valid_variable_name(name)) {
-        fprintf(stderr, "export: `%s`: not a valid identifier\n", arg);
-        free(name);
-        free(value);
-        return;
-    }
-
-    // Vérifie si `name` existe déjà dans l'environnement
-    t_env_list *current = all->env;
-    while (current) {
-        if (strcmp(current->name, name) == 0) {
-            // `name` existe déjà : ne rien faire
-            free(name);
-            free(value);
-            return;
-        }
-        current = current->next;
-    }
-
-    // Si `name` n'existe pas, on ajoute `name=value` à l'environnement
-    t_env_list *new_node = malloc(sizeof(t_env_list));
-    new_node->name = name;
-    new_node->value = value;
-    new_node->var = malloc(strlen(name) + strlen(value) + 2);
-    sprintf(new_node->var, "%s=%s", name, value);
-    new_node->next = all->env;
-    all->env = new_node;
-}*/
-
-
 void	my_export(t_all *all)
 {
 	t_env_list	*current_var;
@@ -88,28 +42,6 @@ void	my_export(t_all *all)
 		current_var = current_var->next;
 	}
 }
-
-/*void	my_export(t_cmd *cmd, t_all *all)
-{
-	int	i;
-
-	if (!cmd->cmd[1])
-	{
-		my_env(cmd, all);
-		return ;
-	}
-	i = 1;
-	while (all->env->next != NULL)
-		all->env = all->env->next;
-	while (cmd->cmd[i] && var_value(cmd->cmd[i]))
-	{
-		all->env = new_node(all->env);
-		all->env->var = cmd->cmd[i];
-		i++;
-	}
-	if (!var_value(cmd->cmd[i]))
-		printf("syntax error\n");
-}*/
 
 /*void	my_cd(char **cmd, t_all *all)
 {
