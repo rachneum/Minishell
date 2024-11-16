@@ -80,3 +80,11 @@ ________________________________________
 //    si built_in = cd, export, unset, exit
 //    si built_in = echo, pwd, env ->rediriger les pipes
 ___________________________
+
+
+
+
+
+Si tok_rlt[0] && tok_rlt[1] == env_rlt[0] && env_rlt[1] return ;
+
+

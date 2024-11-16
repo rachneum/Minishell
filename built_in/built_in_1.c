@@ -16,8 +16,8 @@ void	my_export(t_all *all)
 {
 	t_env_list	*current_var;
 	t_token		*next_content;
-	char		**env_result;
-	char		**tok_result;
+	char		**env_rlt;
+	char		**tok_rlt;
 	char 		*env_name;
     char 		*env_value;
 	char		*tok_name;
@@ -25,19 +25,23 @@ void	my_export(t_all *all)
 
 	current_var = all->env;
 	next_content = all->token->next;
-	tok_result = ft_split(next_content->content, '=');
-	next_content->tok_name = tok_result[0];
-	next_content->tok_value = tok_result[1];
-	printf("TOK NAME: %s\n", next_content->tok_name);
-	printf("TOK VALUE: %s\n", next_content->tok_value);
+	tok_rlt = ft_split(next_content->content, '=');
+	next_content->tok_name = tok_rlt[0];
+	next_content->tok_value = tok_rlt[1];
+	//printf("TOK NAME: %s\n", next_content->tok_name);
+	//printf("TOK VALUE: %s\n", next_content->tok_value);
 	while (current_var)
 	{
-		env_result = ft_split(current_var->var, '=');
-		current_var->env_name = env_result[0];
-		current_var->env_value = env_result[1];
+		env_rlt = ft_split(current_var->var, '=');
+		current_var->env_name = env_rlt[0];
+		current_var->env_value = env_rlt[1];
 		//printf("VAR: %s\n", current_var->var);
-		//printf("NAME OF VAR: %s\n", current_var->env_name);
-		//printf("VALUE OF VAR: %s\n", current_var->env_value);
+		//printf("ENV NAME: %s\n", current_var->env_name);
+		//printf("ENV VALUE: %s\n", current_var->env_value);
+		if (ft_strcmp(tok_rlt[0], env_rlt[0]) == 0)
+		{
+			printf("TEST\n");
+		}
 		current_var = current_var->next;
 	}
 }
