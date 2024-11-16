@@ -23,14 +23,16 @@
 typedef struct s_env_list
 {
 	char				*var;
-	char				*name;
-	char				*value;
+	char				*env_name;
+	char				*env_value;
 	struct s_env_list	*next;
 }	t_env_list;
 
 typedef struct s_token
 {
 	char			*content;
+	char			*tok_name;
+	char			*tok_value;
 	int				type;
 	int				index;
 	struct s_token	*next;

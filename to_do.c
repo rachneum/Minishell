@@ -79,13 +79,4 @@ ________________________________________
 //    sinon exec
 //    si built_in = cd, export, unset, exit
 //    si built_in = echo, pwd, env ->rediriger les pipes
-
-
-->pwd       me montre mon dossier actuel + le path absolu.
-
-->export    //"export RACHEL=test" ajoutera RACHEL=test dans env si il le name existe déjà mais que la value diffère
-            //alors il va juste remplacer avec la nouvelle value.
-            //Split au "=", tout ce qui se trouve avant == le name de ma var et tout ce qui se trouve après == la value de ma var.
-
-
 ___________________________
