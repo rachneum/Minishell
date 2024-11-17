@@ -14,12 +14,12 @@
 
 int	my_pwd(t_cmd *cmd)
 {
-	char	*crt_wd;
+	char	*wd;
 
 	(void)cmd;
-	crt_wd = NULL;
-	crt_wd = getcwd(crt_wd, sizeof(size_t));
-	printf("%s\n", crt_wd);
+	wd = NULL;
+	wd = getcwd(wd, sizeof(size_t));
+	printf("%s\n", wd);
 	return (0);
 }
 
