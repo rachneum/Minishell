@@ -22,6 +22,7 @@ void	my_export(t_all *all)
     char 		*env_value;
 	char		*tok_name;
 	char		*tok_value;
+	char		*new_value;
 
 	current_var = all->env;
 	next_content = all->token->next;
@@ -35,13 +36,19 @@ void	my_export(t_all *all)
 		env_rlt = ft_split(current_var->var, '=');
 		current_var->env_name = env_rlt[0];
 		current_var->env_value = env_rlt[1];
-		//printf("VAR: %s\n", current_var->var);
+		printf("VAR: %s\n", current_var->var);
 		//printf("ENV NAME: %s\n", current_var->env_name);
 		//printf("ENV VALUE: %s\n", current_var->env_value);
-		if (ft_strcmp(tok_rlt[0], env_rlt[0]) == 0)
+		/*if ((ft_strcmp(tok_rlt[0], env_rlt[0]) == 0) && (ft_strcmp(tok_rlt[1], env_rlt[1]) == 0))
+			return;
+		else if ((ft_strcmp(tok_rlt[0], env_rlt[0]) == 0) && (ft_strcmp(tok_rlt[1], env_rlt[1]) != 0))
 		{
-			printf("TEST\n");
+			//remplacer env_rlt[1] par tok_rlt[1]
 		}
+		else if ((ft_strcmp(tok_rlt[0], env_rlt[0]) != 0))
+		{
+			//écrire tok_rlt[0]  et tok_rlt[1] dans l'env
+		}*/
 		current_var = current_var->next;
 	}
 }

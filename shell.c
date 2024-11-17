@@ -21,7 +21,7 @@ int	main(int arc, char **arv, char **envp)
 	{
 		while (1)
 		{
-			input = readline("write something : ");
+			input = readline("bash-3.2$ ");
 			all = (t_all *)malloc(sizeof(t_all));
 			if (*input) 
 				add_history(input);
