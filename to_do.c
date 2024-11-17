@@ -65,6 +65,14 @@ ________________________________________
     > hihi
     > lol
            2       2      10
+
+->  bash-3.2$ env pwd
+    /Users/rachou/Desktop/24
+
+->  bash-3.2$ pwd env
+    /Users/rachou/Desktop/24
+
+
 ________________________________________
 
    [[BUILT_IN]]
