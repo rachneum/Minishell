@@ -15,6 +15,7 @@
 void	my_export(t_all *all)
 {
 	t_env_list	*current_var;
+	t_env_list	*current_var2;
 	t_token		*next_content;
 	char		**env_rlt;
 	char		**tok_rlt;
@@ -31,7 +32,8 @@ void	my_export(t_all *all)
 	next_content->tok_name = tok_rlt[0];
 	next_content->tok_value = tok_rlt[1];
 	//printf("TOK NAME: %s\n", next_content->tok_name);
-	//printf("TOK VALUE: %s\n", next_content->tok_value);
+	//printf("TOK VALUE: %s\n", next_content->tok_value);	`
+	current_var2 = current_var;
 	while (current_var)
 	{
 		env_rlt = ft_split(current_var->var, '=');
@@ -40,36 +42,33 @@ void	my_export(t_all *all)
 		//printf("VAR: %s\n", current_var->var);
 		//printf("ENV NAME: %s\n", current_var->env_name);
 		//printf("ENV VALUE: %s\n", current_var->env_value);
-		if ((ft_strcmp(tok_rlt[0], env_rlt[0]) == 0) && (ft_strcmp(tok_rlt[1], env_rlt[1]) == 0))
-        {
-            rlt = 0;
-			return;
-        }
-        else if (ft_strcmp(tok_rlt[0], env_rlt[0]) == 0)
-        {
-            rlt = 1;
-        }
-		else if ((ft_strcmp(tok_rlt[0], env_rlt[0]) == 0) && (ft_strcmp(tok_rlt[1], env_rlt[1]) != 0))
-		{
-            rlt = 2;
-            //printf("TOK_RLT[0] == ENV_RLT[0] et TOK_RLT[1] != ENV_RLT[1]\n");
-            //return;
-			//remplacer env_rlt[1] par tok_rlt[1]
-
-		}
-		/*else if ((ft_strcmp(tok_rlt[0], env_rlt[0]) != 0))
-		{
-            //printf("TOK_RLT[0] != ENV_RLT[0]\n");
-            //return;
-			//écrire tok_rlt[0]  et tok_rlt[1] dans l'env
-		}*/
 		current_var = current_var->next;
+	}
+	while (current_var2)
+	{
+		if ((ft_strcmp(tok_rlt[0], current_var2->env_name) == 0) && (ft_strcmp(tok_rlt[1], current_var2->env_value) == 0))
+		{
+			printf("TOK_RLT[0]: %s\n", tok_rlt[0]);
+			printf("ENV_RLT_NAME: %s\n", current_var2->env_name);
+			rlt = 0;
+			break;
+		}
+		if ((ft_strcmp(tok_rlt[0], current_var2->env_name) == 0) && (ft_strcmp(tok_rlt[1], current_var2->env_value) != 0))
+		{
+			rlt = 1;
+			break;
+		}
+		if ((ft_strcmp(tok_rlt[0], current_var2->env_name) != 0))
+		{
+			rlt = 2;
+		}
+		current_var2 = current_var2->next;
 	}
     if (rlt == 0)
         printf("test0\n");
-    else if (rlt == 1)
+    if (rlt == 1)
         printf("test1\n");
-    else if (rlt == 2)
+    if (rlt == 2)
         printf("test2\n");
 }
 
