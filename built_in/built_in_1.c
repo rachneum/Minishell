@@ -16,6 +16,7 @@ void	my_export(t_all *all)
 {
 	t_env_list	*current_var;
 	t_env_list	*current_var2;
+	t_env_list	*new_node;
 	t_token		*next_content;
 	char		**env_rlt;
 	char		**tok_rlt;
@@ -24,15 +25,12 @@ void	my_export(t_all *all)
 	char		*tok_name;
 	char		*tok_value;
 	char		*new_value;
-    int         rlt;
 
 	current_var = all->env;
 	next_content = all->token->next;
 	tok_rlt = ft_split(next_content->content, '=');
 	next_content->tok_name = tok_rlt[0];
 	next_content->tok_value = tok_rlt[1];
-	//printf("TOK NAME: %s\n", next_content->tok_name);
-	//printf("TOK VALUE: %s\n", next_content->tok_value);	`
 	current_var2 = current_var;
 	while (current_var)
 	{
@@ -47,29 +45,25 @@ void	my_export(t_all *all)
 	while (current_var2)
 	{
 		if ((ft_strcmp(tok_rlt[0], current_var2->env_name) == 0) && (ft_strcmp(tok_rlt[1], current_var2->env_value) == 0))
-		{
-			printf("TOK_RLT[0]: %s\n", tok_rlt[0]);
-			printf("ENV_RLT_NAME: %s\n", current_var2->env_name);
-			rlt = 0;
 			break;
-		}
 		if ((ft_strcmp(tok_rlt[0], current_var2->env_name) == 0) && (ft_strcmp(tok_rlt[1], current_var2->env_value) != 0))
 		{
-			rlt = 1;
+			free(current_var2->env_value);
+			current_var2->env_value = ft_strdup(tok_rlt[1]);
+			printf("ENV_VALUE: %s\n", current_var2->env_value);
+			current_var2->var = ft_strjoin(current_var2->var, current_var2->env_value);
 			break;
 		}
-		if ((ft_strcmp(tok_rlt[0], current_var2->env_name) != 0))
+		/*if ((ft_strcmp(tok_rlt[0], current_var2->env_name) != 0))
 		{
-			rlt = 2;
-		}
+			new_node = malloc(sizeof(t_env_list));
+			if (!new_node)
+				return;
+			new_node->var = ft_strdup(next_content->content);
+			new_node->next = NULL;
+		}*/
 		current_var2 = current_var2->next;
 	}
-    if (rlt == 0)
-        printf("test0\n");
-    if (rlt == 1)
-        printf("test1\n");
-    if (rlt == 2)
-        printf("test2\n");
 }
 
 /*void	my_cd(char **cmd, t_all *all)
