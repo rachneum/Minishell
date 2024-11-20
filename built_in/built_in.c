@@ -50,11 +50,11 @@ int	my_pwd(t_cmd *cmd)
 
 void	my_env(t_cmd *cmd, t_all *all)
 {
-	if (cmd->cmd[1])
+	/*if (cmd->cmd[1])
 	{
 		printf("Too many arguments !\n");
 		return ;
-	}
+	}*/
 	while (all->env != NULL)
 	{
 		printf("%s\n", all->env->var);

@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/14 16:24:20 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/20 18:37:21 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,12 @@ pid_t create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *e
         perror("FORK");
         return -1;
     }
+    if (handle_built_in(current_cmd, all))
+            return (0);
     if (pid == 0)
     {
         handle_pipe_redirect(current_cmd, tube, prev_tube, env_list);
-        if (handle_built_in(current_cmd, all))
-            exit(0);
-        else   
-            ft_exec(current_cmd->cmd, env_list);
-        exit(1);
+        ft_exec(current_cmd->cmd, env_list);
     }
     else
         wait(NULL);

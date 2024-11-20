@@ -19,13 +19,13 @@ int	main(int arc, char **arv, char **envp)
 
 	if (arc == 1)
 	{
+		all = (t_all *)malloc(sizeof(t_all));
+		all->env = envellope(envp);
 		while (1)
 		{
-			input = readline("bash-3.2$ ");
-			all = (t_all *)malloc(sizeof(t_all));
+			input = readline("Write something here: ");
 			if (*input) 
 				add_history(input);
-			all->env = envellope(envp);
 			all->token = tokenizer(input, all);
 			all->cmd = parser(all);
 			ft_pipex(all->cmd, all->env, all);
