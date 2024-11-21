@@ -32,8 +32,8 @@ int	main(int arc, char **arv, char **envp)
 			//token_list_visualizer(all);
 			//cmd_list_visualizer(all);
 		}
-	clear_history();
-	total_free(all);
+		clear_history();
+		total_free(all);
 	}
 	else
 		printf("Wrong amount of arguments!\n");

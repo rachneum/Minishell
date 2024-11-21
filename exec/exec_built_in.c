@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:53:47 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/20 18:14:00 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/21 12:20:20 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	built_in_subshell(t_cmd *cmd, t_all *all)
 	if ((ft_strcmp(cmd->cmd[0], "export") == 0) && (ft_strlen(cmd->cmd[0]) == 6))
 	{
 		all = my_export(all);
-		//my_env(cmd, all);
 		return (1);
 	}
 	else if ((ft_strcmp(cmd->cmd[0], "unset") == 0) && (ft_strlen(cmd->cmd[0]) == 5))

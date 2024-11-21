@@ -44,11 +44,15 @@ t_all	*my_export(t_all *all)
 			break;
 		if ((!ft_strcmp(tok_rlt[0], all->env->env_name)) && (ft_strcmp(tok_rlt[1], all->env->env_value) != 0))
 		{
-			free(all->env->env_value);
-			all->env->env_value = ft_strdup(tok_rlt[1]);
 
-			all->env->var = ft_strjoin(all->env->var, all->env->env_value);
+			free(all->env->env_value);
+			//printf("%s\n", all->env->env_value);
+			all->env->env_value = ft_strdup(tok_rlt[1]);
 			//printf("%s\n", all->env->var);
+			//all->env->var = ft_strjoin(all->env->var, all->env->env_value);
+			all->env->env_name = ft_strjoin(all->env->env_name, "=");
+			all->env->env_name = ft_strjoin(all->env->env_name, all->env->env_value);
+			all->env->var = all->env->env_name;
 			break;
 		}
 		/*if ((ft_strcmp(tok_rlt[0], current_var2->env_name) != 0))
