@@ -18,6 +18,7 @@ t_all	*my_export(t_all *all)
 	t_token		*next_content;
 	char		**env_rlt;
 	char		**tok_rlt;
+	bool		flag;
 
 	current_var = all->env;
 	next_content = all->token->next;
@@ -33,25 +34,30 @@ t_all	*my_export(t_all *all)
 		current_var = current_var->next;
 	}
 	current_var = all->env;
+	flag = true;
 	while (all->env)
 	{
 		if ((!ft_strcmp(tok_rlt[0], all->env->env_name)) && (!ft_strcmp(tok_rlt[1], all->env->env_value)))
+		{
+			printf("1\n");
 			break;
+		}
 		if ((!ft_strcmp(tok_rlt[0], all->env->env_name)) && (ft_strcmp(tok_rlt[1], all->env->env_value) != 0))
 		{
+			printf("2\n");
 			free(all->env->env_value);
 			all->env->env_value = ft_strdup(tok_rlt[1]);
-			//printf("%s\n", all->env->var);
-			//all->env->var = ft_strjoin(all->env->var, all->env->env_value);
 			all->env->env_name = ft_strjoin(all->env->env_name, "=");
 			all->env->env_name = ft_strjoin(all->env->env_name, all->env->env_value);
 			all->env->var = all->env->env_name;
 			break;
 		}
-		/*if ((ft_strcmp(tok_rlt[0], all->env->env_name) != 0))
+		if ((ft_strcmp(tok_rlt[0], all->env->env_name) != 0))
+			flag = false;
+		if (flag == false && all->env->next == NULL)
 		{
-			break;
-		}*/
+			printf("3\n");
+		}
 		all->env = all->env->next;
 	}
 	all->env = current_var;

@@ -18,8 +18,11 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <stdio.h>
+# include <stdbool.h>
 # include <fcntl.h>
 # include "libft.h"
+
+
 
 typedef struct s_env_list
 {
