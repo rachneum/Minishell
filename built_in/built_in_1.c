@@ -64,6 +64,11 @@ t_all	*my_export(t_all *all)
 	return (all);
 }
 
+void my_unset(t_cmd *cmd, t_all *all)
+{
+
+}
+
 /*void	my_cd(char **cmd, t_all *all)
 {
 	int			err;
@@ -87,11 +92,6 @@ t_all	*my_export(t_all *all)
 		return ;
 	}
 	free(tmp);
-}*/
-
-void my_unset(t_cmd *cmd, t_all *all)
-{
-
 }
 
 /*void	my_unset(t_all *all)
