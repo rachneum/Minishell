@@ -22,8 +22,6 @@
 # include <fcntl.h>
 # include "libft.h"
 
-
-
 typedef struct s_env_list
 {
 	char				*var;

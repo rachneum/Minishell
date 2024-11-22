@@ -15,6 +15,7 @@
 t_all	*my_export(t_all *all)
 {
 	t_env_list	*current_var;
+	t_env_list	*new_node;
 	t_token		*next_content;
 	char		**env_rlt;
 	char		**tok_rlt;
@@ -54,9 +55,8 @@ t_all	*my_export(t_all *all)
 		}
 		if ((ft_strcmp(tok_rlt[0], all->env->env_name) != 0))
 			flag = false;
-		if (flag == false && all->env->next == NULL)
+		if (flag == false && all->env->next == NULL) 
 		{
-			printf("3\n");
 		}
 		all->env = all->env->next;
 	}
