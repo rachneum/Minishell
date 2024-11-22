@@ -15,11 +15,9 @@
 t_all	*my_export(t_all *all)
 {
 	t_env_list	*current_var;
-	//t_env_list	*current_var2;
 	t_token		*next_content;
 	char		**env_rlt;
 	char		**tok_rlt;
-	char		*new_value;
 
 	current_var = all->env;
 	next_content = all->token->next;
@@ -32,9 +30,6 @@ t_all	*my_export(t_all *all)
 		env_rlt = ft_split(current_var->var, '=');
 		current_var->env_name = env_rlt[0];
 		current_var->env_value = env_rlt[1];
-		//printf("VAR: %s\n", current_var->var);
-		//printf("ENV NAME: %s\n", current_var->env_name);
-		//printf("ENV VALUE: %s\n", current_var->env_value);
 		current_var = current_var->next;
 	}
 	current_var = all->env;
@@ -44,9 +39,7 @@ t_all	*my_export(t_all *all)
 			break;
 		if ((!ft_strcmp(tok_rlt[0], all->env->env_name)) && (ft_strcmp(tok_rlt[1], all->env->env_value) != 0))
 		{
-
 			free(all->env->env_value);
-			//printf("%s\n", all->env->env_value);
 			all->env->env_value = ft_strdup(tok_rlt[1]);
 			//printf("%s\n", all->env->var);
 			//all->env->var = ft_strjoin(all->env->var, all->env->env_value);
@@ -55,9 +48,9 @@ t_all	*my_export(t_all *all)
 			all->env->var = all->env->env_name;
 			break;
 		}
-		/*if ((ft_strcmp(tok_rlt[0], current_var2->env_name) != 0))
+		/*if ((ft_strcmp(tok_rlt[0], all->env->env_name) != 0))
 		{
-			free(all->env->var);
+			break;
 		}*/
 		all->env = all->env->next;
 	}
@@ -92,50 +85,7 @@ t_all	*my_export(t_all *all)
 
 void my_unset(t_cmd *cmd, t_all *all)
 {
-	t_env_list	*current_var;
 
-	current_var = all->env;
-
-	while (current_var)
-	{
-		printf("ENV_NAME: %s\n", current_var->env_name);
-		printf("TOKEN_CONTENT: %s\n", all->token->next->content);
-		if (!ft_strncmp(current_var->env_name, all->token->next->content, ft_strlen(all->token->next->content)))
-		{
-			printf("AHAH");
-			return ;
-		}
-		printf("CURRENT_VAR: %s\n", current_var->var);
-		current_var = current_var->next;
-	}
-
-    /*t_env_list	*current_var;
-
-	current_var = all->env;
-    if (cmd->cmd[2])
-    {
-        printf("Too many arguments !\n");
-        return;
-    }
-	//printf("Comparing: '%s' with '%s'\n", current_var->env_name, all->token->next->content);
-    current_var = current_var->next;
-	//printf("CURRENT_VAR_NEXT: %s\n", current_var->var);
-	while (current_var)
-    {
-		printf("CURRENT_VAR_NEXT: %s\n", current_var->var);
-        if (!ft_strcmp(current_var->env_name, all->token->next->content))
-        {
-			printf("WHAT\n");
-            //free(current_var->var);
-            //free(current_var->env_name);
-            //free(current_var->env_value);
-            //free(current_var);
-            break;
-        }
-        current_var = current_var->next;
-		printf("TOKEN_NAME: %s\n", all->token->next->content);
-		printf("ENV_NAME: %s\n", current_var->env_name);
-    }*/
 }
 
 /*void	my_unset(t_all *all)

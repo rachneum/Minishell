@@ -84,3 +84,11 @@ ________________________________________
 //    si built_in = cd, export, unset, exit
 //    si built_in = echo, pwd, env ->rediriger les pipes
 ___________________________
+
+->régler heredoc
+->gérer buildin pipe
+->faire cd, unset et finir export
+
+->pq split l'env avant et pas directement mon export,
+  le split à quel moment?
+  

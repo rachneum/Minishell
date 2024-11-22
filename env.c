@@ -88,6 +88,29 @@ char	*var_pfetch(t_env_list *e, char *str)
 	int	i;
 
 	flag = 0;
+	i = 0;
+	while (str[i + 1] != ' ')
+		i++;
+	while (e != NULL)
+	{
+		if (!ft_strncmp(e->var, str + 1, i))
+		{
+			flag = 1;
+			break ;
+		}
+		e = e->next;
+	}
+	if (flag)
+		return (e->var + (i + 1));
+	return (NULL);
+}
+
+char	*get_pfetch(t_env_list *e, char *str)
+{
+	int	flag;
+	int	i;
+
+	flag = 0;
 	i = ft_strlen("PATH");
 	while (e != NULL)
 	{

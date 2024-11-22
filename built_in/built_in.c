@@ -55,9 +55,12 @@ void	my_env(t_cmd *cmd, t_all *all)
 		printf("Too many arguments !\n");
 		return ;
 	}*/
-	while (all->env != NULL)
+	t_env_list	*list;
+
+	list = all->env;
+	while (list != NULL)
 	{
-		printf("%s\n", all->env->var);
-		all->env = all->env->next;
+		printf("%s\n", list->var);
+		list = list->next;
 	}
 }

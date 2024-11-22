@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:52:57 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/07 12:01:28 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/22 16:47:41 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_path(char **cmd, t_env_list *env_list, int i)//Vérifie si la cmd est 
 
 	if (!access(cmd[0], X_OK))
 		return (cmd[0]);
-	env_path = var_pfetch(env_list, "PATH");
+	env_path = get_pfetch(env_list, "PATH");
 	if (!env_path || check_path(env_list) == -1)
 	{
 		perror("PATH");
@@ -65,7 +65,7 @@ char	**env_list_to_array(t_env_list *env_list, int i)//Convertit liste chaînée
 
 	current = env_list;//Compte le nbr d'éléments dans env_list.
 	count = 0;
-	if (current)
+	while (current)
 	{
 		count++;
 		current = current->next;
@@ -74,7 +74,7 @@ char	**env_list_to_array(t_env_list *env_list, int i)//Convertit liste chaînée
 	if (!env_array)
 		return NULL;
 	current = env_list;
-	if (current)
+	while (current)
 	{
 		env_array[i] = ft_strjoin("&", current->var);
 		if (!env_array[i])

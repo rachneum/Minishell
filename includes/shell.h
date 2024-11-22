@@ -77,6 +77,7 @@ void		env_l_free(t_env_list *l);
 char		*variable_fetch(t_env_list *e, char *str);
 char		*var_value(char *var);
 char		*var_pfetch(t_env_list *e, char *str);
+char		*get_pfetch(t_env_list *e, char *str);
 void		env_n_free(t_env_list *t);
 t_env_list	*env_node_delete(t_env_list *env);
 

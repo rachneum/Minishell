@@ -28,7 +28,8 @@ int	main(int arc, char **arv, char **envp)
 				add_history(input);
 			all->token = tokenizer(input, all);
 			all->cmd = parser(all);
-			ft_pipex(all->cmd, all->env, all);
+			if (handle_built_in(all->cmd, all) == 0)
+				ft_pipex(all->cmd, all->env, all);
 			//token_list_visualizer(all);
 			//cmd_list_visualizer(all);
 		}
