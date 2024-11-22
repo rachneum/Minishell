@@ -89,4 +89,4 @@ ___________________________
 ->gérer buildin pipe
 ->faire cd, unset et finir export
 
--> gérer "export tout seul" qui imprime l'environnement en ordre ascii avec declare -x devant chaque var
+-> gérer "export" tout seul qui imprime l'environnement en ordre ascii avec declare -x devant chaque var
