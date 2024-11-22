@@ -39,13 +39,9 @@ t_all	*my_export(t_all *all)
 	while (all->env)
 	{
 		if ((!ft_strcmp(tok_rlt[0], all->env->env_name)) && (!ft_strcmp(tok_rlt[1], all->env->env_value)))
-		{
-			printf("1\n");
 			break;
-		}
 		if ((!ft_strcmp(tok_rlt[0], all->env->env_name)) && (ft_strcmp(tok_rlt[1], all->env->env_value) != 0))
 		{
-			printf("2\n");
 			free(all->env->env_value);
 			all->env->env_value = ft_strdup(tok_rlt[1]);
 			all->env->env_name = ft_strjoin(all->env->env_name, "=");
@@ -92,17 +88,6 @@ void my_unset(t_cmd *cmd, t_all *all)
 		return ;
 	}
 	free(tmp);
-}
-
-/*void	my_unset(t_all *all)
-{
-	if (all->cmd[2])
-		return (printf("syntax error", ));
-	while (strncmp(all->env->var, all->cmd[1], ft_strlen(all->cmd[1])) != 0
-		&& all->env != NULL)
-		all->env = all->env->next;
-	if (all->env != NULL)
-		all->env = env_node_delete(all->env);
 }
 
 void	env_n_free(t_env_list *t)
