@@ -89,6 +89,4 @@ ___________________________
 ->gérer buildin pipe
 ->faire cd, unset et finir export
 
-->pq split l'env avant et pas directement mon export,
-  le split à quel moment?
-  
+-> gérer "export tout seul" qui imprime l'environnement en ordre ascii avec declare -x devant chaque var
