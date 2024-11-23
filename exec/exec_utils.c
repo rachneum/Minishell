@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:52:57 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/22 16:47:41 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/24 00:19:00 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,20 @@ char	**env_list_to_array(t_env_list *env_list, int i)//Convertit liste chaînée
 	t_env_list	*current;
 	int			count;
 
-	current = env_list;//Compte le nbr d'éléments dans env_list.
+	current = env_list;
 	count = 0;
 	while (current)
 	{
 		count++;
 		current = current->next;
 	}
-	env_array = (char **)malloc(sizeof(char *) * (count + 1));//Allocation de mémoire pour env_array.
+	env_array = (char **)malloc(sizeof(char *) * (count + 1));
 	if (!env_array)
 		return NULL;
 	current = env_list;
 	while (current)
 	{
-		env_array[i] = ft_strjoin("&", current->var);
+		env_array[i] = ft_strdup(current->var);
 		if (!env_array[i])
 			return (free(env_array), NULL);
 		current = current->next;

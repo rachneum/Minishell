@@ -112,7 +112,7 @@ char	*get_pfetch(t_env_list *e, char *str)
 
 	flag = 0;
 	i = ft_strlen("PATH");
-	while (e != NULL)
+	while (e)
 	{
 		if (!ft_strncmp(e->var, str, i))
 		{

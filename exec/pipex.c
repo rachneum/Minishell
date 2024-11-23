@@ -6,14 +6,13 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/22 15:29:31 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/24 00:21:21 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-void ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)//Ajouter condition built_in.
-{
+void ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)
     t_cmd *current_cmd;
     int tube[2];
     int prev_tube;//Garde la sortie du pipe précédent pour connecter les cmd en série.
@@ -155,7 +154,7 @@ void close_unused_pipes(int *prev_tube, int *tube, t_cmd *current_cmd)
     if (current_cmd->next)
     {
         close(tube[1]);
-        *prev_tube = tube[0]; //Met à jour prev_tube pour la prochaine commande.
+        *prev_tube = tube[0];//Met à jour prev_tube pour la prochaine commande.
     }
 }
 

@@ -12,59 +12,68 @@
 
 #include "../includes/shell.h"
 
-t_all	*my_export(t_all *all)
+void	my_export(t_all *all)
 {
-	t_env_list	*current_var;
+	t_env_list	*current;
 	t_env_list	*new_node;
 	t_token		*next_content;
 	char		**env_rlt;
 	char		**tok_rlt;
-	bool		flag;
+	bool		found;
 
-	current_var = all->env;
+	current = all->env;
 	next_content = all->token->next;
 	tok_rlt = ft_split(next_content->content, '=');
 	next_content->tok_name = tok_rlt[0];
 	next_content->tok_value = tok_rlt[1];
-	
-	while (current_var)
+	found = false;
+
+	while (current)
 	{
-		env_rlt = ft_split(current_var->var, '=');
-		current_var->env_name = env_rlt[0];
-		current_var->env_value = env_rlt[1];
-		current_var = current_var->next;
-	}
-	current_var = all->env;
-	flag = true;
-	while (all->env)
-	{
-		if ((!ft_strcmp(tok_rlt[0], all->env->env_name)) && (!ft_strcmp(tok_rlt[1], all->env->env_value)))
-			break;
-		if ((!ft_strcmp(tok_rlt[0], all->env->env_name)) && (ft_strcmp(tok_rlt[1], all->env->env_value) != 0))
+		env_rlt = ft_split(current->var, '=');
+		current->env_name = env_rlt[0];
+		current->env_value = env_rlt[1];
+
+		if (!ft_strcmp(tok_rlt[0], current->env_name))
 		{
-			free(all->env->env_value);
-			all->env->env_value = ft_strdup(tok_rlt[1]);
-			all->env->env_name = ft_strjoin(all->env->env_name, "=");
-			all->env->env_name = ft_strjoin(all->env->env_name, all->env->env_value);
-			all->env->var = all->env->env_name;
+			if (ft_strcmp(tok_rlt[1], current->env_value) != 0)
+			{
+				free(current->env_value);
+				current->env_value = ft_strdup(tok_rlt[1]);
+				current->var = ft_strjoin(current->env_name, "=");
+				current->var = ft_strjoin(current->var, current->env_value);
+			}
+			found = true;
 			break;
 		}
-		if ((ft_strcmp(tok_rlt[0], all->env->env_name) != 0))
-			flag = false;
-		if (flag == false && all->env->next == NULL) 
-		{
-		}
-		all->env = all->env->next;
+		current = current->next;
 	}
-	all->env = current_var;
-	return (all);
+	if (!found)
+	{
+		new_node = malloc(sizeof(t_env_list));
+		if (!new_node)
+			return;
+		new_node->env_name = ft_strdup(tok_rlt[0]);
+		new_node->env_value = ft_strdup(tok_rlt[1]);
+		new_node->var = ft_strjoin(new_node->env_name, "=");
+		new_node->var = ft_strjoin(new_node->var, new_node->env_value);
+		new_node->next = NULL;
+		if (all->env == NULL)
+			all->env = new_node;
+		else 
+		{
+			current = all->env;
+			while (current->next != NULL)
+				current = current->next;
+			current->next = new_node;
+		}
+	}
 }
 
 void my_unset(t_cmd *cmd, t_all *all)
 {
 
 }
-
 /*void	my_cd(char **cmd, t_all *all)
 {
 	int			err;
@@ -88,39 +97,4 @@ void my_unset(t_cmd *cmd, t_all *all)
 		return ;
 	}
 	free(tmp);
-}
-
-void	env_n_free(t_env_list *t)
-{
-	free(t->var);
-	free(t);
-	return ;
-}
-
-t_env_list	*env_node_delete(t_env_list *env)
-{
-	t_env_list	*tmp;
-
-	if (env->next == NULL && env->previous == NULL)
-		return (env_n_free(t), NULL);
-	else if (env->previous == NULL)
-	{
-		tmp = env->next;
-		tmp->previous = NULL;
-		return (env_n_free(t), tmp);
-	}
-	else if (env->next == NULL)
-	{
-		tmp = env->previous;
-		env_n_free(t);
-		tmp->next = NULL;
-		return (NULL);
-	}
-	else
-	{
-		tmp = env->next;
-		env->previous->next = tmp;
-		tmp->previous = env->previous;
-		return (env_n_free(t), tmp);
-	}
 }*/

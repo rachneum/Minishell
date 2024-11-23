@@ -50,14 +50,14 @@ void	my_echo(char **arg)
 
 void	my_env(t_cmd *cmd, t_all *all)
 {
+	t_env_list	*list;
+	
+	list = all->env;
 	/*if (cmd->cmd[1])
 	{
 		printf("Too many arguments !\n");
 		return ;
 	}*/
-	t_env_list	*list;
-
-	list = all->env;
 	while (list != NULL)
 	{
 		printf("%s\n", list->var);
