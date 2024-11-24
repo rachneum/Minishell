@@ -126,7 +126,7 @@ char	*spacer(char *s, t_all *all)
 			tmp = var_pfetch(all->env, s + i);
 			while (*tmp)
 				spaced[j++] = *(tmp++);
-			while (s[i] != ' ')
+			while (s[i] != ' ' && s[i])
 				i++;
 		}
 		if (sym_check(s + i) < GENERAL && !quoted(s, i))

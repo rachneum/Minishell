@@ -89,7 +89,7 @@ char	*var_pfetch(t_env_list *e, char *str)
 
 	flag = 0;
 	i = 0;
-	while (str[i + 1] != ' ')
+	while (str[i + 1] != ' ' && str[i + 1])
 		i++;
 	while (e != NULL)
 	{
