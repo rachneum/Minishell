@@ -23,11 +23,23 @@ void	my_export(t_all *all)
 
 	current = all->env;
 	next_content = all->token->next;
+	if (!next_content)
+	{
+		while (current)
+		{
+			env_rlt = ft_split(current->var, '=');
+			current->env_name = env_rlt[0];
+			current->env_value = env_rlt[1];
+			printf("declare -x %s", current->env_name);
+			printf("=\"%s\"\n", current->env_value);
+			current = current->next;
+		}
+		return;
+	}
 	tok_rlt = ft_split(next_content->content, '=');
 	next_content->tok_name = tok_rlt[0];
 	next_content->tok_value = tok_rlt[1];
 	found = false;
-
 	while (current)
 	{
 		env_rlt = ft_split(current->var, '=');

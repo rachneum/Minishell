@@ -6,13 +6,14 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/24 00:21:21 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/24 00:24:50 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-void ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)
+void    ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)
+{
     t_cmd *current_cmd;
     int tube[2];
     int prev_tube;//Garde la sortie du pipe précédent pour connecter les cmd en série.

@@ -88,5 +88,4 @@ ___________________________
 ->régler heredoc
 ->gérer buildin pipe
 ->faire cd, unset et finir export
-
 -> gérer "export" tout seul qui imprime l'environnement en ordre ascii avec declare -x devant chaque var
