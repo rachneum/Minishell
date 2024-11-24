@@ -118,10 +118,12 @@ t_token		*out_red(t_token *t, t_cmd *c);
 
 int			my_pwd(t_cmd *cmd);
 void		my_unset(t_cmd *cmd, t_all *all);
-//void		my_echo(char **arg);
+void		my_echo(char **arg);
 //void		my_cd(char **cmd, t_all *all);
 void		my_export(t_all *all);
 void		my_env(t_cmd *cmd, t_all *all);
+void		env_split(t_all *all);
+//void		tok_split(t_all *all);
 
 /*exec functions*/
 

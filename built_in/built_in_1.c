@@ -12,12 +12,37 @@
 
 #include "../includes/shell.h"
 
+void	env_split(t_all *all)
+{
+	t_env_list	*current;
+	char		**env_rlt;
+
+	current = all->env;
+	while (current)
+	{
+		env_rlt = ft_split(current->var, '=');
+		current->env_name = env_rlt[0];
+		current->env_value = env_rlt[1];
+		current = current->next;
+	}
+}
+
+/*void	tok_split(t_all *all)
+{
+	t_token		*next_content;
+	char		**tok_rlt;
+
+	next_content = all->token->next;
+	tok_rlt = ft_split(next_content->content, '=');
+	all->token->next->tok_name = tok_rlt[0];
+	all->token->next->tok_value = tok_rlt[1];
+}*/
+
 void	my_export(t_all *all)
 {
 	t_env_list	*current;
 	t_env_list	*new_node;
 	t_token		*next_content;
-	char		**env_rlt;
 	char		**tok_rlt;
 	bool		found;
 
@@ -27,9 +52,7 @@ void	my_export(t_all *all)
 	{
 		while (current)
 		{
-			env_rlt = ft_split(current->var, '=');
-			current->env_name = env_rlt[0];
-			current->env_value = env_rlt[1];
+			env_split(all);
 			printf("declare -x %s", current->env_name);
 			printf("=\"%s\"\n", current->env_value);
 			current = current->next;
@@ -42,10 +65,7 @@ void	my_export(t_all *all)
 	found = false;
 	while (current)
 	{
-		env_rlt = ft_split(current->var, '=');
-		current->env_name = env_rlt[0];
-		current->env_value = env_rlt[1];
-
+		env_split(all);
 		if (!ft_strcmp(tok_rlt[0], current->env_name))
 		{
 			if (ft_strcmp(tok_rlt[1], current->env_value) != 0)
@@ -84,7 +104,25 @@ void	my_export(t_all *all)
 
 void my_unset(t_cmd *cmd, t_all *all)
 {
+	t_env_list	*current;
+	t_token		*next_content;
+	char		**tok_rlt;
 
+	current = all->env;
+	next_content = all->token->next;
+	tok_rlt = ft_split(next_content->content, '=');
+	next_content->tok_name = tok_rlt[0];
+	next_content->tok_value = tok_rlt[1];
+	while (current)
+	{
+		env_split(all);
+		if (strcmp(current->env_name, tok_rlt[0]) == 0)
+		{
+			printf("test\n");
+			break;
+		}
+		current = current->next;
+	}
 }
 /*void	my_cd(char **cmd, t_all *all)
 {

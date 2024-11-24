@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:53:47 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/23 16:53:06 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/24 12:12:17 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ int	built_in_subshell(t_cmd *cmd, t_all *all)
 
 int	built_in_shell(t_cmd *cmd, t_all *all)
 {
-	/*if ((ft_strcmp(cmd->cmd[0], "echo") == 0) && (ft_strlen(cmd->cmd[0]) == 4))
+	if ((ft_strcmp(cmd->cmd[0], "echo") == 0) && (ft_strlen(cmd->cmd[0]) == 4))
 	{
-		my_echo();
+		my_echo(cmd->cmd);
 		return (1);
-	}*/
-	if ((ft_strcmp(cmd->cmd[0], "pwd") == 0) && (ft_strlen(cmd->cmd[0]) == 3))
+	}
+	else if ((ft_strcmp(cmd->cmd[0], "pwd") == 0) && (ft_strlen(cmd->cmd[0]) == 3))
 	{
 		my_pwd(cmd);
 		return (1);
