@@ -120,7 +120,7 @@ void my_unset(t_cmd *cmd, t_all *all)
 		{
 			free(current->var);
 			printf("%s\n", current->env_name);
-
+	
 			break;
 		}
 		current = current->next;

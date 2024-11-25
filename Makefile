@@ -24,7 +24,8 @@ SHELL_SRCS 	= token/token_utils.c\
 				exec/handle_heredoc.c\
 				exec/exec_built_in.c\
 				built_in/built_in.c\
-				built_in/built_in_1.c
+				built_in/built_in_1.c\
+				signal.c
 
 SHELL_SRC	= ${SHELL_SRCS}
 
@@ -38,7 +39,7 @@ FT_FOLDER = ./libft
 
 FT = ${FT_FOLDER}/libft.a
 
-CC		= cc -g #-fsanitize=address
+CC		= cc -g -fsanitize=address
 
 FLAGS	= -Wall -Wextra -Werror
 

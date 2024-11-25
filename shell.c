@@ -14,8 +14,8 @@
 
 int	main(int arc, char **arv, char **envp)
 {
-	char		*input;
-	t_all		*all;
+	char	*input;
+	t_all	*all;
 
 	if (arc == 1)
 	{
@@ -23,20 +23,28 @@ int	main(int arc, char **arv, char **envp)
 		all->env = envellope(envp);
 		while (1)
 		{
-			input = readline("Write something here: ");
-			if (*input) 
+			init_signal();
+			printf("> ");
+			input = readline("");
+			if (input > 0 && *input)
 				add_history(input);
+			if (input <= 0)
+			{
+				write(1, "exit\n", 6);
+				free(input);
+				break;
+			}
 			all->token = tokenizer(input, all);
 			all->cmd = parser(all);
-			if (handle_built_in(all->cmd, all) == 0)
-				ft_pipex(all->cmd, all->env, all);
+			reset_signal();
 			//token_list_visualizer(all);
 			//cmd_list_visualizer(all);
+			ft_pipex(all->cmd, all->env, all);
 		}
 		clear_history();
 		total_free(all);
 	}
 	else
-		printf("Wrong amount of arguments!\n");
+		printf("Wrong amount of arguments !\n");
     return 0;
 }
