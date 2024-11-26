@@ -39,6 +39,7 @@ int	main(int arc, char **arv, char **envp)
 			reset_signal();
 			//token_list_visualizer(all);
 			//cmd_list_visualizer(all);
+			//if (handle_built_in(all->cmd, all) == 0)
 			ft_pipex(all->cmd, all->env, all);
 		}
 		clear_history();

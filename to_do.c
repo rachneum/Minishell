@@ -1,17 +1,57 @@
 TO_DO_LIST
 
-[[PARSING PART]]
+[[ERRORS]]
 
-// - make a function to free everything V
-// - could make token_l_free work from any node V
-// - add  '$' implementation
-// - remove quotes in the tokenization
-- check all error returns
-// - implement redir in parsing
-- adapt free function for the t_cmd list - should be good needs testing
-- check parsing for built-ins
+//->  cat << lol | cat << yeah | cat << yo (a besoin des 3 délimitateurs pour s’arrêter, dois renvoyer ce que j’ai rentré av le dernier délimitateur).
 
-________________________________________
+//->  ls | cat << lol | wc (ne va doit exec le ls mais simplement faire le heredoc et afficher wc).
+
+//->  cat << lol | ls
+
+//->  ajouter printf exit.
+________________________________
+->  cat << lol | cat << yeah | cat << yo 
+    write something : cat << lol | cat << yeah | cat << yo
+    > yo
+    > yeah
+    > lol
+    yo
+    yeah
+    > 
+_________________________________
+->  ls | cat << lol | wc pareril qu’en bas, wc ne renvoie que des 0??
+
+->  write something : ls | cat << lol | wc
+    > haha
+    > hihi
+    > lol
+    haha
+    hihi
+           0       0       0
+    au lieu de
+    bash-3.2$ ls | cat << lol | wc
+    > haha
+    > hihi
+    > lol
+           2       2      10
+________________________________
+-> cat << lol | grep yeah // devrait me renvoyer yeah
+> haha
+> hihi
+> yeah
+> hoho
+> lol
+haha
+hihi
+yeah
+hoho
+>
+________________________________
+->  régler heredoc
+->  gérer buildin pipe (echo, pwd, env)
+->  faire cd, finir unset, += export
+->  qd je tape qqch apres le prompt et ensuite efface je peux effacer le prompt aussi
+________________________________
 
 [[EXECUTION PART]]
 
@@ -28,49 +68,7 @@ La commande ajoute "Salut" à la fin du fichier fichier.txt sans supprimer son c
 <   in_red  Prend l'entrée d'une commande à partir d'un fichier au lieu de l'attendre dans le terminal.
 ex: cat < fichier.txt
 la commande cat lit le contenu de fichier.txt grâce à < et l'affiche dans le terminal.
-
-________________________________________
-
-[[ERRORS]]
-
-//->  cat << lol | cat << yeah | cat << yo (a besoin des 3 délimitateurs pour s’arrêter, dois renvoyer ce que j’ai rentré av le dernier délimitateur).
-
-//->  ls | cat << lol | wc (ne va doit exec le ls mais simplement faire le heredoc et afficher wc).
-
-//->  cat << lol | ls
-
-//->  ajouter printf exit.
-
-->  cat << lol | cat << yeah | cat << yo 
-    write something : cat << lol | cat << yeah | cat << yo
-    > yo
-    > yeah
-    > lol
-    yo
-    yeah
-    > 
-
-->  ls | cat << lol | wc pareril qu’en bas, wc ne renvoie que des 0??
-
-->  write something : ls | cat << lol | wc
-    > haha
-    > hihi
-    > lol
-    haha
-    hihi
-           0       0       0
-    au lieu de
-    bash-3.2$ ls | cat << lol | wc
-    > haha
-    > hihi
-    > lol
-           2       2      10
-
-
-
-
-________________________________________
-
+__________________________________________  
    [[BUILT_IN]]
 
 //->  Les commandes intégrées comme cd, export, unset, et exit n'ont pas d'effet durable dans un pipeline car
@@ -83,8 +81,4 @@ ________________________________________
 //    sinon exec
 //    si built_in = cd, export, unset, exit
 //    si built_in = echo, pwd, env ->rediriger les pipes
-___________________________
-
-->  régler heredoc
-->  gérer buildin pipe (echo, pwd, env)
-->  faire cd, finir unset, += export
+__________________________________________

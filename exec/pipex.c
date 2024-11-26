@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/24 00:24:50 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/25 18:34:58 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ pid_t create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *e
 {
     pid_t pid;
 
-    /*if (handle_built_in(current_cmd, all))
-            return (0);*/
+    if (built_in_subshell(current_cmd, all))
+        return (0);
     pid = fork();
     if (pid == -1)
     {

@@ -6,18 +6,18 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:53:47 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/24 12:12:17 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/25 18:35:49 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-int	handle_built_in(t_cmd *cmd, t_all *all)
+/*int	handle_built_in(t_cmd *cmd, t_all *all)
 {
 	if (built_in_subshell(cmd, all) || built_in_shell(cmd, all))
         return (1);
     return (0); 
-}
+}*/
 
 int	built_in_subshell(t_cmd *cmd, t_all *all)
 {
