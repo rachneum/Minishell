@@ -28,6 +28,7 @@ typedef struct s_env_list
 	char				*env_name;
 	char				*env_value;
 	struct s_env_list	*next;
+	struct s_env_list	*previous;
 }	t_env_list;
 
 typedef struct s_token
@@ -78,7 +79,7 @@ void		env_l_free(t_env_list *l);
 char		*variable_fetch(t_env_list *e, char *str);
 char		*var_value(char *var);
 char		*var_pfetch(t_env_list *e, char *str);
-char		*get_pfetch(t_env_list *e, char *str);
+char		*var_bfetch(t_env_list *e, char *str);
 void		env_n_free(t_env_list *t);
 t_env_list	*env_node_delete(t_env_list *env);
 

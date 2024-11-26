@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:52:57 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/24 00:19:00 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/26 15:12:12 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_path(char **cmd, t_env_list *env_list, int i)//Vérifie si la cmd est 
 
 	if (!access(cmd[0], X_OK))
 		return (cmd[0]);
-	env_path = get_pfetch(env_list, "PATH");
+	env_path = var_bfetch(env_list, "PATH");
 	if (!env_path || check_path(env_list) == -1)
 	{
 		perror("PATH");

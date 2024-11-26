@@ -23,6 +23,7 @@ t_env_list	*envellope(char **env)
 		return (NULL);
 	i = 0;
 	first = envl;
+	envl->previous = NULL;
 	while (env[i])
 	{
 		envl->var = env[i];
@@ -45,6 +46,7 @@ t_env_list	*new_node(t_env_list *l)
 	if (!l)
 		return (new);
 	l->next = new;
+	new->previous = l;
 	new->next = NULL;
 	return (new);
 }
@@ -53,6 +55,8 @@ void	env_l_free(t_env_list *l)
 {
 	t_env_list	*tmp;
 
+	while (l->previous != NULL)
+		l = l->previous;
 	while (l->next != NULL)
 	{
 		tmp = l->next;
@@ -89,7 +93,7 @@ char	*var_pfetch(t_env_list *e, char *str)
 
 	flag = 0;
 	i = 0;
-	while (str[i + 1] != ' ' && str[i + 1])
+	while (str[i + 1] != ' ' && str[i + 1] != '\0')
 		i++;
 	while (e != NULL)
 	{
@@ -105,14 +109,14 @@ char	*var_pfetch(t_env_list *e, char *str)
 	return (NULL);
 }
 
-char	*get_pfetch(t_env_list *e, char *str)
+char	*var_bfetch(t_env_list *e, char *str)
 {
 	int	flag;
 	int	i;
 
 	flag = 0;
 	i = ft_strlen("PATH");
-	while (e)
+	while (e != NULL)
 	{
 		if (!ft_strncmp(e->var, str, i))
 		{

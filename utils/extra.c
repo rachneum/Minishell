@@ -51,7 +51,7 @@ void	cmd_list_visualizer(t_all *all)
 		while (all->cmd->cmd && all->cmd->cmd[++i])
 		{
 			printf("\033[34m%s\033[0m", all->cmd->cmd[i]);
-			if (all->cmd->cmd && all->cmd->cmd[i + 1])
+			if (all->cmd->cmd && all->cmd->cmd[i + 1] && all->cmd->cmd[i + 1][0])
 				printf(" ");
 		}
 		printf("] ");
