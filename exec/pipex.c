@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/26 13:30:23 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/26 15:21:30 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ pid_t create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *e
             ft_exec(current_cmd->cmd, env_list);
         exit(1);
     }
-    else
-        wait(NULL);
+    
+        //wait(NULL);
     return pid;
 }
 

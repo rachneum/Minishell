@@ -43,7 +43,7 @@ CC		= cc -g #-fsanitize=address
 
 FLAGS	= -Wall -Wextra -Werror
 
-READ_FLAGS = -L/Users/raneuman/.brew/opt/readline/lib -I/Users/raneuman/.brew/opt/readline/include -lreadline
+READ_FLAGS = -L/Users/rachou/.brew/opt/readline/lib -I/Users/rachou/.brew/opt/readline/include -lreadline
 
 LIB		= ar -rc
 
