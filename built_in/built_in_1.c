@@ -118,9 +118,14 @@ void my_unset(t_cmd *cmd, t_all *all)
 		env_split(all);
 		if (strcmp(current->env_name, tok_rlt[0]) == 0)
 		{
-			free(current->var);
-			printf("%s\n", current->env_name);
-	
+			//free(current->var);
+			//printf("%s\n", current->var);
+			printf("current->var address: %p\n", current->var);
+			printf("current->var value: %s\n", current->var);
+			//free(current->var);
+
+			//printf("%s\n", current->env_name);
+
 			break;
 		}
 		current = current->next;

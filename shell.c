@@ -24,8 +24,7 @@ int	main(int arc, char **arv, char **envp)
 		while (1)
 		{
 			init_signal();
-			printf("> ");
-			input = readline("");
+			input = readline("> ");
 			if (input > 0 && *input)
 				add_history(input);
 			if (input <= 0)

@@ -9,7 +9,20 @@ TO_DO_LIST
 //->  cat << lol | ls
 
 //->  ajouter printf exit.
+
+-> ctrl D direct apres avoir lancé le programme segfault.
+
+-> > export ahhrajkz
+        AddressSanitizer:DEADLYSIGNAL
+
+
 ________________________________
+-> bash-3.2$ echo "Bonjour" | wc -c
+       8
+-> > echo "BONJOUR" | wc -c
+        BONJOUR
+________________________________
+
 ->  cat << lol | cat << yeah | cat << yo 
     write something : cat << lol | cat << yeah | cat << yo
     > yo
