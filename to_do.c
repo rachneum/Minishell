@@ -10,12 +10,8 @@ TO_DO_LIST
 
 //->  ajouter printf exit.
 
--> ctrl D direct apres avoir lancé le programme segfault.
-
 -> > export ahhrajkz
         AddressSanitizer:DEADLYSIGNAL
-
-
 ________________________________
 -> bash-3.2$ echo "Bonjour" | wc -c
        8
@@ -23,14 +19,6 @@ ________________________________
         BONJOUR
 ________________________________
 
-->  cat << lol | cat << yeah | cat << yo 
-    write something : cat << lol | cat << yeah | cat << yo
-    > yo
-    > yeah
-    > lol
-    yo
-    yeah
-    > 
 _________________________________
 ->  ls | cat << lol | wc pareril qu’en bas, wc ne renvoie que des 0??
 
@@ -47,25 +35,11 @@ _________________________________
     > hihi
     > lol
            2       2      10
+
 ________________________________
--> cat << lol | grep yeah // devrait me renvoyer yeah
-> haha
-> hihi
-> yeah
-> hoho
-> lol
-haha
-hihi
-yeah
-hoho
->
-________________________________
-->  régler heredoc
 ->  gérer buildin pipe (echo, pwd, env)
 ->  faire cd, finir unset, += export
-->  qd je tape qqch apres le prompt et ensuite efface je peux effacer le prompt aussi
-->  Write something here: "$u"ls
-       CMD: No such file or directory
+
 ________________________________
 
 [[EXECUTION PART]]

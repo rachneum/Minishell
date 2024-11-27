@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 11:57:54 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/27 20:15:46 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/28 00:07:31 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,109 +14,73 @@
 
 void handle_heredoc(t_token *in_red, int *heredoc_fd)
 {
-    char *input;
+    char    *input;
     char    *delimiter;
     t_token *current;
-    int fd;//Fichier temporaire pour le Heredoc.
-	
-    //delimiter = in_red->content;
+    t_token *tmp;
+    int     heredoc_count;
+    int     current_index;
+    int     fd;
+
     current = in_red;
+    heredoc_count = 0;
+    current_index = 0;
+    fd = -1;
     while (current->previous)
-    {
         current = current->previous;
-    }
-    if (!current)
-        return ;
-    while (1)
+    tmp = current;
+    while (tmp)
     {
-        while (ft_strcmp(current->previous->content, "<<") == 0)
+        if (ft_strcmp(tmp->content, "<<") == 0)
+            heredoc_count++;
+        tmp = tmp->next;
+    }
+    current_index = 0;
+    while (current)
+    {
+        if (ft_strcmp(current->content, "<<") == 0)
         {
-            current = current->next;
-        }
-        printf("%p\n", current);
-        delimiter = current->content;
-        fd = open(".surprise.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-        if (fd == -1) 
-	    {
-            perror("open");
-            return;
-        }
-        while (1) 
-	    {
-            input = readline("> ");
-            if (!input) 
-	    	{
-                free(input);
-                break;
-            }
-            if (ft_strcmp(input, delimiter) == 0)
+            current_index++;
+            delimiter = current->next->content;
+            if (current_index == heredoc_count)
             {
-                free(input);
-                break;
-            }
-            printf("%s\n", current->content);
-            if (current->next == NULL)
+                fd = open(".surprise.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+                if (fd == -1)
+                {
+                    perror("OPEN ");
+                    return;
+                }
+            }  
+            while (1)
             {
-                //if (ft_strcmp(current->next->content, "<<"))
+                input = readline("> ");
+                if (!input)
+                {
+                    free(input);
+                    break;
+                }
+                if (ft_strcmp(input, delimiter) == 0)
+                {
+                    free(input);
+                    break;
+                }
+                if (current_index == heredoc_count)
                     ft_putendl_fd(input, fd);
+                free(input);
             }
-            free(input);
         }
         current = current->next;
     }
-    close(fd);
-    fd = open(".surprise.txt", O_RDONLY);
-    /*if (current->next != NULL)
+    if (fd != -1)
     {
-        if (ft_strcmp(current->next->content, "<<"))
+        close(fd);
+        fd = open(".surprise.txt", O_RDONLY);
+        if (fd == -1)
         {
-            unlink(".surprise.txt"); // Supprime le fichier intermédiaire si ce n'est pas le dernier heredoc
+            perror("OPEN ");
             return;
         }
-    }*/
-    if (fd == -1)
-	{
-        perror("open");
-        return;
+        *heredoc_fd = fd;
+        unlink(".surprise.txt");
     }
-    *heredoc_fd = fd;
-    unlink(".surprise.txt");
 }
-
-/*void handle_heredoc(t_token *in_red, int *heredoc_fd)
-{
-    char *input;
-    char *delimiter;
-    int fd;//Fichier temporaire pour le Heredoc.
-	
-    delimiter = in_red->content;
-    printf ("%s\n", delimiter);
-    if (!delimiter)
-        return;
-    fd = open(".surprise.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    if (fd == -1) 
-	{
-        perror("open");
-        return;
-    }
-    while (1) 
-	{
-        input = readline("> ");
-        if (!input || ft_strcmp(input, delimiter) == 0) 
-		{
-            free(input);
-            break;
-        }
-        ft_putendl_fd(input, fd);
-        free(input);
-    }
-    close(fd);
-    fd = open(".surprise.txt", O_RDONLY);
-    if (fd == -1)
-	{
-        perror("open");
-        return;
-    }
-    *heredoc_fd = fd;
-    unlink(".surprise.txt");
-}*/
