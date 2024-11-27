@@ -6,18 +6,16 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:59 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/09 11:05:02 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/27 16:35:54 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-void	handle_redirections(t_cmd *cmd)
-{
-	int	fd;
-	
-	while (cmd->n_redirection > 0)
-	{
+void	handle_redirections(t_cmd *cmd, int *heredoc_fd)
+{	
+	//while (cmd->n_redirection > 0)
+	//{
 		if (cmd->out_red && cmd->out_red->content)
 		{
 			if ((cmd->out_red->previous->content) && (ft_strcmp(cmd->out_red->previous->content, ">") == 0) && (ft_strlen(cmd->out_red->previous->content) == 1))
@@ -30,10 +28,10 @@ void	handle_redirections(t_cmd *cmd)
 			if ((cmd->in_red->previous->content) && (ft_strcmp(cmd->in_red->previous->content, "<") == 0) && (ft_strlen(cmd->in_red->previous->content) == 1))
 				handle_input_red(cmd->in_red);
 			if ((cmd->in_red->previous->content) && (ft_strcmp(cmd->in_red->previous->content, "<<") == 0) && (ft_strlen(cmd->in_red->previous->content) == 2))
-				handle_heredoc(cmd->in_red);
+				handle_heredoc(cmd->in_red, heredoc_fd);
 		}
-		cmd->n_redirection--;
-	}
+	//	cmd->n_redirection--;
+	//}
 }
 
 void handle_output_red(t_token *out_red)

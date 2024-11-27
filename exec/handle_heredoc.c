@@ -6,57 +6,45 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 11:57:54 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/20 23:23:22 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/27 16:38:58 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-void	handle_heredoc(t_token *in_red)
+void handle_heredoc(t_token *in_red, int *heredoc_fd)
 {
-	int		fd;
-	char	*input;
-	char	*delimiter;
-
+    char *input;
+    char *delimiter;
+    int fd;//Fichier temporaire pour le Heredoc.
+	
     delimiter = in_red->content;
-	//printf("Délimiteur: %s\n", delimiter);
-	//printf("Heredoc: %s\n", in_red->previous->content);
-	if (!delimiter)
-		return ;
-	fd = open(".surprise.txt", O_WRONLY | O_TRUNC | O_CREAT, 0777);
-	if (fd == -1)
+    if (!delimiter)
+        return;
+    fd = open(".surprise.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    if (fd == -1) 
 	{
-		perror("open");
-		return;
-	}
-	while(1)
+        perror("open");
+        return;
+    }
+    while (1) 
 	{
-		input = readline("> ");
-		if (!input)
+        input = readline("> ");
+        if (!input || ft_strcmp(input, delimiter) == 0) 
 		{
-			printf("EMPTY INPUT HEREDOC\n");
-			break;
-		}
-		if (ft_strcmp(input, delimiter) == 0)
-		{
-	    	free(input);
-	    	break ;
-		}
-		ft_putendl_fd(input, fd);
-	}
-	close(fd);
-	fd = open(".surprise.txt", O_RDONLY);
-	if (fd == -1)
+            free(input);
+            break;
+        }
+        ft_putendl_fd(input, fd);
+        free(input);
+    }
+    close(fd);
+    fd = open(".surprise.txt", O_RDONLY);
+    if (fd == -1)
 	{
-		perror("open");
-		return;
-	}
-	if (dup2(fd, 0) == -1)
-	{
-		close(fd);
-		perror("dup2");
-		return;
-	}
-	close(fd);
-	unlink(".surprise.txt");//Suprime mon fichier une fois fini.
+        perror("open");
+        return;
+    }
+    *heredoc_fd = fd;
+    unlink(".surprise.txt");
 }

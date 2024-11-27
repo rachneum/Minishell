@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/26 15:21:30 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/27 16:37:46 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,33 +76,40 @@ int create_pipe(int tube[2], pid_t *pids, t_cmd *current_cmd)
 pid_t create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list, t_all *all)
 {
     pid_t pid;
+    int heredoc_fd = -1;//Descripteur de fichier pour le Heredoc
 
     if (built_in_subshell(current_cmd, all))
         return (0);
     pid = fork();
     if (pid == -1)
     {
-        perror("FORK");
-        return -1;
+        perror("FORK ");
+        return (-1);
     }
     if (pid == 0)
     {
-        handle_pipe_redirect(current_cmd, tube, prev_tube, env_list);
+        handle_pipe_redirect(current_cmd, tube, prev_tube, env_list, &heredoc_fd);
+        if (heredoc_fd != -1)//Redirige l'entrée Heredoc si présente.
+        {
+            if (current_cmd->in_red != NULL)
+                dup2(heredoc_fd, 0);//Redirige stdin vers le fichier du Heredoc.
+            close(heredoc_fd);
+        }
         if (built_in_shell(current_cmd, all))
             exit(0);
         else
             ft_exec(current_cmd->cmd, env_list);
         exit(1);
     }
-    
-        //wait(NULL);
+    wait(NULL);
     return pid;
 }
 
-void handle_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list)
+
+void handle_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list, int *heredoc_fd)
 {
     if (current_cmd->out_red || current_cmd->in_red)
-        handle_redirections(current_cmd);
+        handle_redirections(current_cmd, heredoc_fd);
     else
         pipe_redirect(current_cmd, tube, prev_tube, env_list);
 }

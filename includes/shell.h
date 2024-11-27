@@ -133,7 +133,7 @@ int 	init_pids_and_count(t_cmd *cmd, pid_t **pids);
 int		create_pipe(int tube[2], pid_t *pids, t_cmd *current_cmd);
 pid_t 	create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list, t_all *all);
 void	pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list);
-void 	handle_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list);
+void 	handle_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list, int *heredoc_fd);
 void	ft_exec(char **cmd, t_env_list *env_list);
 void 	close_unused_pipes(int *prev_tube, int *tube, t_cmd *current_cmd);
 void 	wait_for_children(pid_t *pids, int cmd_count);
@@ -150,11 +150,11 @@ char	**ft_free_split(char **ptr, int i);
 char	*ft_put(char *wds, char const *s, int i, int len_wds);
 int		ft_cnt_wds(char const *str, char c);
 
-void	handle_redirections(t_cmd   *cmd);
+void	handle_redirections(t_cmd *cmd, int *heredoc_fd);
 void 	handle_output_red(t_token *out_red);
 void	handle_append_red(t_token *out_red);
 void	handle_input_red(t_token *in_red);
-void	handle_heredoc(t_token *in_red);
+void	handle_heredoc(t_token *in_red, int *heredoc_fd);
 
 int		built_in_shell(t_cmd *cmd, t_all *all);
 int		built_in_subshell(t_cmd *cmd, t_all *all);
