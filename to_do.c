@@ -64,6 +64,8 @@ ________________________________
 ->  gérer buildin pipe (echo, pwd, env)
 ->  faire cd, finir unset, += export
 ->  qd je tape qqch apres le prompt et ensuite efface je peux effacer le prompt aussi
+->  Write something here: "$u"ls
+       CMD: No such file or directory
 ________________________________
 
 [[EXECUTION PART]]
