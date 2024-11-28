@@ -12,29 +12,6 @@
 
 #include "../includes/shell.h"
 
-/*int	main(int arc, char **arv, char **env)
-{
-	t_token *t;
-	t_cmd	*c;
-	int		i;
-	t_all	*all;
-	char	*str;
-	
-
-	all = (t_all *)malloc(sizeof(t_all));
-	all->env = envellope(env);
-	str = NULL;
-	printf("He<<$SHELL |l\"omy  |'love'\"|baby||bubble <look >out >wow <gril \n");
-	t = tokenizer("He<<$SHELL |l\"omy  |'love'\"|baby||bubble <look >out >wow <gril", all);
-	all->token = t;
-	token_list_visualizer(all);
-	t = all->token;
-	c = parser(t);
-	all->cmd = c;
-	cmd_list_visualizer(all);
-	total_free(all);
-}*/
-
 t_token	*tokenizer(char	*input, t_all *all)
 {
 	char	**chop;
@@ -120,44 +97,22 @@ char	*spacer(char *s, t_all *all)
 	spaced = malloc(sizeof(char) * (size_count(s, all) + 1));
 	while (s[i] && spaced)
 	{
-		if (s[i] == '$' && var_pfetch(all->env, s + i) && !simple_quoted(s, i)
+		if (s[i] == '$' && !simple_quoted(s, i)
 			&& s[i + 1] != '?')
 		{
 			tmp = var_pfetch(all->env, s + i);
-			while (*tmp)
+			while (tmp && *tmp)
 				spaced[j++] = *(tmp++);
-			while (s[i] != ' ' && s[i])
+			while (s[i] != ' ' && s[i] && s[i] != 34)
 				i++;
 		}
 		if (sym_check(s + i) < GENERAL && !quoted(s, i))
 			spacer_shortcut(spaced, s, &i, &j);
-		else
+		else if (s[i])
 			spaced[j++] = s[i++];
 	}
-	//free(s);
+	free(s);
 	if (spaced)
 		spaced[j] = '\0';
 	return (spaced);
-}
-
-/*frees the token list*/
-
-void	token_l_free(t_token *t)
-{
-	t_token	*tmp;
-
-	if (!t)
-		return ;
-	while (t->previous != NULL)
-		t = t->previous;
-	while (t->next != NULL)
-	{
-		tmp = t->next;
-		free(t->content);
-		free(t);
-		t = tmp;
-	}
-	free(t->content);
-	free(t);
-	return ;
 }

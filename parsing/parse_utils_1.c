@@ -17,7 +17,7 @@ void	cmd_l_free(t_cmd *c)
 	t_cmd	*tmp;
 
 	if (!c)
-	 return ;
+		return ;
 	while (c->previous != NULL)
 		c = c->previous;
 	while (c->next != NULL)
@@ -33,10 +33,6 @@ void	cmd_l_free(t_cmd *c)
 	token_l_free(c->out_red);
 	free(c->cmd);
 	free(c);
-	// c->cmd = 0;
-	// c->next = 0;
-	// c->previous = 0;
-	// system("leaks minishell");
 }
 
 /*counts the number of words before the next PIPE*/

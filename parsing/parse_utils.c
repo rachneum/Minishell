@@ -30,7 +30,7 @@ t_token	*redirect_finder(t_token *t, t_cmd *c)
 		if (t->type == SMALLER || t->type == DOUBLE_SMALL)
 			t = (in_red(t, c));
 		if (t && (t->type == GREATER || t->type == DOUBLE_GREAT))
-			t =  (out_red(t, c));
+			t = (out_red(t, c));
 	}
 	return (t);
 }

@@ -17,7 +17,7 @@
 void	type_assign(t_token *t)
 {
 	if (!t)
-		return;
+		return ;
 	while (t->next != NULL)
 	{
 		t->type = sym_check(t->content);

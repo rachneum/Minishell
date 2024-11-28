@@ -71,10 +71,10 @@ t_cmd	*cmd_node(t_all *all, t_cmd *cmd_l)
 		{
 			all->token = redirect_finder(all->token, cmd_l);
 			if (!all->token)
-				break;
+				break ;
 			if (all->token && all->token->type > PIPE
 				&& (!all->token->previous
-				|| all->token->previous->type > DOUBLE_GREAT))
+					|| all->token->previous->type > DOUBLE_GREAT))
 				leftover = all->token;
 			if (all->token->type != PIPE)
 				cmd_l->cmd[i++] = all->token->content;
@@ -82,7 +82,7 @@ t_cmd	*cmd_node(t_all *all, t_cmd *cmd_l)
 		if (all->token->type != PIPE && all->token->next)
 			all->token = all->token->next;
 		if (all->token && all->token->type == PIPE)
-			cmd_l = cmd_node_pipe_short(all,cmd_l, &i);
+			cmd_l = cmd_node_pipe_short(all, cmd_l, &i);
 	}
 	cmd_l->cmd[i] = NULL;
 	if (all->token && all->token->type != PIPE)
@@ -94,7 +94,6 @@ t_cmd	*cmd_node(t_all *all, t_cmd *cmd_l)
 		all->token = leftover;
 	return (first);
 }
-
 
 /*creates a new cmd_node and returns it*/
 
@@ -116,4 +115,3 @@ t_cmd	*new_c_node(t_cmd *c, t_token *t)
 	new->previous = c;
 	return (new);
 }
-

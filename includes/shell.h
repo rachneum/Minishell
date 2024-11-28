@@ -20,6 +20,7 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <fcntl.h>
+# include <termios.h>
 # include "libft.h"
 
 typedef struct s_env_list
@@ -78,6 +79,7 @@ t_env_list	*new_node(t_env_list *l);
 void		env_l_free(t_env_list *l);
 char		*variable_fetch(t_env_list *e, char *str);
 char		*var_value(char *var);
+char		*var_fetch(t_env_list *e, char *str);
 char		*var_pfetch(t_env_list *e, char *str);
 char		*var_bfetch(t_env_list *e, char *str);
 void		env_n_free(t_env_list *t);
@@ -103,6 +105,7 @@ void		quote_erase(t_token *l);
 void		spacer_shortcut(char *spac, char *s, int *i, int *j);
 int			simple_quoted(char *s, int index);
 void		spacer_shortcut(char *spac, char *s, int *i, int *j);
+void		token_l_free(t_token *t);
 
 /*parsing functions*/
 
@@ -117,10 +120,10 @@ t_token		*out_red(t_token *t, t_cmd *c);
 
 /*built-in functions*/
 
-int			my_pwd(t_cmd *cmd);
+int			my_pwd(t_all *all);
 void		my_unset(t_cmd *cmd, t_all *all);
 void		my_echo(char **arg);
-//void		my_cd(char **cmd, t_all *all);
+void		my_cd(char **cmd, t_all *all);
 void		my_export(t_all *all);
 void		my_env(t_cmd *cmd, t_all *all);
 void		env_split(t_all *all);

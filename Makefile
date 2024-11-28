@@ -10,6 +10,7 @@ SHELL_SRCS 	= token/token_utils.c\
 				token/token_utils_2.c\
 				token/token_utils_3.c\
 				token/token.c\
+				token/token1.c\
 				token/special_split.c\
 				parsing/parse.c\
 				parsing/parse_utils.c\
@@ -43,9 +44,17 @@ CC		= cc -g #-fsanitize=address
 
 FLAGS	= -Wall -Wextra -Werror
 
+RDL_PAT	= $(shell brew --prefix readline)
+
+#ifeq ($(CURRENT_USER), thomvan-)
+#	READ_FLAGS = -L/Users/$(shell whoami)/homebrew/opt/readline/lib -I/Users/$(shell whoami)/homebrew/opt/readline/include -lreadline
+#else
+#	READ_FLAGS = -L Users/$(shell whoami)/.brew/opt/readline/lib -I Users/$(shell whoami)/.brew/opt/readline/include -lreadline
+#endif
+
 READ_FLAGS = -L/Users/rachou/.brew/opt/readline/lib -I/Users/rachou/.brew/opt/readline/include -lreadline
 
-LIB		= ar -rc
+RDL_LIB = -lreadline -lhistory -L $(RDL_PAT)/lib
 
 RM		= rm -f
 
@@ -60,22 +69,23 @@ INCLUDES = -I ./includes ./libft/includes
 all: ${NAME}
 
 $(NAME): $(OBJS) ${FT}
-	$(CC) $(FLAGS) -o $(NAME)  $(OBJS) ${FT} ${READ_FLAGS}
+	@$(CC) $(FLAGS) -o $(NAME)  $(OBJS) ${FT} ${READ_FLAGS}
+#	make clean
 
 ${FT}: 
-		${MAKE_FT}
+	@${MAKE_FT}
 
 %.o: %.c ${HEADER}
-	${CC} ${FLAGS} -c ${INCLUDES} $< -o $@
+	@${CC} ${FLAGS} -c ${INCLUDES} $< -o $@
 
 re: fclean all
 
 clean:
-		${RM} ${OBJS}
+	@${RM} ${OBJS}
 
 fclean: clean
-		${RM} ${NAME}
-		${MAKE_FT} fclean
+	@${RM} ${NAME}
+	@${MAKE_FT} fclean
 
 # -----------------------------------.phony--------------------------------------
 

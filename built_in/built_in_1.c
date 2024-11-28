@@ -131,27 +131,41 @@ void my_unset(t_cmd *cmd, t_all *all)
 		current = current->next;
 	}
 }
-/*void	my_cd(char **cmd, t_all *all)
+
+void	my_cd(char **cmd, t_all *all)
 {
 	int			err;
-	char*		tmp;
+	char		*tmp;
+	t_env_list	*cpy;
+	int			i;
 	static char	cwd[1024];	
 
-	err = chdir(cmd[1]);
+	cpy = all->env;
+	i = 0;
+	if (!cmd[1])
+	{
+		printf("please insert absolute or relative path\n");
+		return ;
+	}
+	else
+		err = chdir(cmd[1]);
 	if (err == -1)
 		perror("chdir :");
 	getcwd(cwd, sizeof(cwd));
 	tmp = malloc(sizeof(char) * (ft_strlen(cwd) + 5));
-	while (ft_strncmp(all->env->var, "PWD", 3) != 0
-		&& all->env != NULL)
-		all->env = all->env->next;
-	if (all->env)
+	if (!tmp)
+		return ;
+	while (i < (ft_strlen(cwd) + 5))
+		tmp[i++] = '\0';
+	while (ft_strncmp(cpy->var, "PWD", 3) != 0
+		&& cpy != NULL)
+		cpy = cpy->next;
+	if (cpy)
 	{
 		tmp = strncpy(tmp, "PWD=", 4);
-		ft_strlcat(tmp, cwd, ft_strlen(cwd + 4));
-		free(all->env->var);
-		all->env->var = tmp;
-		return ;
+		ft_strlcat(tmp, cwd, ft_strlen(cwd) + 5);
+		free(cpy->var);
+		cpy->var = tmp;
 	}
-	free(tmp);
-}*/
+}
+
