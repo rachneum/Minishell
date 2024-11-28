@@ -45,7 +45,7 @@ typedef struct s_token
 typedef struct s_cmd
 {
 	char			**cmd;
-	int				n_redirection;
+	//int				n_redirection;
 	struct s_token	*in_red;
 	struct s_token	*out_red;
 	struct s_cmd	*next;

@@ -12,7 +12,7 @@
 
 #include "../includes/shell.h"
 
-void	token_list_visualizer(t_all *all)
+/*void	token_list_visualizer(t_all *all)
 {
 	t_token *first;
 
@@ -88,4 +88,4 @@ void	cmd_list_visualizer(t_all *all)
 	}
 	printf("\n");
 	all->cmd = first;
-}
+}*/

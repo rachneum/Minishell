@@ -12,13 +12,6 @@ TO_DO_LIST
 
 -> > export ahhrajkz
         AddressSanitizer:DEADLYSIGNAL
-________________________________
--> bash-3.2$ echo "Bonjour" | wc -c
-       8
--> > echo "BONJOUR" | wc -c
-        BONJOUR
-________________________________
-
 _________________________________
 ->  ls | cat << lol | wc pareril qu’en bas, wc ne renvoie que des 0??
 
@@ -37,9 +30,9 @@ _________________________________
            2       2      10
 
 ________________________________
-->  gérer buildin pipe (echo, pwd, env)
-->  faire cd, finir unset, += export
 
+->  gérer buildin pipe (echo, pwd, env)
+->  finir unset, ajouter condition += export
 ________________________________
 
 [[EXECUTION PART]]

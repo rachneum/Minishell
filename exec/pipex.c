@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/27 19:28:34 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/28 11:39:17 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ pid_t create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *e
     if (pid == 0)
     {
         handle_pipe_redirect(current_cmd, tube, prev_tube, env_list, &heredoc_fd);
-        if (current_cmd->next != NULL)
-            return (0);
+        //if (current_cmd->next != NULL)
+        //    return (0);
         if ((heredoc_fd != -1))//Redirige l'entrée Heredoc si présente.
         {
             dup2(heredoc_fd, 0);//Redirige stdin vers le fichier du Heredoc.
