@@ -45,10 +45,6 @@ Minishell> ls | cat << lol | wc
 rachou@Rachels-MacBook-Pro 41 % 
 ________________________________
 
-->  gérer buildin pipe (echo, pwd, env)
-->  finir unset, ajouter condition += export
-________________________________
-
 [[EXECUTION PART]]
 
 [Redirections]

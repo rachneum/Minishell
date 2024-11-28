@@ -20,7 +20,7 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <fcntl.h>
-# include <termios.h>
+//# include <termios.h>
 # include "libft.h"
 
 typedef struct s_env_list
@@ -46,7 +46,6 @@ typedef struct s_token
 typedef struct s_cmd
 {
 	char			**cmd;
-	//int				n_redirection;
 	struct s_token	*in_red;
 	struct s_token	*out_red;
 	struct s_cmd	*next;
@@ -127,7 +126,6 @@ void		my_cd(char **cmd, t_all *all);
 void		my_export(t_all *all);
 void		my_env(t_cmd *cmd, t_all *all);
 void		env_split(t_all *all);
-//void		tok_split(t_all *all);
 
 /*exec functions*/
 

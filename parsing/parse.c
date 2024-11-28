@@ -18,7 +18,6 @@ static void	cmd_init(t_cmd *c)
 	c->next = NULL;
 	c->in_red = NULL;
 	c->out_red = NULL;
-	//c->n_redirection = 0;
 }
 
 t_cmd	*parser(t_all *all)
@@ -111,7 +110,6 @@ t_cmd	*new_c_node(t_cmd *c, t_token *t)
 	new->next = NULL;
 	new->in_red = NULL;
 	new->out_red = NULL;
-	//new->n_redirection = 0;
 	new->previous = c;
 	return (new);
 }

@@ -27,17 +27,6 @@ void	env_split(t_all *all)
 	}
 }
 
-/*void	tok_split(t_all *all)
-{
-	t_token		*next_content;
-	char		**tok_rlt;
-
-	next_content = all->token->next;
-	tok_rlt = ft_split(next_content->content, '=');
-	all->token->next->tok_name = tok_rlt[0];
-	all->token->next->tok_value = tok_rlt[1];
-}*/
-
 void	my_export(t_all *all)
 {
 	t_env_list	*current;
@@ -118,12 +107,9 @@ void my_unset(t_cmd *cmd, t_all *all)
 		env_split(all);
 		if (strcmp(current->env_name, tok_rlt[0]) == 0)
 		{
-			//free(current->var);
-			//printf("%s\n", current->var);
 			printf("current->var address: %p\n", current->var);
 			printf("current->var value: %s\n", current->var);
 			//free(current->var);
-			//printf("%s\n", current->env_name);
 			break;
 		}
 		current = current->next;

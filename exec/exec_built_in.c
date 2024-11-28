@@ -6,28 +6,20 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:53:47 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/28 12:50:31 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/28 17:09:36 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-/*int	handle_built_in(t_cmd *cmd, t_all *all)
-{
-	if (built_in_subshell(cmd, all) || built_in_shell(cmd, all))
-        return (1);
-    return (0); 
-}*/
-
 int	built_in_subshell(t_cmd *cmd, t_all *all)
 {
 	if ((ft_strcmp(cmd->cmd[0], "cd") == 0) && (ft_strlen(cmd->cmd[0]) == 2))
 	{
-		//printf("1\n");
 		my_cd(cmd->cmd, all);
 		return (1);
 	}
-	if ((ft_strcmp(cmd->cmd[0], "export") == 0) && (ft_strlen(cmd->cmd[0]) == 6))
+	else if ((ft_strcmp(cmd->cmd[0], "export") == 0) && (ft_strlen(cmd->cmd[0]) == 6))
 	{
 		my_export(all);
 		return (1);

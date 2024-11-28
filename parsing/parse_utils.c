@@ -40,7 +40,6 @@ t_token	*in_red(t_token *t, t_cmd *c)
 	int	round;
 
 	round = 2;
-	//c->n_redirection++;
 	while (round)
 	{
 		c->in_red = new_t_node(c->in_red);
@@ -64,7 +63,6 @@ t_token	*out_red(t_token *t, t_cmd *c)
 	int	round;
 
 	round = 2;
-	//c->n_redirection++;
 	while (round)
 	{
 		c->out_red = new_t_node(c->out_red);
