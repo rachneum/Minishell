@@ -31,6 +31,20 @@ _________________________________
 
 ________________________________
 
+Minishell> ls | cat << lol | wc
+> aj
+> lol
+CMD: No such file or directory
+Minishell> ^C
+rachou@Rachels-MacBook-Pro 41 % ./minishell 
+Minishell> ls | cat << lol | wc
+> haha
+> lol
+
+^C
+rachou@Rachels-MacBook-Pro 41 % 
+________________________________
+
 ->  gérer buildin pipe (echo, pwd, env)
 ->  finir unset, ajouter condition += export
 ________________________________
