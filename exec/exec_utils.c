@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:52:57 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/26 15:12:12 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/11/29 19:21:50 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-char	*get_path(char **cmd, t_env_list *env_list, int i)//Vérifie si la cmd est exécutable et, si ce n'est pas le cas, extrait et divise la variable d'environnement PATH pour rechercher le chemin complet de la commande.
+char	*get_path(char **cmd, t_env_list *env_list, int i)
 {
 	char	**split_path;
 	char	*path;
@@ -30,37 +30,37 @@ char	*get_path(char **cmd, t_env_list *env_list, int i)//Vérifie si la cmd est 
 	split_path = ft_split(env_path, ':');
 	if (!split_path)
 		return (NULL);
-	while (split_path[++i])//Recherche le chemin dans chaque répertoire de PATH.
+	while (split_path[++i])
 	{
 		path = ft_strjoin(split_path[i], "/");
 		full_path = ft_strjoin(path, cmd[0]);
 		if (!path)
 			free(path);
-		if (!full_path)//Si path ou full_path ne sont pas construits correctement je free.
+		if (!full_path)
 			free(full_path);
-		if (!access(full_path, X_OK))//Vérifie si le chemin construit est exécutable.
-			return (full_path);//Retourne le chemin complet si exécutable.
+		if (!access(full_path, X_OK))
+			return (full_path);
 		if (full_path)
-			free(full_path);//Je libère full_path car elle n'est pas executable.
+			free(full_path);
 	}
-	return (ft_free_tab(split_path));//Libère le tableau des chemins.
+	return (ft_free_tab(split_path));
 }
 
-int	check_path(t_env_list *env_list)//Check si le PATH existe dans l'environnement.
+int	check_path(t_env_list *env_list)
 {
 	while (env_list)
 	{
-	    if (ft_strncmp("PATH", env_list->var, 4) == 0)
-	        return (1);
-	    env_list = env_list->next;
+		if (ft_strncmp("PATH", env_list->var, 4) == 0)
+			return (1);
+		env_list = env_list->next;
 	}
 	return (-1);
 }
 
-char	**env_list_to_array(t_env_list *env_list, int i)//Convertit liste chaînée en tableau de chaînes de caractères.
+char	**env_list_to_array(t_env_list *env_list, int i)
 {
-	char		**env_array;
 	t_env_list	*current;
+	char		**env_array;
 	int			count;
 
 	current = env_list;
@@ -72,7 +72,7 @@ char	**env_list_to_array(t_env_list *env_list, int i)//Convertit liste chaînée
 	}
 	env_array = (char **)malloc(sizeof(char *) * (count + 1));
 	if (!env_array)
-		return NULL;
+		return (NULL);
 	current = env_list;
 	while (current)
 	{
@@ -81,9 +81,9 @@ char	**env_list_to_array(t_env_list *env_list, int i)//Convertit liste chaînée
 			return (free(env_array), NULL);
 		current = current->next;
 		i++;
-   	}
-	env_array[i] = NULL;//Terminate env_array.
-	return env_array;
+	}
+	env_array[i] = NULL;
+	return (env_array);
 }
 
 char	*ft_free_tab(char **cmd)
@@ -102,18 +102,16 @@ char	*ft_free_tab(char **cmd)
 	return (NULL);
 }
 
-int ft_strcmp(char *str1, char *str2)
+int	ft_strcmp(char *str1, char *str2)
 {
-    int i;
+	int	i;
 
 	i = 0;
-    while (str1[i] != '\0' && str2[i] != '\0')
-    {
-        if (str1[i] != str2[i])
-        {
-            return (str1[i] - str2[i]);
-        }
-        i++;
-    }
-    return (str1[i] - str2[i]);
+	while (str1[i] != '\0' && str2[i] != '\0')
+	{
+		if (str1[i] != str2[i])
+			return (str1[i] - str2[i]);
+		i++;
+	}
+	return (str1[i] - str2[i]);
 }

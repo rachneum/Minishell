@@ -46,7 +46,7 @@ void	my_export(t_all *all)
 			printf("=\"%s\"\n", current->env_value);
 			current = current->next;
 		}
-		return;
+		return ;
 	}
 	tok_rlt = ft_split(next_content->content, '=');
 	next_content->tok_name = tok_rlt[0];
@@ -91,7 +91,7 @@ void	my_export(t_all *all)
 	}
 }
 
-void my_unset(t_cmd *cmd, t_all *all)
+void	my_unset(t_cmd *cmd, t_all *all)
 {
 	t_env_list	*current;
 	t_token		*next_content;
@@ -152,4 +152,3 @@ void	my_cd(char **cmd, t_all *all)
 		cpy->var = tmp;
 	}
 }
-

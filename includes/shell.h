@@ -130,9 +130,10 @@ void		env_split(t_all *all);
 /*exec functions*/
 
 void	ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all);
-int 	init_pids_and_count(t_cmd *cmd, pid_t **pids);
+int		init_pids_and_count(t_cmd *cmd, pid_t **pids);
 int		create_pipe(int tube[2], pid_t *pids, t_cmd *current_cmd);
-pid_t 	create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list, t_all *all);
+pid_t	create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list, t_all *all);
+
 void	pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list);
 void 	handle_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list, int *heredoc_fd);
 void	ft_exec(char **cmd, t_env_list *env_list);
