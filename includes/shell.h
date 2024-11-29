@@ -161,7 +161,6 @@ int		built_in_shell(t_cmd *cmd, t_all *all);
 int		built_in_subshell(t_cmd *cmd, t_all *all);
 int		handle_built_in(t_cmd *cmd, t_all *all);
 
-
 /*extra functions*/
 
 void		token_list_visualizer(t_all *all);

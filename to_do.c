@@ -14,21 +14,6 @@ TO_DO_LIST
         AddressSanitizer:DEADLYSIGNAL
 _________________________________
 ->  ls | cat << lol | wc pareril qu’en bas, wc ne renvoie que des 0??
-
-->  write something : ls | cat << lol | wc
-    > haha
-    > hihi
-    > lol
-    haha
-    hihi
-           0       0       0
-    au lieu de
-    bash-3.2$ ls | cat << lol | wc
-    > haha
-    > hihi
-    > lol
-           2       2      10
-
 ________________________________
 
 Minishell> ls | cat << lol | wc
