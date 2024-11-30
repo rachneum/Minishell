@@ -19,6 +19,7 @@ SHELL_SRCS 	=	token/token_utils.c\
 				shell.c\
 				utils/extra.c\
 				exec/exec_utils.c\
+				exec/exec_utils_2.c\
 				exec/ft_split.c\
 				exec/pipex.c\
 				exec/pipex_utils.c\
