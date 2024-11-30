@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/30 18:13:12 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/30 19:28:26 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	ft_exec(char **cmd, t_env_list *env_list)
 	if (!path)
 	{
 		perror("CMD");
+		g_err_global = 127;//échoue a trouver une commande exéutable
 		ft_free_tab(cmd);
 		exit(127);
 	}
@@ -32,6 +33,7 @@ static void	ft_exec(char **cmd, t_env_list *env_list)
 		if (execve(path, cmd, env_array) == -1)
 		{
 			perror("EXEC");
+			g_err_global = 126;//échec d'execve
 			ft_free_tab(cmd);
 			ft_free_tab(env_array);
 			exit(126);
@@ -104,7 +106,10 @@ void	ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)
 	cmd->prev_tube = -1;
 	cmd_count = init_pids_and_count(cmd, &pids);
 	if (cmd_count == -1)
+	{
+		g_err_global = 1;
 		return ;
+	}
 	i = 0;
 	while (current_cmd)
 	{

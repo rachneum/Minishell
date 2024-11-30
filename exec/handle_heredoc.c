@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 11:57:54 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/30 17:27:24 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/30 22:20:34 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static int	open_file(void)
 	if (fd == -1)
 	{
 		perror("OPEN ");
+		g_err_global = 1;
 		return (-1);
 	}
 	return (fd);
@@ -33,44 +34,44 @@ static int	open_and_cleanup_heredoc_file(void)
 	if (fd == -1)
 	{
 		perror("OPEN ");
+		g_err_global = 1;
 		return (-1);
 	}
 	unlink(".surprise.txt");
 	return (fd);
 }
 
-static int	process_heredoc(t_token *current, int heredoc_count, int fd)
+static void	prompt_heredoc(t_token *current, int heredoc_count, int i, int fd)
 {
-	char	*input;
-	char	*delimiter;
-	int		current_index;
+	while (1)
+	{
+		current->input = readline("> ");
+		if (!current->input || !ft_strcmp(current->input, current->delimiter))
+		{
+			free(current->input);
+			break ;
+		}
+		if (i == heredoc_count)
+			ft_putendl_fd(current->input, fd);
+		free(current->input);
+	}
+}
 
-	current_index = 0;
-	fd = -1;
+static int	process_heredoc(t_token *current, int heredoc_count, int fd, int i)
+{
 	while (current)
 	{
 		if (ft_strcmp(current->content, "<<") == 0)
 		{
-			current_index++;
-			delimiter = current->next->content;
-			if (current_index == heredoc_count)
+			i++;
+			current->delimiter = current->next->content;
+			if (i == heredoc_count)
 			{
 				fd = open_file();
 				if (fd == -1)
 					break ;
 			}
-			while (1)
-			{
-				input = readline("> ");
-				if (!input || !ft_strcmp(input, delimiter))
-				{
-					free(input);
-					break ;
-				}
-				if (current_index == heredoc_count)
-					ft_putendl_fd(input, fd);
-				free(input);
-			}
+			prompt_heredoc(current, heredoc_count, i, fd);
 		}
 		current = current->next;
 	}
@@ -89,6 +90,7 @@ void	handle_heredoc(t_token *in_red, int *heredoc_fd)
 	int		heredoc_count;
 	int		fd;
 
+	fd = -1;
 	current = in_red;
 	heredoc_count = 0;
 	while (current->previous)
@@ -100,7 +102,7 @@ void	handle_heredoc(t_token *in_red, int *heredoc_fd)
 			heredoc_count++;
 		tmp = tmp->next;
 	}
-	fd = process_heredoc(current, heredoc_count, fd);
+	fd = process_heredoc(current, heredoc_count, fd, 0);
 	if (fd != -1)
 		*heredoc_fd = fd;
 }

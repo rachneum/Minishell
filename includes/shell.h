@@ -39,6 +39,8 @@ typedef struct s_env_list
 typedef struct s_token
 {
 	char			*content;
+	char			*input;
+	char			*delimiter;
 	int				type;
 	int				index;
 	struct s_token	*next;
