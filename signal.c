@@ -19,6 +19,7 @@ void	sigint_handler(int sig)
 	rl_on_new_line();
 	//rl_replace_line("", 0);
 	rl_redisplay();
+	g_err_global = 130;
 	(void) sig;
 }
 

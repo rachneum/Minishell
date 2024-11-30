@@ -12,6 +12,8 @@
 
 #include "includes/shell.h"
 
+int	g_err_global = 0;
+
 static void	l_reset(t_token *t, t_cmd *c)
 {
 	token_l_free(t);
@@ -32,12 +34,18 @@ static void	loop(t_all *all, char *input)
 			free(input);
 			break ;
 		}
-		all->token = tokenizer(input, all);
-		all->cmd = parser(all);
-		/*token_list_visualizer(all);
-		cmd_list_visualizer(all);*/
-		ft_pipex(all->cmd, all->env, all);
-		l_reset(all->token, all->cmd);
+		if (*input)
+		{
+			g_err_global = 0;
+			all->token = tokenizer(input, all);
+			all->cmd = parser(all);
+			//token_list_visualizer(all);
+			//cmd_list_visualizer(all);
+			ft_pipex(all->cmd, all->env, all);
+			l_reset(all->token, all->cmd);
+		}
+		else
+			free(input);
 	}
 }
 
@@ -56,6 +64,8 @@ int	main(int arc, char **arv, char **envp)
 		free(all);
 	}
 	else
+	{
 		printf("Wrong amount of arguments!\n");
+	}
 	return (0);
 }

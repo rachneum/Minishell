@@ -21,12 +21,13 @@ int	my_pwd(t_all *all)
 	if (all->cmd->cmd[1])
 	{
 		printf("Too many arguments !\n");
-		return (0);
+		g_err_global = 1;
+		return (1);
 	}
 	wd = NULL;
 	wd = var_fetch(cpy, "PWD");
 	if (!wd)
-		perror("env variable doesn't exist\n");
+		return (printf("var doesn't exist\n"), g_err_global = 1, 1);
 	printf("%s\n", wd);
 	return (0);
 }
@@ -61,6 +62,7 @@ void	my_env(t_cmd *cmd, t_all *all)
 	if (cmd->cmd[1])
 	{
 		printf("Too many arguments !\n");
+		g_err_global = 1;
 		return ;
 	}
 	while (current)
@@ -68,4 +70,11 @@ void	my_env(t_cmd *cmd, t_all *all)
 		printf("%s\n", current->var);
 		current = current->next;
 	}
+}
+
+t_env_list	*env_rewinder(t_env_list *e)
+{
+	while (e->previous != NULL)
+		e = e->previous;
+	return (e);
 }

@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:52:57 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/30 17:41:32 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/30 18:08:32 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,17 @@ static char	*find_executable_path(char **split_path, char *cmd)
 	return (NULL);
 }
 
+static int	check_path(t_env_list *env_list)
+{
+	while (env_list)
+	{
+		if (ft_strncmp("PATH", env_list->var, 4) == 0)
+			return (1);
+		env_list = env_list->next;
+	}
+	return (-1);
+}
+
 char	*get_path(char **cmd, t_env_list *env_list, int i)
 {
 	char	**split_path;
@@ -60,17 +71,6 @@ char	*get_path(char **cmd, t_env_list *env_list, int i)
 	result = find_executable_path(split_path, cmd[0]);
 	ft_free_tab(split_path);
 	return (result);
-}
-
-int	check_path(t_env_list *env_list)
-{
-	while (env_list)
-	{
-		if (ft_strncmp("PATH", env_list->var, 4) == 0)
-			return (1);
-		env_list = env_list->next;
-	}
-	return (-1);
 }
 
 char	**env_list_to_array(t_env_list *env_list, int i)
