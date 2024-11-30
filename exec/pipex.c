@@ -6,71 +6,36 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/30 16:05:32 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/30 16:50:57 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-void ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)
+void	ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)
 {
-    pid_t *pids;
-    t_cmd *current_cmd;
-    int cmd_count;
-    int i;
-
-    current_cmd = cmd;
-    cmd->prev_tube = -1;
-    cmd_count = init_pids_and_count(cmd, &pids);
-    if (cmd_count == -1)
-        return;
-    i = 0;
-    while (current_cmd)
-	{
-        if (create_pipe(current_cmd->tube, pids, current_cmd) == -1)
-            return;
-        pids[i++] = create_process(current_cmd, env_list, all);
-        close_unused_pipes(current_cmd);
-        if (current_cmd->next)
-            current_cmd->next->prev_tube = current_cmd->tube[0];
-        current_cmd = current_cmd->next;
-    }
-    wait_for_children(pids, cmd_count);
-}
-
-int	init_pids_and_count(t_cmd *cmd, pid_t **pids)
-{
+	pid_t	*pids;
+	t_cmd	*current_cmd;
 	int		cmd_count;
-	t_cmd	*tmp;
+	int		i;
 
-	cmd_count = 0;
-	tmp = cmd;
-	while (tmp)
+	current_cmd = cmd;
+	cmd->prev_tube = -1;
+	cmd_count = init_pids_and_count(cmd, &pids);
+	if (cmd_count == -1)
+		return ;
+	i = 0;
+	while (current_cmd)
 	{
-		cmd_count++;
-		tmp = tmp->next;
+		if (create_pipe(current_cmd->tube, pids, current_cmd) == -1)
+			return ;
+		pids[i++] = create_process(current_cmd, env_list, all);
+		close_unused_pipes(current_cmd);
+		if (current_cmd->next)
+			current_cmd->next->prev_tube = current_cmd->tube[0];
+		current_cmd = current_cmd->next;
 	}
-	*pids = malloc(sizeof(pid_t) * cmd_count);
-	if (!*pids)
-	{
-		perror("PIDS malloc");
-		return (-1);
-	}
-	return (cmd_count);
-}
-
-int	create_pipe(int tube[2], pid_t *pids, t_cmd *current_cmd)
-{
-	if (current_cmd->next)
-	{
-		if (pipe(tube) == -1)
-		{
-			perror("PIPE");
-			free(pids);
-			return (-1);
-		}
-	}
-	return (0);
+	wait_for_children(pids, cmd_count);
 }
 
 pid_t	create_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all)
@@ -81,12 +46,9 @@ pid_t	create_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all)
 	heredoc_fd = -1;
 	if (built_in_subshell(current_cmd, all))
 		return (0);
-	pid = fork();
+	pid = create_fork();
 	if (pid == -1)
-	{
-		perror("FORK ");
 		return (-1);
-	}
 	if (pid == 0)
 	{
 		pipe_redi(current_cmd, env_list, &heredoc_fd);
@@ -104,7 +66,6 @@ pid_t	create_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all)
 	wait(NULL);
 	return (pid);
 }
-
 
 void	pipe_redi(t_cmd *current_cmd, t_env_list *env_list, int *heredoc_fd)
 {
@@ -155,25 +116,4 @@ void	ft_exec(char **cmd, t_env_list *env_list)
 		}
 		ft_free_tab(env_array);
 	}
-}
-
-void close_unused_pipes(t_cmd *current_cmd)
-{
-    if (current_cmd->prev_tube != -1)
-        close(current_cmd->prev_tube);
-    if (current_cmd->next)
-        close(current_cmd->tube[1]);
-}
-
-void	wait_for_children(pid_t *pids, int cmd_count)
-{
-	int	i;
-
-	i = 0;
-	while (i < cmd_count)
-	{
-		waitpid(pids[i], NULL, 0);
-		i++;
-	}
-	free(pids);
 }

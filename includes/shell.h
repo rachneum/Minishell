@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	SHELL_H
+#ifndef SHELL_H
 # define SHELL_H
 
 # include <unistd.h>
@@ -134,18 +134,19 @@ void		env_split(t_all *all);
 void	ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all);
 int		init_pids_and_count(t_cmd *cmd, pid_t **pids);
 int		create_pipe(int tube[2], pid_t *pids, t_cmd *current_cmd);
+pid_t	create_fork(void);
 pid_t	create_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all);
 
 void	pipe_redirect(t_cmd *current_cmd, t_env_list *env_list);
 void	pipe_redi(t_cmd *current_cmd, t_env_list *env_list, int *heredoc_fd);
 void	ft_exec(char **cmd, t_env_list *env_list);
-void close_unused_pipes(t_cmd *current_cmd);
+void	close_unused_pipes(t_cmd *current_cmd);
 void 	wait_for_children(pid_t *pids, int cmd_count);
 
-char	*get_path(char **cmd, t_env_list *env_list, int i);
 int		check_path(t_env_list *env_list);
-char	**env_list_to_array(t_env_list *env_list, int i);
+char	*get_path(char **cmd, t_env_list *env_list, int i);
 char	*ft_free_tab(char **cmd);
+char	**env_list_to_array(t_env_list *env_list, int i);
 int 	ft_strcmp(char *str1, char *str2);
 
 char	**ft_split(char const *s, char c);
