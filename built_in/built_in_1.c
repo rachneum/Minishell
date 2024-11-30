@@ -105,7 +105,7 @@ void	my_unset(t_cmd *cmd, t_all *all)
 	while (current)
 	{
 		env_split(all);
-		if (strcmp(current->env_name, tok_rlt[0]) == 0)
+		if (ft_strcmp(current->env_name, tok_rlt[0]) == 0)
 		{
 			printf("current->var address: %p\n", current->var);
 			printf("current->var value: %s\n", current->var);

@@ -2,32 +2,10 @@ TO_DO_LIST
 
 [[ERRORS]]
 
-//->  cat << lol | cat << yeah | cat << yo (a besoin des 3 délimitateurs pour s’arrêter, dois renvoyer ce que j’ai rentré av le dernier délimitateur).
-
-//->  ls | cat << lol | wc (ne va doit exec le ls mais simplement faire le heredoc et afficher wc).
-
-//->  cat << lol | ls
-
-//->  ajouter printf exit.
-
--> > export ahhrajkz
-        AddressSanitizer:DEADLYSIGNAL
-_________________________________
-->  ls | cat << lol | wc pareril qu’en bas, wc ne renvoie que des 0??
-________________________________
-
-Minishell> ls | cat << lol | wc
-> aj
-> lol
-CMD: No such file or directory
-Minishell> ^C
-rachou@Rachels-MacBook-Pro 41 % ./minishell 
-Minishell> ls | cat << lol | wc
-> haha
-> lol
-
+Minishell> cat < AHAHHAHH  >> yo
+open: No such file or directory
 ^C
-rachou@Rachels-MacBook-Pro 41 % 
+voir ligne 51 handle_heredoc()
 ________________________________
 
 [[EXECUTION PART]]

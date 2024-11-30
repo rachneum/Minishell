@@ -6,36 +6,36 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/29 19:32:32 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/30 16:05:32 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-void	ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)
+void ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)
 {
-	pid_t	*pids;
-	t_cmd	*current_cmd;
-	int		tube[2];
-	int		prev_tube;
-	int		cmd_count;
-	int		i;
+    pid_t *pids;
+    t_cmd *current_cmd;
+    int cmd_count;
+    int i;
 
-	current_cmd = cmd;
-	prev_tube = -1;
-	cmd_count = init_pids_and_count(cmd, &pids);
-	i = 0;
-	if (cmd_count == -1)
-		return ;
-	while (current_cmd)
+    current_cmd = cmd;
+    cmd->prev_tube = -1;
+    cmd_count = init_pids_and_count(cmd, &pids);
+    if (cmd_count == -1)
+        return;
+    i = 0;
+    while (current_cmd)
 	{
-		if (create_pipe(tube, pids, current_cmd) == -1)
-			return ;
-		pids[i++] = create_process(current_cmd, tube, prev_tube, env_list, all);
-		close_unused_pipes(&prev_tube, tube, current_cmd);
-		current_cmd = current_cmd->next;
-	}
-	wait_for_children(pids, cmd_count);
+        if (create_pipe(current_cmd->tube, pids, current_cmd) == -1)
+            return;
+        pids[i++] = create_process(current_cmd, env_list, all);
+        close_unused_pipes(current_cmd);
+        if (current_cmd->next)
+            current_cmd->next->prev_tube = current_cmd->tube[0];
+        current_cmd = current_cmd->next;
+    }
+    wait_for_children(pids, cmd_count);
 }
 
 int	init_pids_and_count(t_cmd *cmd, pid_t **pids)
@@ -67,13 +67,13 @@ int	create_pipe(int tube[2], pid_t *pids, t_cmd *current_cmd)
 		{
 			perror("PIPE");
 			free(pids);
-			return -1;
+			return (-1);
 		}
 	}
 	return (0);
 }
 
-pid_t	create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list, t_all *all)
+pid_t	create_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all)
 {
 	pid_t	pid;
 	int		heredoc_fd;
@@ -89,7 +89,7 @@ pid_t	create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *e
 	}
 	if (pid == 0)
 	{
-		handle_pipe_redirect(current_cmd, tube, prev_tube, env_list, &heredoc_fd);
+		pipe_redi(current_cmd, env_list, &heredoc_fd);
 		if ((heredoc_fd != -1))
 		{
 			dup2(heredoc_fd, 0);
@@ -106,24 +106,27 @@ pid_t	create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *e
 }
 
 
-void	handle_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list, int *heredoc_fd)
+void	pipe_redi(t_cmd *current_cmd, t_env_list *env_list, int *heredoc_fd)
 {
 	if (current_cmd->out_red || current_cmd->in_red)
 		handle_redirections(current_cmd, heredoc_fd);
-	pipe_redirect(current_cmd, tube, prev_tube, env_list);
+	pipe_redirect(current_cmd, env_list);
 }
 
-void	pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list)
+void	pipe_redirect(t_cmd *current_cmd, t_env_list *env_list)
 {
-	if (current_cmd->next)
+	if (!current_cmd->out_red)
 	{
-		dup2(tube[1], 1);
-		close(tube[1]);
+		if (current_cmd->next)
+		{
+			dup2(current_cmd->tube[1], 1);
+			close(current_cmd->tube[1]);
+		}
 	}
 	if (current_cmd->previous != NULL)
 	{
-		dup2(prev_tube, 0);
-		close(prev_tube);
+		dup2(current_cmd->prev_tube, 0);
+		close(current_cmd->prev_tube);
 	}
 }
 
@@ -154,15 +157,12 @@ void	ft_exec(char **cmd, t_env_list *env_list)
 	}
 }
 
-void	close_unused_pipes(int *prev_tube, int *tube, t_cmd *current_cmd)
+void close_unused_pipes(t_cmd *current_cmd)
 {
-	if (*prev_tube != -1)
-		close(*prev_tube);
-	if (current_cmd->next)
-	{
-		close(tube[1]);
-		*prev_tube = tube[0];
-	}
+    if (current_cmd->prev_tube != -1)
+        close(current_cmd->prev_tube);
+    if (current_cmd->next)
+        close(current_cmd->tube[1]);
 }
 
 void	wait_for_children(pid_t *pids, int cmd_count)

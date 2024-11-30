@@ -45,11 +45,13 @@ typedef struct s_token
 
 typedef struct s_cmd
 {
-	char			**cmd;
+	char			**cmd;		
 	struct s_token	*in_red;
 	struct s_token	*out_red;
 	struct s_cmd	*next;
 	struct s_cmd	*previous;
+	int				tube[2];
+	int				prev_tube;
 }	t_cmd;
 
 typedef struct s_all
@@ -132,12 +134,12 @@ void		env_split(t_all *all);
 void	ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all);
 int		init_pids_and_count(t_cmd *cmd, pid_t **pids);
 int		create_pipe(int tube[2], pid_t *pids, t_cmd *current_cmd);
-pid_t	create_process(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list, t_all *all);
+pid_t	create_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all);
 
-void	pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list);
-void 	handle_pipe_redirect(t_cmd *current_cmd, int *tube, int prev_tube, t_env_list *env_list, int *heredoc_fd);
+void	pipe_redirect(t_cmd *current_cmd, t_env_list *env_list);
+void	pipe_redi(t_cmd *current_cmd, t_env_list *env_list, int *heredoc_fd);
 void	ft_exec(char **cmd, t_env_list *env_list);
-void 	close_unused_pipes(int *prev_tube, int *tube, t_cmd *current_cmd);
+void close_unused_pipes(t_cmd *current_cmd);
 void 	wait_for_children(pid_t *pids, int cmd_count);
 
 char	*get_path(char **cmd, t_env_list *env_list, int i);

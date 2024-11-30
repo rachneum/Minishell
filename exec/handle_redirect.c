@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:59 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/29 19:25:57 by rachou           ###   ########.fr       */
+/*   Updated: 2024/11/30 16:04:53 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ void	handle_input_red(t_token *in_red)
 	fd = open(in_red->content, O_RDONLY);
 	if (fd == -1)
 	{
-		perror("open");
-		return ;
+		perror("OPEN ");
+		exit (1);
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)
 	{
-		perror("dup2");
+		perror("DUP2 ");
 		return ;
 	}
 	close(fd);
@@ -115,6 +115,23 @@ void	handle_output_red(t_token *out_red)
 
 void	handle_redirections(t_cmd *cmd, int *heredoc_fd)
 {
+	if (cmd->in_red && cmd->in_red->content)
+	{
+		if ((cmd->in_red->previous->content)
+			&& (ft_strcmp(cmd->in_red->previous->content, "<") == 0)
+			&& (ft_strlen(cmd->in_red->previous->content) == 1))
+		{
+			printf("TEST1\n");
+			handle_input_red(cmd->in_red);
+		}
+		if ((cmd->in_red->previous->content)
+			&& (ft_strcmp(cmd->in_red->previous->content, "<<") == 0)
+			&& (ft_strlen(cmd->in_red->previous->content) == 2))
+		{
+			printf("TEST2\n");
+			handle_heredoc(cmd->in_red, heredoc_fd);
+		}
+	}
 	if (cmd->out_red && cmd->out_red->content)
 	{
 		if ((cmd->out_red->previous->content)
@@ -125,16 +142,5 @@ void	handle_redirections(t_cmd *cmd, int *heredoc_fd)
 			&& (ft_strcmp(cmd->out_red->previous->content, ">>") == 0)
 			&& (ft_strlen(cmd->out_red->previous->content) == 2))
 			handle_append_red(cmd->out_red);
-	}
-	else if (cmd->in_red && cmd->in_red->content)
-	{
-		if ((cmd->in_red->previous->content)
-			&& (ft_strcmp(cmd->in_red->previous->content, "<") == 0)
-			&& (ft_strlen(cmd->in_red->previous->content) == 1))
-			handle_input_red(cmd->in_red);
-		if ((cmd->in_red->previous->content)
-			&& (ft_strcmp(cmd->in_red->previous->content, "<<") == 0)
-			&& (ft_strlen(cmd->in_red->previous->content) == 2))
-			handle_heredoc(cmd->in_red, heredoc_fd);
 	}
 }
