@@ -6,7 +6,7 @@
 /*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/12/01 10:05:44 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/12/01 12:15:30 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static int	ft_exec(char **cmd, t_env_list *env_list)
 	path = get_path(&cmd[0], env_list, -1);
 	if (!path)
 	{
-		perror("CMD");
+		perror(cmd[0]);
 		ft_free_tab(cmd);
-		return (g_err_global = 127, 1);
+		exit (127);
 	}
 	env_array = env_list_to_array(env_list, 0);
 	if (env_array)
@@ -31,10 +31,10 @@ static int	ft_exec(char **cmd, t_env_list *env_list)
 		reset_signal();
 		if (execve(path, cmd, env_array) == -1)
 		{
-			perror("EXEC");
+			perror("exec ");
 			ft_free_tab(cmd);
 			ft_free_tab(env_array);
-			return (g_err_global = 126, 1);
+			exit (126);
 		}
 		ft_free_tab(env_array);
 	}
@@ -67,21 +67,21 @@ static void	pipe_redi(t_cmd *current_cmd, t_env_list *env_list, int *heredoc_fd)
 static pid_t	ft_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all)
 {
 	pid_t	pid;
-	int		heredoc_fd;
+	int		status;
 
-	heredoc_fd = -1;
+	current_cmd->heredoc_fd = -1;
 	if (built_in_subshell(current_cmd, all))
 		return (0);
 	pid = create_fork();
 	if (pid == -1)
-		return (-1);
+		return (g_err_global = 1, -1);
 	if (pid == 0)
 	{
-		pipe_redi(current_cmd, env_list, &heredoc_fd);
-		if ((heredoc_fd != -1))
+		pipe_redi(current_cmd, env_list, &current_cmd->heredoc_fd);
+		if ((current_cmd->heredoc_fd != -1))
 		{
-			dup2(heredoc_fd, 0);
-			close(heredoc_fd);
+			dup2(current_cmd->heredoc_fd, 0);
+			close(current_cmd->heredoc_fd);
 		}
 		if (built_in_shell(current_cmd, all))
 			exit(0);
@@ -89,11 +89,12 @@ static pid_t	ft_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all)
 			ft_exec(current_cmd->cmd, env_list);
 		exit(1);
 	}
-	wait(NULL);
+	wait(&status);
+	g_err_global = WEXITSTATUS(status);
 	return (pid);
 }
 
-void	ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)
+int	ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)
 {
 	pid_t	*pids;
 	t_cmd	*current_cmd;
@@ -104,15 +105,12 @@ void	ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)
 	cmd->prev_tube = -1;
 	cmd_count = init_pids_and_count(cmd, &pids);
 	if (cmd_count == -1)
-	{
-		g_err_global = 1;
-		return ;
-	}
+		return (g_err_global = 1, 1);
 	i = 0;
 	while (current_cmd)
 	{
 		if (create_pipe(current_cmd->tube, pids, current_cmd) == -1)
-			return ;
+			return (g_err_global = 2, 1);
 		pids[i++] = ft_process(current_cmd, env_list, all);
 		close_unused_pipes(current_cmd);
 		if (current_cmd->next)

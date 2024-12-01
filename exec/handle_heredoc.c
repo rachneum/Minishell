@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 11:57:54 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/30 22:20:34 by rachou           ###   ########.fr       */
+/*   Updated: 2024/12/01 11:56:24 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	open_file(void)
 	fd = open(".surprise.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		perror("OPEN ");
+		perror("open ");
 		g_err_global = 1;
 		return (-1);
 	}
@@ -33,7 +33,7 @@ static int	open_and_cleanup_heredoc_file(void)
 	fd = open(".surprise.txt", O_RDONLY);
 	if (fd == -1)
 	{
-		perror("OPEN ");
+		perror("open ");
 		g_err_global = 1;
 		return (-1);
 	}

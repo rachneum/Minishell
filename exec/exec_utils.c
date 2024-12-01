@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:52:57 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/30 18:08:32 by rachou           ###   ########.fr       */
+/*   Updated: 2024/12/01 12:08:29 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	check_path(t_env_list *env_list)
 			return (1);
 		env_list = env_list->next;
 	}
-	return (-1);
+	return (g_err_global = 1, -1);
 }
 
 char	*get_path(char **cmd, t_env_list *env_list, int i)
@@ -57,14 +57,12 @@ char	*get_path(char **cmd, t_env_list *env_list, int i)
 
 	if (!access(cmd[0], X_OK))
 		return (cmd[0]);
-
 	env_path = var_bfetch(env_list, "PATH");
 	if (!env_path || check_path(env_list) == -1)
 	{
 		perror("PATH");
 		return (cmd[0]);
 	}
-
 	split_path = ft_split(env_path, ':');
 	if (!split_path)
 		return (NULL);

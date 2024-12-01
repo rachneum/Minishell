@@ -56,6 +56,7 @@ typedef struct s_cmd
 	struct s_cmd	*previous;
 	int				tube[2];
 	int				prev_tube;
+	int				heredoc_fd;
 }	t_cmd;
 
 typedef struct s_all
@@ -134,7 +135,7 @@ char		*get_name(t_env_list *env, char *str);
 
 /*exec functions*/
 
-void		ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all);
+int			ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all);
 int			init_pids_and_count(t_cmd *cmd, pid_t **pids);
 int			create_pipe(int tube[2], pid_t *pids, t_cmd *current_cmd);
 pid_t		create_fork(void);

@@ -6,7 +6,7 @@
 /*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:32:13 by rachou            #+#    #+#             */
-/*   Updated: 2024/12/01 09:55:20 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/12/01 12:04:58 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ int	init_pids_and_count(t_cmd *cmd, pid_t **pids)
 	*pids = malloc(sizeof(pid_t) * cmd_count);
 	if (!*pids)
 	{
-		perror("PIDS ");
-		g_err_global = 1;
-		return (-1);
+		perror("pid ");
+		return (g_err_global = 1, -1);
 	}
 	return (cmd_count);
 }
@@ -40,7 +39,7 @@ int	create_pipe(int tube[2], pid_t *pids, t_cmd *current_cmd)
 	{
 		if (pipe(tube) == -1)
 		{
-			perror("PIPE");
+			perror("pipe ");
 			g_err_global = 3;
 			free(pids);
 			return (-1);
@@ -56,7 +55,7 @@ pid_t	create_fork(void)
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("FORK ");
+		perror("fork ");
 		g_err_global = 3;
 		return (-1);
 	}
