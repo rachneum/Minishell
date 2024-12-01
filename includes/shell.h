@@ -132,8 +132,6 @@ void		update_equal(char *c, t_env_list *e);
 void		update_append(char *c, t_env_list *e);
 char		*get_name(t_env_list *env, char *str);
 
-
-
 /*exec functions*/
 
 void		ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all);

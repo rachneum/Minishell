@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:32:13 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/30 20:44:15 by rachou           ###   ########.fr       */
+/*   Updated: 2024/12/01 09:55:20 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	create_pipe(int tube[2], pid_t *pids, t_cmd *current_cmd)
 		if (pipe(tube) == -1)
 		{
 			perror("PIPE");
-			g_err_global = 3;//erreur de fork ou process
+			g_err_global = 3;
 			free(pids);
 			return (-1);
 		}
@@ -57,7 +57,7 @@ pid_t	create_fork(void)
 	if (pid == -1)
 	{
 		perror("FORK ");
-		g_err_global = 3;//erreur de fork ou process
+		g_err_global = 3;
 		return (-1);
 	}
 	return (pid);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/11/30 19:28:26 by rachou           ###   ########.fr       */
+/*   Updated: 2024/12/01 10:05:44 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-static void	ft_exec(char **cmd, t_env_list *env_list)
+static int	ft_exec(char **cmd, t_env_list *env_list)
 {
 	char	*path;
 	char	**env_array;
@@ -22,9 +22,8 @@ static void	ft_exec(char **cmd, t_env_list *env_list)
 	if (!path)
 	{
 		perror("CMD");
-		g_err_global = 127;//échoue a trouver une commande exéutable
 		ft_free_tab(cmd);
-		exit(127);
+		return (g_err_global = 127, 1);
 	}
 	env_array = env_list_to_array(env_list, 0);
 	if (env_array)
@@ -33,16 +32,15 @@ static void	ft_exec(char **cmd, t_env_list *env_list)
 		if (execve(path, cmd, env_array) == -1)
 		{
 			perror("EXEC");
-			g_err_global = 126;//échec d'execve
 			ft_free_tab(cmd);
 			ft_free_tab(env_array);
-			exit(126);
+			return (g_err_global = 126, 1);
 		}
 		ft_free_tab(env_array);
 	}
 }
 
-static void	pipe_redirect(t_cmd *current_cmd, t_env_list *env_list)
+static int	pipe_redirect(t_cmd *current_cmd, t_env_list *env_list)
 {
 	if (!current_cmd->out_red)
 	{
