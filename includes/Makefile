@@ -5,31 +5,37 @@ NAME	= minishell
 
 HEADER	= /includes/shell.h 
 
-SHELL_SRCS 	=	token/token_utils.c\
+SHELL_SRCS 	=	built_in/built_in_utils.c\
+				built_in/built_in.c\
+				built_in/my_cd.c\
+				built_in/my_exit.c\
+				built_in/my_export.c\
+				built_in/my_unset.c\
+				env/env_utils.c\
+				env/env.c\
+				exec/exec_built_in.c\
+				exec/exec_utils_2.c\
+				exec/exec_utils.c\
+				exec/ft_split.c\
+				exec/handle_heredoc.c\
+				exec/handle_redirect.c\
+				exec/pipex_utils.c\
+				exec/pipex.c\
+				exec/redirect.c\
+				parsing/cmd.c\
+				parsing/parse_utils_1.c\
+				parsing/parse_utils.c\
+				parsing/parse.c\
+				token/special_split.c\
 				token/token_utils_1.c\
 				token/token_utils_2.c\
 				token/token_utils_3.c\
+				token/token_utils.c\
 				token/token.c\
 				token/token1.c\
-				token/special_split.c\
-				parsing/parse.c\
-				parsing/parse_utils.c\
-				parsing/parse_utils_1.c\
-				env.c\
-				shell.c\
 				utils/extra.c\
-				exec/exec_utils.c\
-				exec/exec_utils_2.c\
-				exec/ft_split.c\
-				exec/pipex.c\
-				exec/pipex_utils.c\
-				exec/redirect.c\
-				exec/handle_redirect.c\
-				exec/handle_heredoc.c\
-				exec/exec_built_in.c\
+				shell.c\
 				signal.c\
-				#built_in/built_in.c\
-				#built_in/built_in_1.c\
 
 SHELL_SRC	= ${SHELL_SRCS}
 
@@ -49,13 +55,13 @@ FLAGS		= -Wall -Wextra -Werror
 
 RDL_PAT		= $(shell brew --prefix readline)
 
-#ifeq ($(CURRENT_USER), thomvan-)
-#	READ_FLAGS = -L/Users/$(shell whoami)/homebrew/opt/readline/lib -I/Users/$(shell whoami)/homebrew/opt/readline/include -lreadline
-#else
-#	READ_FLAGS = -L Users/$(shell whoami)/.brew/opt/readline/lib -I Users/$(shell whoami)/.brew/opt/readline/include -lreadline
-#endif
+ifeq ($(CURRENT_USER), thomvan-)
+	READ_FLAGS = -L/Users/$(shell whoami)/homebrew/opt/readline/lib -I/Users/$(shell whoami)/homebrew/opt/readline/include -lreadline
+else
+	READ_FLAGS = -L Users/$(shell whoami)/.brew/opt/readline/lib -I Users/$(shell whoami)/.brew/opt/readline/include -lreadline
+endif
 
-READ_FLAGS	= -L/Users/rachou/.brew/opt/readline/lib -I/Users/rachou/.brew/opt/readline/include -lreadline
+#READ_FLAGS	= -L/Users/rachou/.brew/opt/readline/lib -I/Users/rachou/.brew/opt/readline/include -lreadline
 
 RDL_LIB		= -lreadline -lhistory -L $(RDL_PAT)/lib
 

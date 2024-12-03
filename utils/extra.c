@@ -26,8 +26,7 @@
 	printf("\nTOKEN LIST\n\n");
 	while (all->token)
 	{
-		printf("%d. [\033[34m%s\033[0m] type = %d\n", all->token->index, 
-		all->token->content, all->token->type);
+		printf("%d. [\033[34m%s\033[0m] type = %d\n", all->token->index, all->token->content, all->token->type);
 		all->token = all->token->next;
 	}
 	printf("\n");

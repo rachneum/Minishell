@@ -12,6 +12,8 @@
 
 #include "../includes/shell.h"
 
+/*indentifies the special character*/
+
 int	sym_check(char *input)
 {
 	int	i;
@@ -31,6 +33,8 @@ int	sym_check(char *input)
 		return (PIPE);
 	return (6);
 }
+
+/*detects if the character is between quotes or double-quotes*/
 
 int	quoted(char *s, int index)
 {
@@ -60,6 +64,8 @@ int	quoted(char *s, int index)
 	}
 	return (0);
 }
+
+/*copies the string without the quotes*/
 
 static char	*no_quote_cpy(char *dest, char *src)
 {
@@ -106,6 +112,8 @@ static char	*no_quote_node(char *s)
 	}
 	return (s);
 }
+
+/*replaces the tokens with their version without quotes*/
 
 void	quote_erase(t_token *l)
 {

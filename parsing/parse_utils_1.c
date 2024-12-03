@@ -35,6 +35,8 @@ void	cmd_l_free(t_cmd *c)
 	free(c);
 }
 
+/*counts the number of words before the next PIPE*/
+
 int	word_count(t_token *t)
 {
 	int	i;

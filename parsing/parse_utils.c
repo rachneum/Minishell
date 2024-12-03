@@ -44,7 +44,7 @@ t_token	*in_red(t_token *t, t_cmd *c)
 	{
 		c->in_red = new_t_node(c->in_red);
 		if (!c)
-			return (g_err_global = 1, NULL);
+			return (NULL);
 		if (t->type == PIPE || !t)
 			c->in_red->content = NULL;
 		else
@@ -67,7 +67,7 @@ t_token	*out_red(t_token *t, t_cmd *c)
 	{
 		c->out_red = new_t_node(c->out_red);
 		if (!c)
-			return (g_err_global = 1, NULL);
+			return (NULL);
 		if (t->type == PIPE || !t)
 			c->out_red->content = NULL;
 		else

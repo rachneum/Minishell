@@ -17,9 +17,8 @@ void	sigint_handler(int sig)
 {
 	printf("\n");
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	//rl_replace_line("", 0);
 	rl_redisplay();
-	g_err_global = 130;
 	(void) sig;
 }
 
