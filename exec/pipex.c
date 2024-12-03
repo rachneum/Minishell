@@ -6,7 +6,7 @@
 /*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/12/03 16:20:25 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/12/01 12:15:30 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ static pid_t	ft_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all)
 	int		status;
 
 	current_cmd->heredoc_fd = -1;
-	//if (built_in_subshell(current_cmd, all))
-	//	return (0);
+	if (built_in_subshell(current_cmd, all))
+		return (0);
 	pid = create_fork();
 	if (pid == -1)
 		return (g_err_global = 1, -1);
@@ -83,14 +83,15 @@ static pid_t	ft_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all)
 			dup2(current_cmd->heredoc_fd, 0);
 			close(current_cmd->heredoc_fd);
 		}
-	//	if (built_in_shell(current_cmd, all))
-	//		exit(0);
+		if (built_in_shell(current_cmd, all))
+			exit(0);
 		else
 			ft_exec(current_cmd->cmd, env_list);
 		exit(1);
 	}
 	wait(&status);
-	return (g_err_global = WEXITSTATUS(status), pid);
+	g_err_global = WEXITSTATUS(status);
+	return (pid);
 }
 
 int	ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)

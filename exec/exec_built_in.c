@@ -6,13 +6,13 @@
 /*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:53:47 by rachou            #+#    #+#             */
-/*   Updated: 2024/12/02 16:19:59 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/12/01 12:02:57 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-/*int	built_in_subshell(t_cmd *cmd, t_all *all)
+int	built_in_subshell(t_cmd *cmd, t_all *all)
 {
 	if ((ft_strcmp(cmd->cmd[0], "cd") == 0) && (ft_strlen(cmd->cmd[0]) == 2))
 	{
@@ -61,4 +61,3 @@ int	built_in_shell(t_cmd *cmd, t_all *all)
 	}
 	return (0);
 }
-*/
