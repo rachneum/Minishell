@@ -19,7 +19,7 @@ static void	sigint_handler2(int sig)
 	g_err_global = 130;
 	printf("\n");
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	//rl_replace_line("", 0);
 	rl_redisplay();
 	(void) sig;
 }
