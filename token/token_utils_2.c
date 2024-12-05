@@ -12,6 +12,8 @@
 
 #include "../includes/shell.h"
 
+/*frees the lists*/
+
 void	total_free(t_all *all)
 {
 	token_l_free(all->token);
@@ -20,6 +22,8 @@ void	total_free(t_all *all)
 	free(all);
 	return ;
 }
+
+/*deletes one token of the list*/
 
 t_token	*token_delete(t_token *t)
 {
@@ -50,12 +54,16 @@ t_token	*token_delete(t_token *t)
 	}
 }
 
+/*frees token*/
+
 void	token_free(t_token *t)
 {
 	free(t->content);
 	free(t);
 	return ;
 }
+
+/*detects if a character is a point to split*/
 
 int	not_a_split(char *s, char sep, int index)
 {
@@ -64,6 +72,8 @@ int	not_a_split(char *s, char sep, int index)
 	else
 		return (0);
 }
+
+/*detects if a character is between simple quotes*/
 
 int	simple_quoted(char *s, int index)
 {

@@ -23,6 +23,16 @@ void	sigint_handler(int sig)
 	(void) sig;
 }
 
+static void	sigint_handler2(int sig)
+{
+	printf("\n");
+	rl_on_new_line();
+	//rl_replace_line("", 0);
+	//rl_redisplay();
+	exit (130);
+	(void) sig;
+}
+
 void	init_signal(void)
 {
 	signal(SIGINT, sigint_handler);
@@ -31,6 +41,6 @@ void	init_signal(void)
 
 void	reset_signal(void)
 {
-	signal(SIGINT, SIG_DFL);
+	signal(SIGINT, sigint_handler2);
 	signal(SIGQUIT, SIG_DFL);
 }

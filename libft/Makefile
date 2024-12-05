@@ -67,10 +67,10 @@ INCLUDES = -I ./includes
 all: ${NAME}
 
 ${NAME}: ${OBJS} ${HEADER}
-		${LIB} ${NAME} ${OBJS}
+		@${LIB} ${NAME} ${OBJS}
 
 %.o: %.c
-	${CC} ${FLAGS} -c ${INCLUDES} $< -o $@
+	@${CC} ${FLAGS} -c ${INCLUDES} $< -o $@
 
 re: fclean all
 

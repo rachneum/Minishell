@@ -61,7 +61,7 @@ static int	space_maker(char **piec, char set, char *str)
 		{
 			piec[j] = malloc((flag) * sizeof(char));
 			if (!piec[j])
-				return (ft_free(piec));
+				return (ft_free(piec), g_err_global = 1, 1);
 			flag = 1;
 			j++;
 		}
@@ -107,9 +107,9 @@ char	**s_split(char const *str, const char charset)
 	how_many = space_counter(charset, (char *)str);
 	pieces = malloc((how_many + 1) * sizeof(char *));
 	if (!pieces)
-		return (NULL);
+		return (g_err_global = 1, NULL);
 	safe = space_maker(pieces, charset, (char *)str);
 	if (!safe)
-		return (NULL);
+		return (g_err_global = 1, NULL);
 	return (ft_maker(pieces, charset, (char *)str));
 }

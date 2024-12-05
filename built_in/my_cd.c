@@ -1,12 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_cd.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/30 18:00:00 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/30 18:00:11 by rachou           ###   ########.fr       */
+/*   built_in_1.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
+/*   Created: 2024/10/10 16:54:44 by marvin            #+#    #+#             */
+/*   Updated: 2024/10/10 16:54:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +42,7 @@ int	my_cd(char **cmd, t_all *all)
 	else
 		err = chdir(cmd[1]);
 	if (err == -1)
-		perror("chdir :");
+		return (printf("No such file or directory\n"), g_err_global = 1, 1);
 	getcwd(cwd, sizeof(cwd));
 	tmp = new_empty_string(cwd);
 	if (!tmp)

@@ -18,10 +18,10 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <stdio.h>
-# include <stdbool.h>
 # include <fcntl.h>
-# include <termios.h>
 # include "libft.h"
+# include <termios.h>
+# include <stdbool.h>
 
 typedef struct s_pair
 {
@@ -49,13 +49,14 @@ typedef struct s_token
 
 typedef struct s_cmd
 {
-	char			**cmd;		
+	char			**cmd;
+	int				n_redirection;
+	int				prev_tube;
+	int				tube[2];
 	struct s_token	*in_red;
 	struct s_token	*out_red;
 	struct s_cmd	*next;
 	struct s_cmd	*previous;
-	int				tube[2];
-	int				prev_tube;
 	int				heredoc_fd;
 }	t_cmd;
 
@@ -74,7 +75,12 @@ typedef struct s_all
 # define GENERAL 6
 # define COMMAND 7
 
-extern int	g_err_global;
+extern int			g_err_global;
+
+/*general functions*/
+
+void		total_free(t_all *all);
+int			syntax_police(t_token *tok);
 
 /*environment_list functions*/
 
@@ -82,56 +88,55 @@ t_env_list	*envellope(char **env);
 t_env_list	*new_node(t_env_list *l);
 void		env_l_free(t_env_list *l);
 char		*var_fetch(t_env_list *e, char *str);
-char		*var_bfetch(t_env_list *e, char *str);
+char		*var_value(char *var);
 char		*var_pfetch(t_env_list *e, char *str);
+char		*var_bfetch(t_env_list *e, char *str);
+t_env_list	*env_rewinder(t_env_list *e);
 
 /*token functions*/
 
-char		**s_split(char const *str, const char charset);
+t_token		*new_t_node(t_token *l);
+void		token_l_free(t_token *t);
+t_token		*token_node(char **chopped);
+int			sym_check(char *input);
+int			size_count(char *str, t_all *all);
+char		*spacer(char *s, t_all *all);
+t_token		*tokenizer(char	*input, t_all *all);
 void		type_assign(t_token *t);
 int			is_command(t_token *t);
-int			size_count(char *str, t_all *all);
-int			simple_quoted(char *s, int index);
-int			not_a_split(char *s, char sep, int index);
 t_token		*token_delete(t_token *t);
 void		token_free(t_token *t);
-void		total_free(t_all *all);
-void		spacer_shortcut(char *spac, char *s, int *i, int *j);
-void		quote_erase(t_token *l);
 int			quoted(char *s, int index);
-int			sym_check(char *input);
-char		*spacer(char *s, t_all *all);
-t_token		*new_t_node(t_token *l);
-t_token		*token_node(char **chopped);
-t_token		*tokenizer(char	*input, t_all *all);
-void		token_l_free(t_token *t);
+int			not_a_split(char *s, char sep, int index);
+char		**s_split(char const *str, const char charset);
+void		quote_erase(t_token *l);
+void		spacer_shortcut(char *spac, char *s, int *i, int *j);
+int			simple_quoted(char *s, int index);
 
 /*parsing functions*/
 
-t_cmd		*parser(t_all *all);
+int			word_count(t_token *t);
+t_cmd		*cmd_node(t_all *all, t_cmd *cmd_l);
 t_cmd		*new_c_node(t_cmd *c, t_token *t);
-char		*var_value(char *var);
+t_cmd		*parser(t_all *all);
+void		cmd_l_free(t_cmd *c);
 t_token		*redirect_finder(t_token *t, t_cmd *c);
 t_token		*in_red(t_token *t, t_cmd *c);
 t_token		*out_red(t_token *t, t_cmd *c);
-void		cmd_l_free(t_cmd *c);
-int			word_count(t_token *t);
-t_cmd		*cmd_node(t_all *all, t_cmd *cmd_l);
 
 /*built-in functions*/
 
-void		my_unset(t_all *all);
-int			my_export(t_all *all, t_cmd *cm);
-char		*get_value(t_env_list *env, char *str);
-int			my_exit(t_all *all, t_cmd *c);
-int			my_cd(char **cmd, t_all *all);
 int			my_pwd(t_all *all);
+void		my_unset(t_all *all);
 void		my_echo(char **arg);
+int			my_cd(char **cmd, t_all *all);
+int			my_export(t_all *all, t_cmd *cm);
 void		my_env(t_cmd *cmd, t_all *all);
-t_env_list	*env_rewinder(t_env_list *e);
+int			my_exit(t_all *all, t_cmd *c);
 void		update_equal(char *c, t_env_list *e);
 void		update_append(char *c, t_env_list *e);
 char		*get_name(t_env_list *env, char *str);
+char		*get_value(t_env_list *env, char *str);
 
 /*exec functions*/
 
@@ -153,16 +158,17 @@ void		handle_output_red(t_token *out_red);
 void		handle_heredoc(t_token *in_red, int *heredoc_fd);
 int			built_in_subshell(t_cmd *cmd, t_all *all);
 int			built_in_shell(t_cmd *cmd, t_all *all);
-
-/*signal functions*/
-
-void		sigint_handler(int sig);
-void		init_signal(void);
-void		reset_signal(void);
+int	pipes_limit(t_all *all);
 
 /*extra functions*/
 
 void		token_list_visualizer(t_all *all);
 void		cmd_list_visualizer(t_all *all);
+
+/*signal functions*/
+
+void		init_signal(void);
+void		sigint_handler(int sig);
+void		reset_signal(void);
 
 #endif

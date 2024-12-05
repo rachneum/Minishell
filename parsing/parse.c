@@ -18,6 +18,7 @@ static void	cmd_init(t_cmd *c)
 	c->next = NULL;
 	c->in_red = NULL;
 	c->out_red = NULL;
+	c->n_redirection = 0;
 }
 
 t_cmd	*parser(t_all *all)
@@ -31,11 +32,13 @@ t_cmd	*parser(t_all *all)
 	how_many = 0;
 	command = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!command)
-		return (g_err_global = 1, NULL);
+		return (NULL);
 	cmd_init(command);
 	command = cmd_node(all, command);
 	return (command);
 }
+
+/*creates a new cmd_node and returns it*/
 
 t_cmd	*new_c_node(t_cmd *c, t_token *t)
 {
@@ -43,10 +46,10 @@ t_cmd	*new_c_node(t_cmd *c, t_token *t)
 
 	new = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!new)
-		return (g_err_global = 1, NULL);
+		return (NULL);
 	new->cmd = malloc(sizeof(char *) * (word_count(t) + 1));
 	if (!new->cmd)
-		return (g_err_global = 1, NULL);
+		return (NULL);
 	c->next = new;
 	new->next = NULL;
 	new->in_red = NULL;

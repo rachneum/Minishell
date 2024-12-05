@@ -23,14 +23,27 @@ char	*var_value(char *var)
 
 t_token	*redirect_finder(t_token *t, t_cmd *c)
 {
-	t_cmd	*first;
-
 	while (t && t->type < PIPE)
 	{
-		if (t->type == SMALLER || t->type == DOUBLE_SMALL)
-			t = (in_red(t, c));
-		if (t && (t->type == GREATER || t->type == DOUBLE_GREAT))
-			t = (out_red(t, c));
+		if (((t->type == SMALLER || t->type == DOUBLE_SMALL)
+				&& (t->next->type != GREATER
+					&& t->next->type != DOUBLE_GREAT))
+			|| (t && (t->type == GREATER
+					|| t->type == DOUBLE_GREAT)
+				&& (t->next->type != SMALLER
+					&& t->next->type != DOUBLE_SMALL)))
+		{
+			if ((t->type == SMALLER || t->type == DOUBLE_SMALL)
+				&& (t->next->type != GREATER
+					&& t->next->type != DOUBLE_GREAT))
+				t = (in_red(t, c));
+			if (t && (t->type == GREATER || t->type == DOUBLE_GREAT)
+				&& (t->next->type != SMALLER
+					&& t->next->type != DOUBLE_SMALL))
+				t = (out_red(t, c));
+		}
+		else
+			t = t->next;
 	}
 	return (t);
 }
@@ -44,7 +57,7 @@ t_token	*in_red(t_token *t, t_cmd *c)
 	{
 		c->in_red = new_t_node(c->in_red);
 		if (!c)
-			return (g_err_global = 1, NULL);
+			return (NULL);
 		if (t->type == PIPE || !t)
 			c->in_red->content = NULL;
 		else
@@ -67,7 +80,7 @@ t_token	*out_red(t_token *t, t_cmd *c)
 	{
 		c->out_red = new_t_node(c->out_red);
 		if (!c)
-			return (g_err_global = 1, NULL);
+			return (NULL);
 		if (t->type == PIPE || !t)
 			c->out_red->content = NULL;
 		else
