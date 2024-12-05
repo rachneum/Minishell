@@ -44,6 +44,7 @@ static int	loop(t_all *all, char *input)
 				if (syntax_police(all->token) && syntax_exit(input, all))
 					break ;
 				all->cmd = parser(all);
+				reset_signal();
 				if (all->cmd)
 					ft_pipex(all->cmd, all->env, all);
 				l_reset(all->token, all->cmd);
@@ -67,7 +68,6 @@ int	main(int arc, char **arv, char **envp)
 		clear_history();
 		env_l_free(all->env);
 		free(all);
-		//system("leaks minishell");
 	}
 	else
 	{

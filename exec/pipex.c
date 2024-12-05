@@ -6,7 +6,7 @@
 /*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/12/05 12:37:10 by rachou           ###   ########.fr       */
+/*   Updated: 2024/12/05 15:56:42 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static int	ft_exec(char **cmd, t_env_list *env_list)
 	env_array = env_list_to_array(env_list, 0);
 	if (env_array)
 	{
-		reset_signal();
 		if (execve(path, cmd, env_array) == -1)
 		{
 			perror("exec ");
@@ -48,6 +47,7 @@ static int	pipe_redirect(t_cmd *current_cmd, t_env_list *env_list)
 		{
 			dup2(current_cmd->tube[1], 1);
 			close(current_cmd->tube[1]);
+			close(current_cmd->tube[0]);
 		}
 	}
 	if (current_cmd->previous != NULL)
@@ -89,8 +89,7 @@ static pid_t	ft_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all)
 			ft_exec(current_cmd->cmd, env_list);
 		exit(1);
 	}
-	wait(&status);
-	return (g_err_global = WEXITSTATUS(status), pid);
+	return (pid);
 }
 
 int	ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)
@@ -107,7 +106,7 @@ int	ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)
 		return (g_err_global = 1, 1);
 	i = 0;
 	if (pipes_limit(all) == 1)
-		return (g_err_global = 1, 1);
+	return (g_err_global = 1, 1);
 	while (current_cmd)
 	{
 		if (create_pipe(current_cmd->tube, pids, current_cmd) == -1)

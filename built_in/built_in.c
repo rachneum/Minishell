@@ -43,7 +43,10 @@ void	my_echo(char **arg)
 	i = 1;
 	flag = 0;
 	if (!arg[1])
+	{
+		printf("\n");
 		return ;
+	}
 	if (!ft_strncmp(arg[i], "-n", 2))
 		flag = 1;
 	while (arg[i + flag] != NULL)
@@ -70,9 +73,11 @@ void	my_env(t_cmd *cmd, t_all *all)
 	}
 	while (current)
 	{
-		printf("%s\n", current->var);
+		if (current->var[0] != '_' && has_equal(current->var))
+			printf("%s\n", current->var);
 		current = current->next;
 	}
+	printf("_=/usr/bin/env\n");
 }
 
 t_env_list	*env_rewinder(t_env_list *e)

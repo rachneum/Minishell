@@ -6,31 +6,11 @@
 /*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:18:55 by thomvan-          #+#    #+#             */
-/*   Updated: 2024/11/29 21:31:57 by thomvan-         ###   ########.fr       */
+/*   Updated: 2024/12/05 14:28:18 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
-
-char	*get_value(t_env_list *env, char *str)
-{
-	int	i;
-
-	if (!str)
-	{
-		i = 0;
-		while (env->var[i] != '=' && env->var[i])
-			i++;
-		return (env->var + i + 1);
-	}
-	else
-	{
-		i = 0;
-		while (str[i] != '=' && str[i])
-			i++;
-		return (str + i + 1);
-	}
-}
 
 static void	naked_export(t_env_list *e)
 {
@@ -38,10 +18,16 @@ static void	naked_export(t_env_list *e)
 
 	while (e)
 	{
-		tmp = get_name(e, NULL);
-		printf("declare -x %s", tmp);
-		free(tmp);
-		printf("=\"%s\"\n", get_value(e, NULL));
+		if (has_equal(e->var) && e->var[0] != '_')
+		{
+			tmp = get_name(e, NULL);
+			printf("declare -x %s", tmp);
+			free(tmp);
+			printf("=\"%s\"\n", get_value(e, NULL));
+		}
+		else
+			if (e->var[0] != '_')
+				printf("declare -x %s\n", e->var);
 		e = e->next;
 	}
 }
@@ -65,7 +51,7 @@ static int	is_valid(t_cmd *cm)
 	return (1);
 }
 
-static int	has_equal(char *s)
+int	has_equal(char *s)
 {
 	int	i;
 
@@ -79,6 +65,32 @@ static int	has_equal(char *s)
 	return (0);
 }
 
+static void	my_export_part(t_env_list *e, t_all *all, t_cmd *cm, int *i)
+{
+	char	*tmp;
+
+	if (has_equal(cm->cmd[*i]))
+	{
+		tmp = get_name(e, cm->cmd[*i]);
+		e = all->env;
+		if (ft_strnstr(cm->cmd[*i], "+=", ft_strlen(tmp) + 2))
+			update_append(cm->cmd[*i], e);
+		else
+			update_equal(cm->cmd[*i], e);
+		free(tmp);
+	}
+	else
+	{
+		while (e->next != NULL && ft_strncmp(e->var, cm->cmd[*i],
+				ft_strlen(cm->cmd[*i])) != 0)
+			e = e->next;
+		if (ft_strncmp(e->var, cm->cmd[*i], ft_strlen(cm->cmd[*i])) == 0)
+			return ;
+		e = new_node(e);
+		e->var = ft_strdup(cm->cmd[*i]);
+	}
+}
+
 int	my_export(t_all *all, t_cmd *cm)
 {
 	t_env_list	*e;
@@ -86,24 +98,17 @@ int	my_export(t_all *all, t_cmd *cm)
 	char		*tmp;
 
 	i = 1;
-	all->env = env_rewinder(all->env);
-	e = all->env;
+	e = env_rewinder(all->env);
 	if (!cm->cmd[1])
-		return (naked_export(e), 0);
+	{
+		e = env_sort_cpy(e);
+		return (naked_export(e), env_l_free(e), 0);
+	}
 	if (!is_valid(cm))
 		return (printf("not a valid identifier\n"), g_err_global = 1, 1);
 	while (cm->cmd[i])
 	{
-		if (has_equal(cm->cmd[i]))
-		{
-			tmp = get_name(e, cm->cmd[i]);
-			e = all->env;
-			if (ft_strnstr(cm->cmd[i], "+=", ft_strlen(tmp) + 2))
-				update_append(cm->cmd[i], e);
-			else
-				update_equal(cm->cmd[i], e);
-			free(tmp);
-		}
+		my_export_part(e, all, cm, &i);
 		i++;
 	}
 }

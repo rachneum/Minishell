@@ -54,8 +54,7 @@ int	size_count(char *str, t_all *all)
 	size = 0;
 	while (str[i])
 	{
-		if (str[i] == '$' && var_pfetch(all->env, str + i)
-			&& !simple_quoted(str, i))
+		if (str[i] == '$' && !simple_quoted(str, i))
 		{
 			if (str[i + 1] == '?')
 				size += error_size();

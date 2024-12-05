@@ -137,6 +137,9 @@ void		update_equal(char *c, t_env_list *e);
 void		update_append(char *c, t_env_list *e);
 char		*get_name(t_env_list *env, char *str);
 char		*get_value(t_env_list *env, char *str);
+t_env_list	*env_cpy(t_env_list *env);
+t_env_list	*env_sort_cpy(t_env_list *env);
+int			has_equal(char *s);
 
 /*exec functions*/
 
@@ -158,7 +161,7 @@ void		handle_output_red(t_token *out_red);
 void		handle_heredoc(t_token *in_red, int *heredoc_fd);
 int			built_in_subshell(t_cmd *cmd, t_all *all);
 int			built_in_shell(t_cmd *cmd, t_all *all);
-int	pipes_limit(t_all *all);
+int			pipes_limit(t_all *all);
 
 /*extra functions*/
 

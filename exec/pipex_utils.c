@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:32:13 by rachou            #+#    #+#             */
-/*   Updated: 2024/12/04 11:02:13 by rachou           ###   ########.fr       */
+/*   Updated: 2024/12/05 14:22:19 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,14 @@ void	close_unused_pipes(t_cmd *current_cmd)
 void	wait_for_children(pid_t *pids, int cmd_count)
 {
 	int	i;
+	int	w_status;
 
 	i = 0;
 	while (i < cmd_count)
 	{
-		waitpid(pids[i], NULL, 0);
+		waitpid(pids[i], &w_status, 0);
+		if (WIFEXITED(w_status))
+			g_err_global = WEXITSTATUS(w_status);
 		i++;
 	}
 	free(pids);

@@ -6,7 +6,7 @@
 /*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:38:29 by thomvan-          #+#    #+#             */
-/*   Updated: 2024/11/30 17:35:17 by thomvan-         ###   ########.fr       */
+/*   Updated: 2024/12/04 19:59:51 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	my_exit(t_all *all, t_cmd *c)
 	j = 0;
 	while (c->cmd[j])
 		j++;
-	if (j > 1)
+	if (j > 2)
 		return (printf("too many arguments\n"), g_err_global = 1, 1);
 	if (c->cmd[i])
 	{
