@@ -35,6 +35,27 @@ int	my_pwd(t_all *all)
 	return (0);
 }
 
+static int	check_n(char **arg, int *flag)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (arg[i])
+	{
+		j = 1;
+		if (arg[i][0] == '-' && arg[i][1] == 'n')
+			while (arg[i][j] == 'n' && arg[i][j])
+				j++;
+		if (arg[i][j] != 'n' && arg[i][j] != '\0')
+			return (0);
+		else
+			(*flag)++;
+		i++;
+	}
+	return (*flag);
+}
+
 void	my_echo(char **arg)
 {
 	int	i;
@@ -47,7 +68,7 @@ void	my_echo(char **arg)
 		printf("\n");
 		return ;
 	}
-	if (!ft_strncmp(arg[i], "-n", 2))
+	if (check_n(arg, &flag))
 		flag = 1;
 	while (arg[i + flag] != NULL)
 	{

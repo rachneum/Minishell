@@ -115,7 +115,7 @@ char	*spacer(char *s, t_all *all)
 
 	p.i = 0;
 	p.j = 0;
-	spaced = malloc(sizeof(char) * (size_count(s, all) + 3));
+	spaced = malloc(sizeof(char) * (size_count(s, all) + 1));
 	while (s[p.i] && spaced)
 	{
 		if (s[p.i] == '$' && !simple_quoted(s, p.i))

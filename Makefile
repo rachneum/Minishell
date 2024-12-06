@@ -1,9 +1,9 @@
 # -----------------------------------Makefile------------------------------------
-NAME	= minishell
+NAME		= minishell
 
 # -----------------------------------Sources-------------------------------------
 
-HEADER	= /includes/shell.h 
+HEADER		= /includes/shell.h 
 
 SHELL_SRCS 	= token/token_utils.c\
 				token/token_utils_1.c\
@@ -42,37 +42,35 @@ SHELL_SRC	= ${SHELL_SRCS}
 
 ALL_SRC		= ${SHELL_SRC} 
 
-OBJS	= ${ALL_SRC:.c=.o}
+OBJS		= ${ALL_SRC:.c=.o}
 
 # -----------------------------------Compilation------------------------------------
 
-FT_FOLDER = ./libft
+FT_FOLDER 	= ./libft
 
-FT = ${FT_FOLDER}/libft.a
+FT 			= ${FT_FOLDER}/libft.a
 
-CC		= gcc -g -fsanitize=address
+CC			= gcc -g -fsanitize=address
 
-FLAGS	= -Wall -Wextra -Werror
+FLAGS		= -Wall -Wextra -Werror
 
-RDL_PAT	= $(shell brew --prefix readline)
+RDL_PAT		= $(shell brew --prefix readline)
 
-#ifeq ($(CURRENT_USER), thomvan-)
-#	READ_FLAGS = -L/Users/$(shell whoami)/homebrew/opt/readline/lib -I/Users/$(shell whoami)/homebrew/opt/readline/include -lreadline
-#else
-#	READ_FLAGS = -L Users/$(shell whoami)/.brew/opt/readline/lib -I Users/$(shell whoami)/.brew/opt/readline/include -lreadline
-#endif
+ifeq ($(CURRENT_USER), thomvan-)
+	READ_FLAGS = -L/Users/$(shell whoami)/homebrew/opt/readline/lib -I/Users/$(shell whoami)/homebrew/opt/readline/include -lreadline
+else
+	READ_FLAGS = -L Users/$(shell whoami)/.brew/opt/readline/lib -I Users/$(shell whoami)/.brew/opt/readline/include -lreadline
+endif
 
-READ_FLAGS =  -L/Users/rachou/.brew/opt/readline/lib -I/Users/rachou/.brew/opt/readline/include -lreadline
+RDL_LIB 	= -lreadline -lhistory -L $(RDL_PAT)/lib
 
-RDL_LIB = -lreadline -lhistory -L $(RDL_PAT)/lib
+RM			= rm -f
 
-RM		= rm -f
-
-MAKE_FT = make -s -C ${FT_FOLDER}
+MAKE_FT 	= make -s -C ${FT_FOLDER}
 
 # -----------------------------------Libraries--------------------------------------
 
-INCLUDES = -I ./includes ./libft/includes
+INCLUDES 	= -I ./includes ./libft/includes
 
 # -----------------------------------Rules------------------------------------------
 
@@ -80,7 +78,6 @@ all: ${NAME}
 
 $(NAME): $(OBJS) ${FT}
 	@$(CC) $(FLAGS) -o $(NAME)  $(OBJS) ${FT} ${READ_FLAGS}
-	make clean
 
 ${FT}: 
 	@${MAKE_FT}
