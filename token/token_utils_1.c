@@ -58,7 +58,7 @@ int	size_count(char *str, t_all *all)
 		{
 			if (str[i + 1] == '?')
 				size += error_size();
-			else if (var_pfetch(all->env, str + i))
+			else
 				size += ft_strlen(var_pfetch(all->env, str + i));
 		}
 		if (sym_check(str + i) < GENERAL && !quoted(str, i))

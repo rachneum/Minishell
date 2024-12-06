@@ -21,18 +21,15 @@ t_env_list	*envellope(char **env)
 	envl = (t_env_list *)malloc(sizeof(t_env_list));
 	if (!envl)
 		return (g_err_global = 1, NULL);
-	if (!env[0])
-		return (env_empty(envl));
 	i = 0;
 	first = envl;
 	envl->previous = NULL;
 	while (env[i] != NULL)
 	{
-		if (env[i] && ft_strncmp(env[i], "SHLVL=", 6) == 0)
-			envl->var = increment_shlvl(envl, env[i]);
-		else
+		if (env[i])
 			envl->var = ft_strdup(env[i]);
-		i++;
+		if (env[i])
+			i++;
 		if (env[i])
 			envl = new_node(envl);
 		if (!envl)

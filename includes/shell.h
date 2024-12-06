@@ -92,8 +92,6 @@ char		*var_value(char *var);
 char		*var_pfetch(t_env_list *e, char *str);
 char		*var_bfetch(t_env_list *e, char *str);
 t_env_list	*env_rewinder(t_env_list *e);
-char		*increment_shlvl(t_env_list *envl, char	*var);
-t_env_list	*env_empty(t_env_list *e);
 
 /*token functions*/
 

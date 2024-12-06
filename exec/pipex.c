@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/12/06 13:08:13 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:20:10 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,10 @@ int	ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)
 	cmd->prev_tube = -1;
 	cmd_count = init_pids_and_count(cmd, &pids);
 	if (cmd_count == -1)
+	{
+		free(pids);
 		return (g_err_global = 1, 1);
+	}
 	i = 0;
 	if (pipes_limit(all) == 1)
 		return (g_err_global = 1, 1);

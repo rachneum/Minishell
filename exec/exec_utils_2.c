@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 17:40:18 by rachou            #+#    #+#             */
-/*   Updated: 2024/12/06 11:19:59 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:08:38 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	pipes_limit(t_all *all)
 		if (ft_strcmp(current->content, "|") == 0)
 		{
 			count++;
-			if (count > 200)
+			if (count > 5)
 			{
 				printf("ERROR: Too many pipes\n");
 				return (1);
