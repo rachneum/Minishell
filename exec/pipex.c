@@ -6,7 +6,7 @@
 /*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/12/06 11:22:39 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/12/06 13:08:13 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static void	pipe_redi(t_cmd *current_cmd, t_env_list *env_list, int *heredoc_fd)
 static pid_t	ft_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all)
 {
 	pid_t	pid;
-	int		status;
 
 	current_cmd->heredoc_fd = -1;
 	if (built_in_subshell(current_cmd, all))
@@ -89,7 +88,8 @@ static pid_t	ft_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all)
 			ft_exec(current_cmd->cmd, env_list);
 		exit(1);
 	}
-	wait(&current_cmd->heredoc_fd);
+	if (current_cmd->in_red || current_cmd->out_red)
+		wait(NULL);
 	return (pid);
 }
 
