@@ -6,7 +6,7 @@
 /*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 17:40:18 by rachou            #+#    #+#             */
-/*   Updated: 2024/12/08 11:31:52 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/12/08 11:45:07 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	pipes_limit(t_all *all)
 		if (ft_strcmp(current->content, "|") == 0)
 		{
 			count++;
-			if (count > 5)
+			if (count > 200)
 			{
 				printf("ERROR: Too many pipes\n");
 				return (1);
