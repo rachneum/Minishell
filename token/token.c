@@ -115,10 +115,10 @@ char	*spacer(char *s, t_all *all)
 
 	p.i = 0;
 	p.j = 0;
-	spaced = malloc(sizeof(char) * (size_count(s, all) + 3));
+	spaced = malloc(sizeof(char) * (size_count(s, all) + 1));
 	while (s[p.i] && spaced)
 	{
-		if (s[p.i] == '$' && !simple_quoted(s, p.i))
+		if (s[p.i] == '$' && !simple_quoted(s, p.i) && s[p.i + 1])
 			spacer_short(spaced, s, &p, all);
 		if (sym_check(s + p.i) < GENERAL && !quoted(s, p.i))
 			spacer_shortcut(spaced, s, &p.i, &p.j);
