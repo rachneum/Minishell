@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirect.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:59 by rachou            #+#    #+#             */
-/*   Updated: 2024/12/10 16:46:43 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/12/11 00:32:24 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	handle_redirections(t_cmd *cmd)
 	}
 }
 
-void handle_redirection_hd(t_cmd *cmd, int *heredoc_fd)
+void	handle_redirection_hd(t_cmd *cmd, int *heredoc_fd)
 {
-    reset_hered();
-    handle_heredoc(cmd->in_red, heredoc_fd);
+	reset_hered();
+	handle_heredoc(cmd->in_red, heredoc_fd);
 }
 
