@@ -6,7 +6,7 @@
 /*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:53:47 by rachou            #+#    #+#             */
-/*   Updated: 2024/12/10 13:11:45 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:13:58 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,18 @@ int	built_in_subshell(t_cmd *cmd, t_all *all)
 
 int	built_in_shell(t_cmd *cmd, t_all *all)
 {
-	if ((ft_strcmp(cmd->cmd[0], "echo") == 0) && (ft_strlen(cmd->cmd[0]) == 4))
+	if (cmd->cmd[0] && (ft_strcmp(cmd->cmd[0], "echo") == 0) && (ft_strlen(cmd->cmd[0]) == 4))
 	{
 		my_echo(cmd->cmd);
 		return (1);
 	}
-	else if ((ft_strcmp(cmd->cmd[0], "pwd") == 0)
+	else if (cmd->cmd[0] && (ft_strcmp(cmd->cmd[0], "pwd") == 0)
 		&& (ft_strlen(cmd->cmd[0]) == 3))
 	{
 		my_pwd(all);
 		return (1);
 	}
-	else if ((ft_strcmp(cmd->cmd[0], "env") == 0)
+	else if (cmd->cmd[0] && (ft_strcmp(cmd->cmd[0], "env") == 0)
 		&& (ft_strlen(cmd->cmd[0]) == 3))
 	{
 		my_env(cmd, all);
