@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirect.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:59 by rachou            #+#    #+#             */
-/*   Updated: 2024/12/08 13:58:21 by thomvan-         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:46:43 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-void	handle_redirections(t_cmd *cmd, int *heredoc_fd)
+void	handle_redirections(t_cmd *cmd)
 {
 	if (cmd->in_red && cmd->in_red->content)
 	{
@@ -20,13 +20,6 @@ void	handle_redirections(t_cmd *cmd, int *heredoc_fd)
 			&& (ft_strcmp(cmd->in_red->previous->content, "<") == 0)
 			&& (ft_strlen(cmd->in_red->previous->content) == 1))
 			handle_input_red(cmd->in_red);
-		if ((cmd->in_red->previous->content)
-			&& (ft_strcmp(cmd->in_red->previous->content, "<<") == 0)
-			&& (ft_strlen(cmd->in_red->previous->content) == 2))
-		{
-			reset_hered();
-			handle_heredoc(cmd->in_red, heredoc_fd);
-		}
 	}
 	if (cmd->out_red && cmd->out_red->content)
 	{
@@ -40,3 +33,10 @@ void	handle_redirections(t_cmd *cmd, int *heredoc_fd)
 			handle_append_red(cmd->out_red);
 	}
 }
+
+void handle_redirection_hd(t_cmd *cmd, int *heredoc_fd)
+{
+    reset_hered();
+    handle_heredoc(cmd->in_red, heredoc_fd);
+}
+

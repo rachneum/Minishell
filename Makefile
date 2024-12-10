@@ -49,7 +49,7 @@ FT_FOLDER = ./libft
 
 FT = ${FT_FOLDER}/libft.a
 
-CC		= cc -g
+CC		= cc -g -fsanitize=address
 
 FLAGS	= -Wall -Wextra -Werror
 
