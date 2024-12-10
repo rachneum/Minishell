@@ -75,6 +75,3 @@ int	main(int arc, char **arv, char **envp)
 	}
 	return (0);
 }
-
-/*token_list_visualizer(all);
-cmd_list_visualizer(all);*/

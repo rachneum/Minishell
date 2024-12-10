@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:52:57 by raneuman          #+#    #+#             */
-/*   Updated: 2024/12/10 17:19:20 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/12/11 00:17:48 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,68 @@ static int	check_path(t_env_list *env_list)
 	return (g_err_global = 1, -1);
 }
 
+/*char	*get_path(char **cmd, t_env_list *env_list, int i)
+{
+	char	**split_path;
+	char	*env_path;
+	char	*result;
+
+	// Vérification de cmd[0]
+	if (!cmd || !cmd[0])
+	{
+		write(2, "Error: Command is NULL\n", 23);
+		return (NULL);
+	}
+
+	// Vérification si cmd[0] est déjà un chemin valide
+	if (!access(cmd[0], X_OK))
+	{
+		return (ft_strdup(cmd[0])); // Retourne une copie pour éviter des conflits.
+	}
+
+	// Récupération de la variable PATH
+	env_path = var_bfetch(env_list, "PATH");
+	if (!env_path)
+	{
+		write(2, "Error: PATH variable not found\n", 31);
+		return (NULL);
+	}
+
+	// Split PATH en un tableau de chemins
+	split_path = ft_split(env_path, ':');
+	if (!split_path)
+	{
+		write(2, "Error: Failed to split PATH\n", 28);
+		return (NULL);
+	}
+
+	// Recherche de l'exécutable dans les chemins
+	result = find_executable_path(split_path, cmd[0]);
+	ft_free_tab(split_path);
+
+	// Vérifie si un chemin valide a été trouvé
+	if (!result)
+	{
+		write(2, "Error: Command not found: ", 26);
+		write(2, cmd[0], ft_strlen(cmd[0]));
+		write(2, "\n", 1);
+		return (NULL);
+	}
+
+	// Retourne le chemin trouvé
+	return (result);
+}*/
+
+
 char	*get_path(char **cmd, t_env_list *env_list, int i)
 {
 	char	**split_path;
 	char	*env_path;
 	char	*result;
 
+
+	if (!cmd || !cmd[0])
+		exit (1);
 	if (!access(cmd[0], X_OK))
 		return (cmd[0]);
 	env_path = var_bfetch(env_list, "PATH");
