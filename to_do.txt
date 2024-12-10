@@ -1,5 +1,9 @@
 _____________________________________
 
 echo "Test" >&3
-bash: 3: Bad file descriptor
+//bash: 3: Bad file descriptor
+_____________________________________
+
+exit qwertyu
+//va exit et renvoyer un message d'erreur ("numeric argument required")
 _____________________________________
