@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/12/10 16:41:58 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/12/11 00:36:46 by rachou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,20 @@ static int	pipe_redirect(t_cmd *current_cmd, t_env_list *env_list)
 	}
 }
 
-static void pipe_redi(t_cmd *current_cmd, t_env_list *env_list, int *heredoc_fd)
+static void	pipe_redi(t_cmd *current_cmd, t_env_list *env_list, int *heredoc_fd)
 {
-    if (current_cmd->in_red && ft_strcmp(current_cmd->in_red->previous->content, "<<") == 0)
-        handle_redirection_hd(current_cmd, heredoc_fd);
-    pipe_redirect(current_cmd, env_list);
-    if (current_cmd->out_red || current_cmd->in_red)
-        handle_redirections(current_cmd);
+	if (current_cmd->in_red
+		&& ft_strcmp(current_cmd->in_red->previous->content, "<<") == 0)
+		handle_redirection_hd(current_cmd, heredoc_fd);
+	pipe_redirect(current_cmd, env_list);
+	if (current_cmd->out_red || current_cmd->in_red)
+		handle_redirections(current_cmd);
 }
 
 static pid_t	ft_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all)
 {
 	pid_t	pid;
 
-	current_cmd->heredoc_fd = -1;
 	if (built_in_subshell(current_cmd, all))
 		return (0);
 	pid = create_fork();
@@ -91,7 +91,8 @@ static pid_t	ft_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all)
 			ft_exec(current_cmd->cmd, env_list);
 		exit(1);
 	}
-	if (current_cmd->in_red && (ft_strcmp(current_cmd->in_red->previous->content, "<<") == 0))
+	if (current_cmd->in_red
+		&& (ft_strcmp(current_cmd->in_red->previous->content, "<<") == 0))
 		wait(NULL);
 	return (pid);
 }
@@ -113,6 +114,7 @@ int	ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)
 	{
 		if (create_pipe(current_cmd->tube, pids, current_cmd) == -1)
 			return (g_err_global = 2, 1);
+		current_cmd->heredoc_fd = -1;
 		pids[i++] = ft_process(current_cmd, env_list, all);
 		close_unused_pipes(current_cmd);
 		if (current_cmd->next)
