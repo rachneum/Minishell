@@ -3,6 +3,3 @@ _____________________________________
 echo "Test" >&3
 bash: 3: Bad file descriptor
 _____________________________________
-ls | cat < Makefile > yo.txt
-me renvoie ls dans yo.txt au lieu du Makefile??
-_____________________________________

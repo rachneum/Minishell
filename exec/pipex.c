@@ -6,7 +6,7 @@
 /*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/12/10 13:10:52 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:44:47 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ static int	pipe_redirect(t_cmd *current_cmd, t_env_list *env_list)
 
 static void	pipe_redi(t_cmd *current_cmd, t_env_list *env_list, int *heredoc_fd)
 {
+	pipe_redirect(current_cmd, env_list);
 	if (current_cmd->out_red || current_cmd->in_red)
 		handle_redirections(current_cmd, heredoc_fd);
-	pipe_redirect(current_cmd, env_list);
 }
 
 static pid_t	ft_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all)
