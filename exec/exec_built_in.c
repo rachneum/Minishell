@@ -6,7 +6,7 @@
 /*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:53:47 by rachou            #+#    #+#             */
-/*   Updated: 2024/12/08 12:12:40 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:11:45 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	built_in_subshell(t_cmd *cmd, t_all *all)
 {
-	if (cmd->cmd[0] && (ft_strcmp(cmd->cmd[0], "cd") == 0) 
+	if (cmd->cmd[0] && (ft_strcmp(cmd->cmd[0], "cd") == 0)
 		&& (ft_strlen(cmd->cmd[0]) == 2))
 	{
 		my_cd(cmd->cmd, all);

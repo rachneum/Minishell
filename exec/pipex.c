@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/12/08 14:33:37 by thomvan-         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:10:52 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static pid_t	ft_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all)
 			ft_exec(current_cmd->cmd, env_list);
 		exit(1);
 	}
-	if (current_cmd->in_red || current_cmd->out_red)
+	if (current_cmd->in_red && (ft_strcmp(current_cmd->in_red->previous->content, "<<") == 0))
 		wait(NULL);
 	return (pid);
 }

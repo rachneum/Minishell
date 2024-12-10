@@ -6,7 +6,7 @@
 /*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 17:40:18 by rachou            #+#    #+#             */
-/*   Updated: 2024/12/08 11:45:07 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:11:36 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,34 +42,6 @@ int	ft_strcmp(char *str1, char *str2)
 	return (str1[i] - str2[i]);
 }
 
-/*int	pipes_limit(t_all *all)
-{
-	t_token	*current;
-	int		count;
-
-	current = all->token;
-	count = 0;
-	while (current->previous)
-	{
-		printf("prout\n");
-		current = current->previous;
-	}
-	while (current)
-	{
-		if (ft_strcmp(current->content, "|") == 0)
-		{
-			count++;
-			if (count > 200)
-			{
-				printf("ERROR: Too many pipes\n");
-				return (1);
-			}
-		}
-		current = current->next;
-	}
-	return (0);
-}*/
-
 int	pipes_limit(t_all *all)
 {
 	t_cmd	*c;
@@ -82,7 +54,7 @@ int	pipes_limit(t_all *all)
 	while (c)
 	{
 		count++;
-		if (count > 200    )
+		if (count > 200)
 		{
 			printf("ERROR: Too many pipes\n");
 			return (1);
