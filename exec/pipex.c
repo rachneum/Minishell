@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/12/08 13:37:59 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/12/08 14:33:37 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static int	ft_exec(char **cmd, t_env_list *env_list)
 		if (execve(path, cmd, env_array) == -1)
 		{
 			perror("exec ");
+			printf("prout\n");
 			ft_free_tab(cmd);
 			ft_free_tab(env_array);
 			exit (126);
@@ -69,11 +70,11 @@ static pid_t	ft_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all)
 	pid_t	pid;
 
 	current_cmd->heredoc_fd = -1;
+	if (built_in_subshell(current_cmd, all))
+		return (0);
 	pid = create_fork();
 	if (pid == -1)
 		return (g_err_global = 1, -1);
-	if (built_in_subshell(current_cmd, all))
-		return (0);
 	if (pid == 0)
 	{
 		pipe_redi(current_cmd, env_list, &current_cmd->heredoc_fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirect.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 09:33:59 by rachou            #+#    #+#             */
-/*   Updated: 2024/11/30 16:55:03 by rachou           ###   ########.fr       */
+/*   Updated: 2024/12/08 13:58:21 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ void	handle_redirections(t_cmd *cmd, int *heredoc_fd)
 		if ((cmd->in_red->previous->content)
 			&& (ft_strcmp(cmd->in_red->previous->content, "<<") == 0)
 			&& (ft_strlen(cmd->in_red->previous->content) == 2))
+		{
+			reset_hered();
 			handle_heredoc(cmd->in_red, heredoc_fd);
+		}
 	}
 	if (cmd->out_red && cmd->out_red->content)
 	{

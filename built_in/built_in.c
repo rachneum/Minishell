@@ -47,7 +47,7 @@ static int	check_n(char **arg, int *flag)
 		if (arg[i][0] == '-' && arg[i][1] == 'n')
 			while (arg[i][j + 1] == 'n')
 				j++;
-		if (arg[i][j + 1] != '\0')
+		if (arg[i][j] && arg[i][j + 1] != '\0')
 			return (0);
 		else if (arg[i][0] == '-' && arg[i][1] == 'n')
 			(*flag)++;

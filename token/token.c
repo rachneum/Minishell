@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/09/14 13:10:50 by marvin            #+#    #+#             */
 /*   Updated: 2024/09/14 13:10:50 by marvin           ###   ########.fr       */
 /*                                                                            */
@@ -12,7 +15,7 @@
 
 #include "../includes/shell.h"
 
-t_token	*tokenizer(char	*input, t_all *all)
+t_token	*tokenizer(char *input, t_all *all)
 {
 	char	**chop;
 	t_token	*token_list;
@@ -100,8 +103,12 @@ static void	spacer_short(char *sp, char *s, t_pair *p, t_all *all)
 		tmp = var_pfetch(all->env, s + (p->i));
 	while (tmp && *tmp)
 		sp[(p->j)++] = *(tmp++);
-	while (s[p->i] != ' ' && s[p->i] && s[p->i] != 34)
-		(p->i)++;
+	if (flag)
+		(p->i) = p->i + 2;
+	else
+		while (s[p->i] != ' ' && s[p->i] && s[p->i] != 34
+			&& sym_check(s + p->i) == 6)
+			(p->i)++;
 	if (flag)
 		free(cpy);
 }
@@ -118,7 +125,8 @@ char	*spacer(char *s, t_all *all)
 	spaced = malloc(sizeof(char) * (size_count(s, all) + 1));
 	while (s[p.i] && spaced)
 	{
-		if (s[p.i] == '$' && !simple_quoted(s, p.i) && s[p.i + 1])
+		if (s[p.i] == '$' && !simple_quoted(s, p.i) && s[p.i + 1]
+			&& !alone_quote(s, p.i))
 			spacer_short(spaced, s, &p, all);
 		if (sym_check(s + p.i) < GENERAL && !quoted(s, p.i))
 			spacer_shortcut(spaced, s, &p.i, &p.j);

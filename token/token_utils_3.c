@@ -20,3 +20,26 @@ void	spacer_shortcut(char *spac, char *s, int *i, int *j)
 		spac[(*j)++] = s[(*i)++];
 	spac[(*j)++] = ' ';
 }
+
+int	alone_quote(char *s, int index)
+{
+	int	i;
+
+	i = 1;
+	if (quoted(s, index))
+	{
+		while (s[index + i] == ' ' && s[index + i] != 34
+			&& s[index + i])
+			i++;
+		if (s[index + i] == 34)
+			return (1);
+	}
+	return (0);
+}
+
+int	is_c_digit(char c)
+{
+	if (c < 48 || c > 57)
+		return (0);
+	return (1);
+}

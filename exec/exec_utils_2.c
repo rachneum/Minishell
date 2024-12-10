@@ -42,7 +42,7 @@ int	ft_strcmp(char *str1, char *str2)
 	return (str1[i] - str2[i]);
 }
 
-int	pipes_limit(t_all *all)
+/*int	pipes_limit(t_all *all)
 {
 	t_token	*current;
 	int		count;
@@ -50,7 +50,10 @@ int	pipes_limit(t_all *all)
 	current = all->token;
 	count = 0;
 	while (current->previous)
+	{
+		printf("prout\n");
 		current = current->previous;
+	}
 	while (current)
 	{
 		if (ft_strcmp(current->content, "|") == 0)
@@ -63,6 +66,28 @@ int	pipes_limit(t_all *all)
 			}
 		}
 		current = current->next;
+	}
+	return (0);
+}*/
+
+int	pipes_limit(t_all *all)
+{
+	t_cmd	*c;
+	int		count;
+
+	c = all->cmd;
+	count = 0;
+	while (c->previous)
+		c = c->previous;
+	while (c)
+	{
+		count++;
+		if (count > 200    )
+		{
+			printf("ERROR: Too many pipes\n");
+			return (1);
+		}
+		c = c->next;
 	}
 	return (0);
 }

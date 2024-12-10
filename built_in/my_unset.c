@@ -66,17 +66,12 @@ void	my_unset(t_all *all)
 	while (all->cmd->cmd[i])
 	{
 		e = env_rewinder(e);
-		if (has_equal(all->cmd->cmd[i]))
-			tmp = ft_strjoin(all->cmd->cmd[i], "=");
-		else
-			tmp = all->cmd->cmd[i];
-		while (strncmp(e->var, tmp, ft_strlen(all->cmd->cmd[i]) + 1) != 0
+		tmp = all->cmd->cmd[i];
+		while (strncmp(e->var, tmp, ft_strlen(all->cmd->cmd[i])) != 0
 			&& e->next != NULL)
 			e = e->next;
-		if (strncmp(e->var, tmp, ft_strlen(all->cmd->cmd[i]) + 1) == 0)
+		if (strncmp(e->var, tmp, ft_strlen(all->cmd->cmd[i])) == 0)
 			e = env_node_delete(e);
-		if (has_equal(all->cmd->cmd[i]))
-			free(tmp);
 		i++;
 	}
 }

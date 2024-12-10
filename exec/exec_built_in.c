@@ -14,24 +14,25 @@
 
 int	built_in_subshell(t_cmd *cmd, t_all *all)
 {
-	if ((ft_strcmp(cmd->cmd[0], "cd") == 0) && (ft_strlen(cmd->cmd[0]) == 2))
+	if (cmd->cmd[0] && (ft_strcmp(cmd->cmd[0], "cd") == 0) 
+		&& (ft_strlen(cmd->cmd[0]) == 2))
 	{
 		my_cd(cmd->cmd, all);
 		return (1);
 	}
-	else if ((ft_strcmp(cmd->cmd[0], "export") == 0)
+	else if (cmd->cmd[0] && (ft_strcmp(cmd->cmd[0], "export") == 0)
 		&& (ft_strlen(cmd->cmd[0]) == 6))
 	{
 		my_export(all, cmd);
 		return (1);
 	}
-	else if ((ft_strcmp(cmd->cmd[0], "unset") == 0)
+	else if (cmd->cmd[0] && (ft_strcmp(cmd->cmd[0], "unset") == 0)
 		&& (ft_strlen(cmd->cmd[0]) == 5))
 	{
 		my_unset(all);
 		return (1);
 	}
-	else if ((ft_strcmp(cmd->cmd[0], "exit") == 0)
+	else if (cmd->cmd[0] && (ft_strcmp(cmd->cmd[0], "exit") == 0)
 		&& (ft_strlen(cmd->cmd[0]) == 4))
 	{
 		my_exit(all, cmd);

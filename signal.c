@@ -37,6 +37,12 @@ void	init_signal(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
+void	reset_hered(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
+}
+
 void	reset_signal(void)
 {
 	struct termios	term;

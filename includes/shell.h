@@ -81,6 +81,8 @@ extern int			g_err_global;
 
 void		total_free(t_all *all);
 int			syntax_police(t_token *tok);
+int			is_digit(char *s);
+int			is_c_digit(char c);
 
 /*environment_list functions*/
 
@@ -114,6 +116,7 @@ char		**s_split(char const *str, const char charset);
 void		quote_erase(t_token *l);
 void		spacer_shortcut(char *spac, char *s, int *i, int *j);
 int			simple_quoted(char *s, int index);
+int			alone_quote(char *s, int index);
 
 /*parsing functions*/
 
@@ -175,5 +178,6 @@ void		cmd_list_visualizer(t_all *all);
 void		init_signal(void);
 void		sigint_handler(int sig);
 void		reset_signal(void);
+void		reset_hered(void);
 
 #endif

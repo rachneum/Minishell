@@ -6,7 +6,7 @@
 /*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 21:42:19 by thomvan-          #+#    #+#             */
-/*   Updated: 2024/12/08 09:15:21 by thomvan-         ###   ########.fr       */
+/*   Updated: 2024/12/08 13:26:01 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ char	*var_pfetch(t_env_list *e, char *str)
 	flag = 0;
 	i = 0;
 	cpy = env_rewinder(e);
-	while (str[i + 1] != ' ' && str[i + 1] != 34 && str[i + 1] != '\0')
+	while (str[i + 1] != ' ' && str[i + 1] != 34 && str[i + 1] != '\0'
+		&& sym_check(str + i + 1) == 6)
 		i++;
 	var = var_maker(var, i, str);
 	if (!var)
@@ -89,7 +90,12 @@ t_env_list	*env_empty(t_env_list *e)
 	tmp = ft_strjoin("_=", cwd);
 	e->var = ft_strjoin(tmp, "/./minishell");
 	e = new_node(e);
-	e->var = ft_strdup("/home/thomvan-/bin:/home/thomvan-/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin");
+	e->var = ft_calloc(142, sizeof(char));
+	ft_strlcat(e->var, "PATH=", 6);
+	ft_strlcat(e->var, "/home/thomvan-/bin:/home/thomvan-/bin:", 44);
+	ft_strlcat(e->var, "/usr/local/sbin:/usr/local/bin:", 75);
+	ft_strlcat(e->var, "/usr/sbin:/usr/bin:/sbin:/bin:", 105);
+	ft_strlcat(e->var, "/usr/games:/usr/local/games:/snap/bin", 142);
 	free(tmp);
 	free(cwd);
 	e = env_rewinder(e);
