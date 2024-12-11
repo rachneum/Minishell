@@ -160,7 +160,7 @@ char		**env_list_to_array(t_env_list *env_list, int i);
 char		*ft_free_tab(char **cmd);
 int			ft_strcmp(char *str1, char *str2);
 void		handle_redirections(t_cmd *cmd);
-void 		handle_redirection_hd(t_cmd *cmd, int *heredoc_fd);
+void		handle_redirection_hd(t_cmd *cmd, int *heredoc_fd);
 void		handle_input_red(t_token *in_red);
 void		handle_append_red(t_token *out_red);
 void		handle_output_red(t_token *out_red);

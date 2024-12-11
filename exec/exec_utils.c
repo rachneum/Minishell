@@ -6,7 +6,7 @@
 /*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:52:57 by raneuman          #+#    #+#             */
-/*   Updated: 2024/12/11 12:39:04 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/12/11 12:41:45 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ char	*get_path(char **cmd, t_env_list *env_list, int i)
 	char	**split_path;
 	char	*env_path;
 	char	*result;
-
 
 	if (!cmd[0])
 		exit (1);
