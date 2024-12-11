@@ -12,7 +12,6 @@
 
 #include "../includes/shell.h"
 
-
 static int	open_and_cleanup_heredoc_file(void)
 {
 	int	fd;
