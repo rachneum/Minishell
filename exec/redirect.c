@@ -19,7 +19,7 @@ static int	open_file_append_red(t_token *current, int append_mode)
 	fd = open(current->content, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd == -1)
 	{
-		perror("fd ");
+		perror("fd yoooo");
 		return (g_err_global = 1, -1);
 	}
 	if (current->next != NULL)
