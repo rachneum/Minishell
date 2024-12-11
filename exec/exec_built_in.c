@@ -14,7 +14,7 @@
 
 int	built_in_subshell(t_cmd *cmd, t_all *all)
 {
-	if (cmd->cmd[0] && (ft_strcmp(cmd->cmd[0], "cd") == 0) 
+	if (cmd->cmd[0] && (ft_strcmp(cmd->cmd[0], "cd") == 0)
 		&& (ft_strlen(cmd->cmd[0]) == 2))
 	{
 		my_cd(cmd->cmd, all);

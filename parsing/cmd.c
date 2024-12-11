@@ -12,8 +12,6 @@
 
 #include "../includes/shell.h"
 
-/*factorisation of next function (cmd_node)*/
-
 static t_cmd	*cmd_node_pipe_short(t_all *all, t_cmd *cmd_l, int *i)
 {
 	all->token = all->token->next;
@@ -47,8 +45,6 @@ static t_cmd	*cmd_part1(t_all *all, int *i, t_token **left, t_cmd *cmd)
 	}
 	return (cmd);
 }
-
-/*creates cmd_nodes and fills them with the commands*/
 
 t_cmd	*cmd_node(t_all *all, t_cmd *cmd_l)
 {

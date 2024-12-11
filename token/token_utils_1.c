@@ -12,8 +12,6 @@
 
 #include "../includes/shell.h"
 
-/*checks if the current token is between 2 nodes with quotes*/
-
 void	type_assign(t_token *t)
 {
 	if (!t)
@@ -43,8 +41,6 @@ static int	error_size(void)
 	return (cpy);
 }
 
-/*calculates the size needed for the new spaced string*/
-
 int	size_count(char *str, t_all *all)
 {
 	int		i;
@@ -71,8 +67,6 @@ int	size_count(char *str, t_all *all)
 	}
 	return (size += i);
 }
-
-/*checks if the node is a command*/
 
 int	is_command(t_token *t)
 {

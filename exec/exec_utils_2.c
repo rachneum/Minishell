@@ -54,7 +54,7 @@ int	pipes_limit(t_all *all)
 	while (c)
 	{
 		count++;
-		if (count > 200    )
+		if (count > 200)
 		{
 			printf("ERROR: Too many pipes\n");
 			return (1);

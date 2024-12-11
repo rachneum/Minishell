@@ -34,8 +34,6 @@ t_token	*tokenizer(char *input, t_all *all)
 	return (token_list);
 }
 
-/*adds the elements of the double array into the token list*/
-
 t_token	*token_node(char **chopped)
 {
 	t_token	*tok;
@@ -64,8 +62,6 @@ t_token	*token_node(char **chopped)
 	}
 	return (first);
 }
-
-/*creates a new token node for the list*/
 
 t_token	*new_t_node(t_token *l)
 {
@@ -112,8 +108,6 @@ static void	spacer_short(char *sp, char *s, t_pair *p, t_all *all)
 	if (flag)
 		free(cpy);
 }
-
-/*creates a new string with ' ' separating each elements for further splitting*/
 
 char	*spacer(char *s, t_all *all)
 {

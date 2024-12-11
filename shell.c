@@ -41,11 +41,9 @@ static int	loop(t_all *all, char *input)
 			{
 				add_history(input);
 				all->token = tokenizer(input, all);
-				//token_list_visualizer(all);
 				if (syntax_police(all->token) && syntax_exit(input, all))
 					break ;
 				all->cmd = parser(all);
-				//cmd_list_visualizer(all);
 				reset_signal();
 				if (all->cmd)
 					ft_pipex(all->cmd, all->env, all);
@@ -75,6 +73,3 @@ int	main(int arc, char **arv, char **envp)
 		printf("Wrong amount of arguments!\n");
 	return (0);
 }
-
-/*token_list_visualizer(all);
-cmd_list_visualizer(all);*/

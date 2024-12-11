@@ -12,8 +12,6 @@
 
 #include "../includes/shell.h"
 
-/*frees the token list*/
-
 void	token_l_free(t_token *t)
 {
 	t_token	*tmp;
