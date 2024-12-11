@@ -24,12 +24,11 @@ static char	*var_maker(char *var, int i, char *str)
 
 char	*var_pfetch(t_env_list *e, char *str)
 {
-	int			flag;
 	int			i;
 	t_env_list	*cpy;
 	char		*var;
 
-	flag = 0;
+	e->flag = 0;
 	i = 0;
 	cpy = env_rewinder(e);
 	while (str[i + 1] != ' ' && str[i + 1] != 34 && str[i + 1] != '\0'
@@ -42,12 +41,12 @@ char	*var_pfetch(t_env_list *e, char *str)
 	{
 		if (ft_strncmp(cpy->var, var, i + 1) == 0)
 		{
-			flag = 1;
+			e->flag = 1;
 			break ;
 		}
 		cpy = cpy->next;
 	}
-	if (flag)
+	if (e->flag)
 		return (free(var), cpy->var + (i + 1));
 	return (free(var), NULL);
 }

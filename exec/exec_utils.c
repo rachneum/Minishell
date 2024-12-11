@@ -6,7 +6,7 @@
 /*   By: raneuman <raneuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:52:57 by raneuman          #+#    #+#             */
-/*   Updated: 2024/12/11 12:41:45 by raneuman         ###   ########.fr       */
+/*   Updated: 2024/12/01 12:08:29 by raneuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,7 @@ char	*get_path(char **cmd, t_env_list *env_list, int i)
 	char	*env_path;
 	char	*result;
 
-	if (!cmd[0])
-		exit (1);
-	if (!access(cmd[0], X_OK))
+	if (cmd[0] && !access(cmd[0], X_OK))
 		return (cmd[0]);
 	env_path = var_bfetch(env_list, "PATH");
 	if (!env_path || check_path(env_list) == -1)

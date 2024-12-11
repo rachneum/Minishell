@@ -35,6 +35,7 @@ SHELL_SRCS 	= token/token_utils.c\
 				built_in/my_exit.c\
 				built_in/my_cd.c\
 				built_in/export_utils.c\
+				utils/extra.c\
 				signal.c
 
 SHELL_SRC	= ${SHELL_SRCS}
@@ -60,8 +61,6 @@ ifeq ($(CURRENT_USER), thomvan-)
 else
 	READ_FLAGS = -L Users/$(shell whoami)/.brew/opt/readline/lib -I Users/$(shell whoami)/.brew/opt/readline/include -lreadline
 endif
-
-#READ_FLAGS	= -L/Users/rachou/.brew/opt/readline/lib -I/Users/rachou/.brew/opt/readline/include -lreadline
 
 RDL_LIB = -lreadline -lhistory -L $(RDL_PAT)/lib
 

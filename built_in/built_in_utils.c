@@ -42,15 +42,16 @@ void	update_append(char *c, t_env_list *e)
 	tmp = get_name(NULL, c);
 	while (ft_strncmp(e->var, tmp, ft_strlen(tmp)) != 0 && e->next)
 		e = e->next;
-	if (ft_strncmp(e->var, tmp, ft_strlen(tmp)) == 0)
+	if (ft_strncmp(e->var, tmp, ft_strlen(tmp)) == 0 && has_equal(e->var))
 	{
 		cpy = e->var;
 		e->var = ft_strjoin(e->var, get_value(e, c));
 		free(cpy);
 	}
-	else if (!e->next)
+	else if (!e->next || !has_equal(e->var))
 	{
-		e = new_node(e);
+		if (ft_strncmp(e->var, tmp, ft_strlen(tmp)) != 0)
+			e = new_node(e);
 		cpy = ft_strjoin(tmp, "=");
 		e->var = ft_strjoin(cpy, get_value(e, c));
 		free(cpy);

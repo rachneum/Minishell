@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rachou <rachou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:48:07 by raneuman          #+#    #+#             */
-/*   Updated: 2024/12/11 00:36:46 by rachou           ###   ########.fr       */
+/*   Updated: 2024/12/08 14:33:37 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static int	ft_exec(char **cmd, t_env_list *env_list)
 	path = get_path(&cmd[0], env_list, -1);
 	if (!path)
 	{
-		perror(cmd[0]);
+		if (cmd[0])
+			perror(cmd[0]);
 		ft_free_tab(cmd);
 		exit (127);
 	}
@@ -31,7 +32,6 @@ static int	ft_exec(char **cmd, t_env_list *env_list)
 		if (execve(path, cmd, env_array) == -1)
 		{
 			perror("exec ");
-			printf("prout\n");
 			ft_free_tab(cmd);
 			ft_free_tab(env_array);
 			exit (126);
@@ -72,6 +72,7 @@ static pid_t	ft_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all)
 {
 	pid_t	pid;
 
+	current_cmd->heredoc_fd = -1;
 	if (built_in_subshell(current_cmd, all))
 		return (0);
 	pid = create_fork();
@@ -91,8 +92,7 @@ static pid_t	ft_process(t_cmd *current_cmd, t_env_list *env_list, t_all *all)
 			ft_exec(current_cmd->cmd, env_list);
 		exit(1);
 	}
-	if (current_cmd->in_red
-		&& (ft_strcmp(current_cmd->in_red->previous->content, "<<") == 0))
+	if (current_cmd->in_red || current_cmd->out_red)
 		wait(NULL);
 	return (pid);
 }
@@ -114,7 +114,6 @@ int	ft_pipex(t_cmd *cmd, t_env_list *env_list, t_all *all)
 	{
 		if (create_pipe(current_cmd->tube, pids, current_cmd) == -1)
 			return (g_err_global = 2, 1);
-		current_cmd->heredoc_fd = -1;
 		pids[i++] = ft_process(current_cmd, env_list, all);
 		close_unused_pipes(current_cmd);
 		if (current_cmd->next)

@@ -34,6 +34,7 @@ typedef struct s_env_list
 	char				*var;
 	struct s_env_list	*next;
 	struct s_env_list	*previous;
+	int					flag;
 }	t_env_list;
 
 typedef struct s_token
@@ -43,6 +44,7 @@ typedef struct s_token
 	char			*delimiter;
 	int				type;
 	int				index;
+	int				flag;
 	struct s_token	*next;
 	struct s_token	*previous;
 }	t_token;
