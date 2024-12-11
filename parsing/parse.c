@@ -38,6 +38,8 @@ t_cmd	*parser(t_all *all)
 	return (command);
 }
 
+/*creates a new cmd_node and returns it*/
+
 t_cmd	*new_c_node(t_cmd *c, t_token *t)
 {
 	t_cmd	*new;

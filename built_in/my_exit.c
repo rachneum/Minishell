@@ -57,6 +57,15 @@ static int	is_too_big(t_cmd *c)
 	return (0);
 }
 
+static int	moduler(t_cmd *c, int *tmp)
+{
+	*tmp = ft_atoi(c->cmd[1]);
+	if (tmp < 0)
+		*tmp = (256 - (*tmp)) % 256;
+	else
+		*tmp = *tmp % 256;
+}
+
 int	my_exit(t_all *all, t_cmd *c)
 {
 	int	i;
@@ -65,7 +74,7 @@ int	my_exit(t_all *all, t_cmd *c)
 	i = 1;
 	tmp = 0;
 	if (c->cmd[i])
-		tmp = ft_atoi(c->cmd[1]) % 256;
+		moduler(c, &tmp);
 	if (pipe_exist(c))
 		return (g_err_global = tmp, 1);
 	if (is_too_big(c))
@@ -75,7 +84,7 @@ int	my_exit(t_all *all, t_cmd *c)
 		while (c->cmd[i])
 		{
 			if (!is_digit(c->cmd[i++]))
-				return (printf("not a number\n"), g_err_global = 1, 1);
+				return (printf("exit\nnot a number\n"), exit(1), 1);
 		}
 		g_err_global = tmp;
 		total_free(all);

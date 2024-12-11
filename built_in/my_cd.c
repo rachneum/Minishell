@@ -37,7 +37,7 @@ static void	cd_short(char *tmp, char *cwd, t_env_list *cpy)
 	cpy->var = tmp;
 }
 
-static void	old_pwd_update(t_all *all)
+void	old_pwd_update(t_all *all)
 {
 	t_env_list	*old;
 	t_env_list	*pwd;
@@ -56,6 +56,32 @@ static void	old_pwd_update(t_all *all)
 	}
 }
 
+static int	cd_check(t_all *all, char **cmd, int err)
+{
+	char	*tmp;
+	char	*buff;
+	int		flag;
+
+	flag = 0;
+	buff = ft_strdup(var_fetch(all->env, "OLDPWD="));
+	if (!cmd[1])
+		return (printf("please insert path\n"), g_err_global = 1, 1);
+	if (ft_strncmp(cmd[1], "-", 1) == 0)
+		cd_minus(all, cmd, &flag, buff);
+	else
+		old_pwd_update(all);
+	err = chdir(cmd[1]);
+	if (err == -1)
+	{
+		strncpy(var_fetch(all->env, "OLDPWD="), buff, ft_strlen(buff));
+		free(buff);
+		return (printf("No such file or directory\n"), g_err_global = 1, 1);
+	}
+	if (flag)
+		printf("%s\n", buff);
+	free(buff);
+}
+
 int	my_cd(char **cmd, t_all *all)
 {
 	int			err;
@@ -64,12 +90,7 @@ int	my_cd(char **cmd, t_all *all)
 	static char	cwd[1024];
 
 	cpy = all->env;
-	if (!cmd[1])
-		return (printf("please insert path\n"), g_err_global = 1, 1);
-	old_pwd_update(all);
-	err = chdir(cmd[1]);
-	if (err == -1)
-		return (printf("No such file or directory\n"), g_err_global = 1, 1);
+	cd_check(all, cmd, err);
 	getcwd(cwd, sizeof(cwd));
 	tmp = new_empty_string(cwd);
 	if (!tmp)

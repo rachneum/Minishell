@@ -63,7 +63,8 @@ int	size_count(char *str, t_all *all)
 			if (sym_check(str + i) == 5 || sym_check(str + i) == 4)
 				i++;
 		}
-		i++;
+		if (str[i])
+			i++;
 	}
 	return (size += i);
 }

@@ -32,7 +32,7 @@ char	*var_pfetch(t_env_list *e, char *str)
 	i = 0;
 	cpy = env_rewinder(e);
 	while (str[i + 1] != ' ' && str[i + 1] != 34 && str[i + 1] != '\0'
-		&& sym_check(str + i + 1) == 6)
+		&& sym_check(str + i + 1) == 6 && ft_isalnum(str[i + 1]))
 		i++;
 	var = var_maker(var, i, str);
 	if (!var)
@@ -99,4 +99,24 @@ t_env_list	*env_empty(t_env_list *e)
 	free(cwd);
 	e = env_rewinder(e);
 	return (e);
+}
+
+char	*fetch(t_env_list *e, char *str)
+{
+	int	flag;
+
+	flag = 0;
+	e = env_rewinder(e);
+	while (e != NULL)
+	{
+		if (ft_strncmp(e->var, str, ft_strlen(str)) == 0)
+		{
+			flag = 1;
+			break ;
+		}
+		e = e->next;
+	}
+	if (flag)
+		return (e->var);
+	return (NULL);
 }

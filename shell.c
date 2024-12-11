@@ -70,6 +70,8 @@ int	main(int arc, char **arv, char **envp)
 		free(all);
 	}
 	else
+	{
 		printf("Wrong amount of arguments!\n");
+	}
 	return (0);
 }

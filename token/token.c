@@ -29,7 +29,8 @@ t_token	*tokenizer(char *input, t_all *all)
 		return (g_err_global = 1, NULL);
 	type_assign(token_list);
 	all->token = token_list;
-	free(input);
+	if (input)
+		free(input);
 	free(chop);
 	return (token_list);
 }
@@ -103,8 +104,9 @@ static void	spacer_short(char *sp, char *s, t_pair *p, t_all *all)
 		(p->i) = p->i + 2;
 	else
 		while (s[p->i] != ' ' && s[p->i] && s[p->i] != 34
-			&& sym_check(s + p->i) == 6)
-			(p->i)++;
+			&& sym_check(s + (p->i)++) == 6)
+			if (!ft_isalnum(s[p->i]))
+				break ;
 	if (flag)
 		free(cpy);
 }
@@ -124,13 +126,13 @@ char	*spacer(char *s, t_all *all)
 			spacer_short(spaced, s, &p, all);
 		if (sym_check(s + p.i) < GENERAL && !quoted(s, p.i))
 			spacer_shortcut(spaced, s, &p.i, &p.j);
-		else if (s[p.i])
+		else if (s[p.i] && s[p.i] != '$')
 			spaced[p.j++] = s[p.i++];
 	}
 	free(s);
 	if (spaced)
 		spaced[p.j] = '\0';
 	else
-		return (g_err_global = 1, NULL);
+		return (g_err_global = 1, free(spaced), NULL);
 	return (spaced);
 }
