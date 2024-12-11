@@ -27,7 +27,7 @@ int	init_pids_and_count(t_cmd *cmd, pid_t **pids)
 	*pids = malloc(sizeof(pid_t) * cmd_count);
 	if (!*pids)
 	{
-		perror("pid ");
+		perror("pids ");
 		return (g_err_global = 1, -1);
 	}
 	return (cmd_count);

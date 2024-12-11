@@ -12,19 +12,6 @@
 
 #include "../includes/shell.h"
 
-static int	open_file(void)
-{
-	int	fd;
-
-	fd = open(".surprise.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd == -1)
-	{
-		perror("open ");
-		g_err_global = 1;
-		return (-1);
-	}
-	return (fd);
-}
 
 static int	open_and_cleanup_heredoc_file(void)
 {
@@ -55,6 +42,20 @@ static void	prompt_heredoc(t_token *current, int heredoc_count, int i, int fd)
 			ft_putendl_fd(current->input, fd);
 		free(current->input);
 	}
+}
+
+static int	open_file(void)
+{
+	int	fd;
+
+	fd = open(".surprise.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		perror("open ");
+		g_err_global = 1;
+		return (-1);
+	}
+	return (fd);
 }
 
 static int	process_heredoc(t_token *current, int heredoc_count, int fd, int i)

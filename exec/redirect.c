@@ -52,7 +52,7 @@ void	handle_input_red(t_token *in_red)
 		perror(in_red->content);
 		exit (1);
 	}
-	if (dup2(fd, STDIN_FILENO) == -1)
+	if (dup2(fd, 0) == -1)
 	{
 		perror("fd ");
 		exit (1);
@@ -79,7 +79,7 @@ void	handle_append_red(t_token *out_red)
 		}
 		current = current->next;
 	}
-	if (dup2(fd, STDOUT_FILENO) == -1)
+	if (dup2(fd, 1) == -1)
 	{
 		perror("fd ");
 		exit (1);
@@ -106,7 +106,7 @@ void	handle_output_red(t_token *out_red)
 		}
 		current = current->next;
 	}
-	if (dup2(fd, STDOUT_FILENO) == -1)
+	if (dup2(fd, 1) == -1)
 	{
 		perror("fd ");
 		exit (1);
